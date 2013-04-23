@@ -2,7 +2,7 @@
 // MUST match guids.h
 using System;
 
-namespace MaciejNowak.JenkinsBuilds
+namespace JenkinsBuilds
 {
     static class GuidList
     {
