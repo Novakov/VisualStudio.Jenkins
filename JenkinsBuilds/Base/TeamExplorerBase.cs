@@ -6,16 +6,18 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.TeamFoundation.Client;
+using Microsoft.TeamFoundation.Controls;
 
 namespace JenkinsBuilds.Base
 {
     public abstract class TeamExplorerBase : IDisposable, INotifyPropertyChanged
-    {
+    {        
         private IServiceProvider serviceProvider;
         private bool contextSubscribed;
 
         public event PropertyChangedEventHandler PropertyChanged;
 
+        [ImportServiceProvider]
         public IServiceProvider ServiceProvider
         {
             get { return this.serviceProvider; }
@@ -86,6 +88,11 @@ namespace JenkinsBuilds.Base
             }
         }
 
+        protected virtual void ShowError(string message, params object[] args)
+        {
+            this.GetService<ITeamExplorer>().ShowNotification(string.Format(message, args), NotificationType.Error, NotificationFlags.None, null, Guid.NewGuid());
+        }
+        
         public void Dispose()
         {
             this.UnsubscribeContextChanges();

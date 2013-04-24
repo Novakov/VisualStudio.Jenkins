@@ -28,6 +28,12 @@ namespace JenkinsBuilds.Pages
             this.IsVisible = true;
 
             this.view.AddInstanceCommand = new DelegateCommand(OpenAddJenkinsPage);
+            this.view.ViewJobsCommand = new DelegateCommand(OpenJobsPage);
+        }
+
+        private void OpenJobsPage(object obj)
+        {
+            this.GetService<ITeamExplorer>().NavigateToPage(new Guid(JobsPage.PageId), obj);
         }
 
         private void OpenAddJenkinsPage(object obj)

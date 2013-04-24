@@ -37,12 +37,13 @@ namespace JenkinsBuilds.Pages
                 Url = this.view.Url
             });
 
+            Properties.Settings.Default.Save();
+
             this.Close();
         }
 
         private void Back(object obj)
-        {
-            //this.GetService<ITeamExplorer>().NavigateToPage(new Guid(BuildsPage.PageId), null);
+        {            
             this.Close();
         }
     }

@@ -9,12 +9,21 @@
              >    
     <DockPanel LastChildFill="True">  
         <te:TextLink x:Name="a" Text="Add Jenkins" Command="{Binding AddInstanceCommand}" DockPanel.Dock="Top" IsLink="True" />
-        <ListBox Name="instancesList" BorderThickness="0">
-            <ListBox.ItemTemplate>
-                <DataTemplate>
-                    <Label Content="{Binding DisplayName}" />
-                </DataTemplate>
-            </ListBox.ItemTemplate>
-        </ListBox>
+        <ListView Height="284" VerticalAlignment="Top" ItemsSource="{Binding Instances}" ScrollViewer.HorizontalScrollBarVisibility="Auto">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="Name" Width="100" DisplayMemberBinding="{Binding DisplayName}"/>
+                    <GridViewColumn Header="Actions" Width="150">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <te:TextLink Text="View jobs" Command="{Binding ViewJobsCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}" CommandParameter="{Binding}" />
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <GridViewColumn Header="Url" DisplayMemberBinding="{Binding Url}" />
+                </GridView>
+            </ListView.View>
+        </ListView>
+
     </DockPanel>
 </UserControl>

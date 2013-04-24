@@ -8,7 +8,7 @@ using System.Windows.Media.Imaging;
 
 namespace JenkinsBuilds.Converters
 {
-    public class BuildStatusConverter : IValueConverter
+    public class BuildResultSmallImage : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {
@@ -16,7 +16,7 @@ namespace JenkinsBuilds.Converters
                 throw new NotImplementedException();
 
             String path = null;
-            path = "Images/" + value.ToString() + ".png";
+            path = "Images/results/16/" + value.ToString() + ".png";
 
             return new BitmapImage(new Uri("/JenkinsBuilds;component/" + path, UriKind.Relative));
         }

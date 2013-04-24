@@ -152,11 +152,12 @@
     <Compile Include="Base\TeamExplorerSectionBase.cs" />
     <Compile Include="Commands\DelegateCommand.cs" />
     <Compile Include="Configuration\JenkinsInstances.cs" />
-    <Compile Include="Converters\BuildStatusConverter.cs" />
+    <Compile Include="Converters\BuildResultSmallImage.cs" />
     <Compile Include="Converters\RelativeTimeConverter.cs" />
     <Compile Include="Guids.cs" />
     <Compile Include="Base\TeamExplorerPageBase.cs" />
     <Compile Include="ImportServiceProviderAttribute.cs" />
+    <Compile Include="JenkinsClientExtensions.cs" />
     <Compile Include="Pages\AddJenkinsPage.cs" />
     <Compile Include="Pages\AddJenkinsView.xaml.cs">
       <DependentUpon>AddJenkinsView.xaml</DependentUpon>
@@ -169,6 +170,10 @@
     <Compile Include="Pages\InstancesSection.cs" />
     <Compile Include="Pages\InstancesView.xaml.cs">
       <DependentUpon>InstancesView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\JobsPage.cs" />
+    <Compile Include="Pages\JobsView.xaml.cs">
+      <DependentUpon>JobsView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -211,8 +216,10 @@
     <None Include="Key.snk" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Images\failed.png" />
-    <Resource Include="Images\success.png" />
+    <Resource Include="Images\results\16\failure.png" />
+    <Resource Include="Images\results\16\unstable.png" />
+    <Resource Include="Images\results\16\aborted.png" />
+    <Resource Include="Images\results\16\success.png" />
     <Content Include="Resources\Package.ico" />
   </ItemGroup>
   <ItemGroup>
@@ -225,6 +232,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Pages\InstancesView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\JobsView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

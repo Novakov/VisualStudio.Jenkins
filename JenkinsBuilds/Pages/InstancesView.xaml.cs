@@ -29,19 +29,37 @@ namespace JenkinsBuilds.Pages
 
         // Using a DependencyProperty as the backing store for AddInstanceCommand.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty AddInstanceCommandProperty =
-            DependencyProperty.Register("AddInstanceCommand", typeof(ICommand), typeof(InstancesView), new PropertyMetadata(null));        
+            DependencyProperty.Register("AddInstanceCommand", typeof(ICommand), typeof(InstancesView), new PropertyMetadata(null));
 
+        public IEnumerable<Configuration.JenkinsInstance> Instances
+        {
+            get { return (IEnumerable<Configuration.JenkinsInstance>)GetValue(InstancesProperty); }
+            set { SetValue(InstancesProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for Instances.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty InstancesProperty =
+            DependencyProperty.Register("Instances", typeof(IEnumerable<Configuration.JenkinsInstance>), typeof(InstancesView), new PropertyMetadata(null));
+
+        public ICommand ViewJobsCommand
+        {
+            get { return (ICommand)GetValue(ViewJobsCommandProperty); }
+            set { SetValue(ViewJobsCommandProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for ViewJobsCommand.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty ViewJobsCommandProperty =
+            DependencyProperty.Register("ViewJobsCommand", typeof(ICommand), typeof(InstancesView), new PropertyMetadata(null));
+       
         public InstancesView()
         {
             this.DataContext = this;
             InitializeComponent();
-
-            //this.a.Command = new RelayCommand(x => { this.LoadInstances(new Configuration.JenkinsInstance[0]); });
         }
 
         public void LoadInstances(IEnumerable<Configuration.JenkinsInstance> instances)
         {
-            this.instancesList.ItemsSource = instances;
+            this.Instances = instances;
         }
     }
 }

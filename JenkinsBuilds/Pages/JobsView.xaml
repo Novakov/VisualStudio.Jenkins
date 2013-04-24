@@ -1,0 +1,41 @@
+﻿<UserControl x:Class="JenkinsBuilds.Pages.JobsView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:conv="clr-namespace:JenkinsBuilds.Converters"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary x:Uid="mergedResourceDictionary" Source="pack://application:,,,/Microsoft.TeamFoundation.Controls;component/WPF/SharedResources.xaml" />
+                <ResourceDictionary>
+                    <conv:BuildResultSmallImage x:Key="resultImage" />
+                    <conv:RelativeTimeConverter x:Key="relativeTime" />
+                </ResourceDictionary>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <DockPanel>
+        <ListView ItemContainerStyle="{StaticResource ListBoxItemStyle}" ItemsSource="{Binding Jobs}">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        
+                        <Image Grid.Column="0" Width="16" Height="16" Margin="0,1,6,1" Source="{Binding LastBuild.Result, Converter={StaticResource resultImage}}"/>
+                        <TextBlock Grid.Column="1" Margin="0,0,6,3" Text="{Binding DisplayName}" />
+                        <Separator Grid.Column="2" Margin="0,0,6,3" Style="{StaticResource VerticalSeparator}" />
+                        <TextBlock Grid.Column="3" Margin="0,0,6,3" Text="{Binding LastBuild.Timestamp, Converter={StaticResource relativeTime}}" />
+                    </Grid>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+    </DockPanel>
+</UserControl>

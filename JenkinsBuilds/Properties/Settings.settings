@@ -6,7 +6,7 @@
       <Value Profile="(Default)">&lt;?xml version="1.0" encoding="utf-16"?&gt;
 &lt;ArrayOfJenkinsInstance xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;
   &lt;JenkinsInstance&gt;
-    &lt;Url&gt;http://localhost/jenkins&lt;/Url&gt;
+    &lt;Url&gt;http://localhost/jenkins/&lt;/Url&gt;
     &lt;DisplayName&gt;Localhost&lt;/DisplayName&gt;
   &lt;/JenkinsInstance&gt;
 &lt;/ArrayOfJenkinsInstance&gt;</Value>
