@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
+  <metadata>
+    <id>Niles</id>
+    <version>1.1.0.014</version>
+    <authors>Jason Walker</authors>
+    <owners>Jason Walker</owners>
+    <licenseUrl>http://www.apache.org/licenses/LICENSE-2.0</licenseUrl>
+    <projectUrl>http://github.com/ungood/niles</projectUrl>
+    <iconUrl>https://github.com/ungood/Niles/raw/master/NilesLogo.png</iconUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Niles is a .NET library to navigate the Hudson/Jenkins API.</description>
+    <dependencies>
+      <dependency id="Newtonsoft.Json" version="4.0.4" />
+    </dependencies>
+    <references>
+      <reference file="Niles.dll" />
+    </references>
+  </metadata>
+</package>

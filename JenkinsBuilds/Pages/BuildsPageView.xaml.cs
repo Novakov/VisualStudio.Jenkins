@@ -12,6 +12,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Niles.Model;
+//using Niles.Model;
 
 namespace JenkinsBuilds.Pages
 {
@@ -23,6 +25,11 @@ namespace JenkinsBuilds.Pages
         public BuildsPageView()
         {
             InitializeComponent();
+        }
+
+        public void LoadJobs(IEnumerable<Job> jobs)
+        {
+            this.jobsList.ItemsSource = jobs;
         }
     }
 }

@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
+  <metadata>
+    <id>AGoGo</id>
+    <version>1.0</version>
+    <title>AGoGo</title>
+    <authors>Tyler Brinks</authors>
+    <owners>Tyler Brinks</owners>
+    <projectUrl>https://github.com/Acoustic/AGoGo</projectUrl>
+    <iconUrl>http://i.imgur.com/p1PTJs.jpg</iconUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>AGoGo converts DateTime values into relative time text.  Compare a to Now or one date to another to get how far apart they are.  e.g. "2 months ago," "5 minutes ago," "Yesterday."  
+
+Also generates rank values like 1st, 2nd, third for any integer value.</description>
+    <summary>Relative Time and Rank made simple.  Turn DateTime values into text like "5 minutes ago."</summary>
+    <tags>AGoGo Relative Time DateTime Ago Helper</tags>
+    <references>
+      <reference file="AGoGo.dll" />
+    </references>
+  </metadata>
+</package>

@@ -9,7 +9,7 @@ using Microsoft.VisualStudio.Shell;
 
 namespace JenkinsBuilds.Pages
 {
-    [TeamExplorerNavigationItem(BuildsLink.LinkId, 200)]
+    [TeamExplorerNavigationItem(BuildsLink.LinkId, 200, TargetPageId = BuildsPage.PageId)]
     public class BuildsLink : Base.TeamExplorerNavigationItemBase
     {
         public const string LinkId = "E16E7060-3E3F-49B0-A29A-B907ABFA5E94";

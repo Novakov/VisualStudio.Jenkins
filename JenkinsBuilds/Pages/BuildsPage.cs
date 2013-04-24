@@ -4,6 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.TeamFoundation.Controls;
+using Niles.Client;
+using Niles.Model;
+//using Niles.Client;
+//using Niles.Model;
 
 namespace JenkinsBuilds.Pages
 {
@@ -16,6 +20,19 @@ namespace JenkinsBuilds.Pages
         {
             this.Title = "Jenkins";
             this.PageContent = new BuildsPageView();
+        }
+
+        public override void Loaded(object sender, PageLoadedEventArgs e)
+        {
+            this.Refresh();            
+        }
+
+        public override void Refresh()
+        {
+            var jenkins = new JsonJenkinsClient();
+            var node = jenkins.GetResource<Node>(new Uri("http://localhost/jenkins/"), "jobs[name,color,displayName,url,lastBuild[url,number,building,result,timestamp]]");
+
+            ((BuildsPageView)this.PageContent).LoadJobs(node.Jobs);
         }
     }
 }
