@@ -14,12 +14,14 @@ namespace JenkinsBuilds.Pages
     [TeamExplorerPage(BuildsPage.PageId)]
     public class BuildsPage : Base.TeamExplorerPageBase
     {
-        public const string PageId = "{363821C0-E453-464A-8E41-65B07807AB2C}";
+        public const string PageId = "363821C0-E453-464A-8E41-65B07807AB2C";
 
         public BuildsPage()
         {
             this.Title = "Jenkins";
-            this.PageContent = new BuildsPageView();
+            //this.PageContent = new BuildsPageView();
+
+            
         }
 
         public override void Loaded(object sender, PageLoadedEventArgs e)
@@ -29,10 +31,10 @@ namespace JenkinsBuilds.Pages
 
         public override void Refresh()
         {
-            var jenkins = new JsonJenkinsClient();
-            var node = jenkins.GetResource<Node>(new Uri("http://localhost/jenkins/"), "jobs[name,color,displayName,url,lastBuild[url,number,building,result,timestamp]]");
+            //var jenkins = new JsonJenkinsClient();
+            //var node = jenkins.GetResource<Node>(new Uri("http://localhost/jenkins/"), "jobs[name,color,displayName,url,lastBuild[url,number,building,result,timestamp]]");
 
-            ((BuildsPageView)this.PageContent).LoadJobs(node.Jobs);
+            //((BuildsPageView)this.PageContent).LoadJobs(node.Jobs);
         }
     }
 }

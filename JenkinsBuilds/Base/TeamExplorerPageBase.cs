@@ -31,6 +31,15 @@ namespace JenkinsBuilds.Base
             set { this.title = value; this.RaisePropertyChanged(); }
         }
 
+        public TeamExplorerPageBase()
+        {
+        }
+
+        public TeamExplorerPageBase(IServiceProvider serviceProvider)            
+        {
+            this.ServiceProvider = serviceProvider;
+        }
+
         public virtual void Cancel()
         {
             
