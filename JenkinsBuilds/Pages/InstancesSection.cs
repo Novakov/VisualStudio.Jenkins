@@ -11,7 +11,7 @@ using Microsoft.VisualStudio.Shell;
 
 namespace JenkinsBuilds.Pages
 {
-    [TeamExplorerSection(InstancesSection.SectionId, BuildsPage.PageId, 1)]
+    [TeamExplorerSection(InstancesSection.SectionId, BuildsPage.PageId, 20)]
     public class InstancesSection : Base.TeamExplorerSectionBase
     {
         public const string SectionId = "62A1A1D3-AAC9-401D-8627-621D4C013C8B";

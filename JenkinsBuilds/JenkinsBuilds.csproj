@@ -171,6 +171,10 @@
     <Compile Include="Pages\BuildsPageView.xaml.cs">
       <DependentUpon>BuildsPageView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Pages\BuildsSection.cs" />
+    <Compile Include="Pages\BuildsSectionView.xaml.cs">
+      <DependentUpon>BuildsSectionView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pages\InstancesSection.cs" />
     <Compile Include="Pages\InstancesView.xaml.cs">
       <DependentUpon>InstancesView.xaml</DependentUpon>
@@ -235,6 +239,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Pages\BuildsPageView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\BuildsSectionView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
