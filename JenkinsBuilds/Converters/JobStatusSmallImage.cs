@@ -8,10 +8,15 @@ using System.Windows.Media.Imaging;
 
 namespace JenkinsBuilds.Converters
 {
-    public class BuildResultSmallImage : IValueConverter
+    public class JobStatusSmallImage : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {
+            if (value == null)
+            {
+                return null;
+            }
+
             if (!(value is string))
                 throw new NotImplementedException();
 

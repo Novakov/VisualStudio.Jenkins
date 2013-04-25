@@ -42,13 +42,7 @@ namespace JenkinsBuilds.Pages
             var jobs = await Task.WhenAll(Properties.Settings.Default.FavouriteJobs.Select(x => client.GetResourceAsync<Job>(x.JobUrl, "name,color,displayName,url,lastBuild[url,number,building,result,timestamp]")));
 
             this.view.Jobs = from j in jobs
-                             select new JobViewModel
-                             {
-                                 DisplayName = j.DisplayName, 
-                                 JobUrl = j.Url,
-                                 LastBuildTimestamp = j.LastBuild.Timestamp,
-                                 LastStatus = j.LastBuild.Result
-                             };
+                             select new JobViewModel().LoadFrom(j);
         }
     }
 }

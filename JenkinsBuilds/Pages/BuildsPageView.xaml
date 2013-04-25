@@ -7,7 +7,7 @@
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
     <UserControl.Resources>
-        <converters:BuildResultSmallImage x:Key="buildStatus" />
+        <converters:JobStatusSmallImage x:Key="buildStatus" />
         <converters:RelativeTimeConverter x:Key="time" />
     </UserControl.Resources>
     <DockPanel LastChildFill="True">

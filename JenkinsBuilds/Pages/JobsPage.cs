@@ -85,14 +85,7 @@ namespace JenkinsBuilds.Pages
 
             this.view.Jobs = from j in node.Jobs
                              let favourite = Settings.Default.FavouriteJobs.SingleOrDefault(x => new Uri(x.JobUrl) == j.Url)
-                             select new JobViewModel
-                             {
-                                 DisplayName = j.DisplayName,
-                                 JobUrl = j.Url,
-                                 LastStatus = j.LastBuild.Result,
-                                 LastBuildTimestamp = j.LastBuild.Timestamp,
-                                 IsFavourite = favourite != null
-                             };
+                             select new JobViewModel().LoadFrom(j).MarkFavourite(favourite != null);
         }
     }
 }

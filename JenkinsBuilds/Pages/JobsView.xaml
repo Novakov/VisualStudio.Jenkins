@@ -12,7 +12,7 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary x:Uid="mergedResourceDictionary" Source="pack://application:,,,/Microsoft.TeamFoundation.Controls;component/WPF/SharedResources.xaml" />
                 <ResourceDictionary>
-                    <conv:BuildResultSmallImage x:Key="resultImage" />
+                    <conv:JobStatusSmallImage x:Key="statusImage" />
                     <conv:RelativeTimeConverter x:Key="relativeTime" />
                     <conv:FavouriteMarkImage x:Key="favouriteMark" />
                     <ContextMenu x:Key="contextMenu">
@@ -35,11 +35,11 @@
                             <ColumnDefinition Width="Auto" />
                         </Grid.ColumnDefinitions>
 
-                        <Image Grid.Column="0" Width="16" Height="16" Margin="0,1,6,1" Source="{Binding LastStatus, Converter={StaticResource resultImage}}"/>
+                        <Image Grid.Column="0" Width="16" Height="16" Margin="0,1,6,1" Source="{Binding JobStatus, Converter={StaticResource statusImage}}"/>
                         <Image Grid.Column="1" Width="16" Margin="0,0,6,3" Source="{Binding IsFavourite, Converter={StaticResource favouriteMark}}" />
                         <TextBlock Grid.Column="2" Margin="0,0,6,3" Text="{Binding DisplayName}" />
                         <Separator Grid.Column="3" Margin="0,0,6,3" Style="{StaticResource VerticalSeparator}" />
-                        <TextBlock Grid.Column="4" Margin="0,0,6,3" Text="{Binding LastBuildTimestamp, Converter={StaticResource relativeTime}}" />                                                                       
+                        <TextBlock Grid.Column="4" Margin="0,0,6,3" Text="{Binding LastBuildTimestamp, Converter={StaticResource relativeTime}, TargetNullValue='Not built'}" />                                                                       
                     </Grid>
                 </DataTemplate>
             </ListView.ItemTemplate>

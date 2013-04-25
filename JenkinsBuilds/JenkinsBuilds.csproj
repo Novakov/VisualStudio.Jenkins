@@ -155,7 +155,7 @@
     <Compile Include="Configuration\FavouriteJob.cs" />
     <Compile Include="Configuration\FavouriteJobs.cs" />
     <Compile Include="Configuration\JenkinsInstances.cs" />
-    <Compile Include="Converters\BuildResultSmallImage.cs" />
+    <Compile Include="Converters\JobStatusSmallImage.cs" />
     <Compile Include="Converters\FavouriteMarkImage.cs" />
     <Compile Include="Converters\RelativeTimeConverter.cs" />
     <Compile Include="Guids.cs" />
@@ -228,9 +228,9 @@
   <ItemGroup>
     <Resource Include="Images\results\16\failure.png" />
     <Resource Include="Images\results\16\unstable.png" />
-    <Resource Include="Images\results\16\aborted.png" />
     <Resource Include="Images\results\16\success.png" />
     <Resource Include="Images\star.png" />
+    <Resource Include="Images\results\16\aborted.png" />
     <Content Include="Resources\Package.ico" />
   </ItemGroup>
   <ItemGroup>
