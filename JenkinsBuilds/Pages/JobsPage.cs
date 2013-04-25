@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using JenkinsBuilds.Commands;
 using JenkinsBuilds.Configuration;
+using JenkinsBuilds.Properties;
 using Microsoft.TeamFoundation.Controls;
 using Niles.Client;
 using Niles.Model;
@@ -17,10 +19,26 @@ namespace JenkinsBuilds.Pages
 
         private JenkinsInstance instance;
         private JobsView view;
-        
+
         public JobsPage()
         {
-            this.PageContent = this.view = new JobsView();    
+            this.PageContent = this.view = new JobsView();
+
+            this.view.AddToFavouritesCommand = new DelegateCommand(AddToFavourites);
+        }
+
+        private void AddToFavourites(object obj)
+        {
+            var job = new FavouriteJob
+            {
+                ServerUrl = this.instance.Url,
+                JobUrl = ((JobViewModel)obj).JobUrl.ToString()
+            };
+
+            Properties.Settings.Default.FavouriteJobs.Add(job);
+            Properties.Settings.Default.Save();
+
+            this.Refresh();
         }
 
         public override void Initialize(object sender, PageInitializeEventArgs e)
@@ -60,12 +78,21 @@ namespace JenkinsBuilds.Pages
             }
             catch (Exception e)
             {
-                this.ShowError("Unable to contact Jenkins instance at {0}: {1}", this.instance.Url, e.Message);                
+                this.ShowError("Unable to contact Jenkins instance at {0}: {1}", this.instance.Url, e.Message);
 
                 return;
             }
 
-            this.view.Jobs = node.Jobs;
+            this.view.Jobs = from j in node.Jobs
+                             let favourite = Settings.Default.FavouriteJobs.SingleOrDefault(x => new Uri(x.JobUrl) == j.Url)
+                             select new JobViewModel
+                             {
+                                 DisplayName = j.DisplayName,
+                                 JobUrl = j.Url,
+                                 LastStatus = j.LastBuild.Result,
+                                 LastBuildTimestamp = j.LastBuild.Timestamp,
+                                 IsFavourite = favourite != null
+                             };
         }
     }
 }

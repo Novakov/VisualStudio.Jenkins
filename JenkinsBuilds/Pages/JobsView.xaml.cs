@@ -21,21 +21,41 @@ namespace JenkinsBuilds.Pages
     /// </summary>
     public partial class JobsView : UserControl
     {
-        public IEnumerable<Job> Jobs
+        public IEnumerable<JobViewModel> Jobs
         {
-            get { return (IEnumerable<Job>)GetValue(JobsProperty); }
+            get { return (IEnumerable<JobViewModel>)GetValue(JobsProperty); }
             set { SetValue(JobsProperty, value); }
         }
 
         // Using a DependencyProperty as the backing store for Jobs.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty JobsProperty =
-            DependencyProperty.Register("Jobs", typeof(IEnumerable<Job>), typeof(JobsView), new PropertyMetadata(null));
+            DependencyProperty.Register("Jobs", typeof(IEnumerable<JobViewModel>), typeof(JobsView), new PropertyMetadata(null));
+
+        public ICommand AddToFavouritesCommand
+        {
+            get { return (ICommand)GetValue(AddToFavouritesCommandProperty); }
+            set { SetValue(AddToFavouritesCommandProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for AddToFavouritesCommand.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty AddToFavouritesCommandProperty =
+            DependencyProperty.Register("AddToFavouritesCommand", typeof(ICommand), typeof(JobsView), new PropertyMetadata(null));
 
         public JobsView()
         {
             this.DataContext = this;
 
             InitializeComponent();
+        }
+
+        private void AddToFavouritesClick(object sender, RoutedEventArgs e)
+        {
+            var param = ((ICommandSource)sender).CommandParameter;
+
+            if (this.AddToFavouritesCommand != null && this.AddToFavouritesCommand.CanExecute(param))
+            {
+                this.AddToFavouritesCommand.Execute(param);
+            }
         }
     }
 }

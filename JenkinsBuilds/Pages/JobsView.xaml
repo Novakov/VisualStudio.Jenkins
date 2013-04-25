@@ -14,26 +14,35 @@
                 <ResourceDictionary>
                     <conv:BuildResultSmallImage x:Key="resultImage" />
                     <conv:RelativeTimeConverter x:Key="relativeTime" />
+                    <conv:FavouriteMarkImage x:Key="favouriteMark" />
                 </ResourceDictionary>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </UserControl.Resources>
     <DockPanel>
-        <ListView ItemContainerStyle="{StaticResource ListBoxItemStyle}" ItemsSource="{Binding Jobs}" BorderThickness="0">
+        <ListView ItemContainerStyle="{StaticResource ListBoxItemStyle}" ItemsSource="{Binding Jobs}" BorderThickness="0" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch">
             <ListView.ItemTemplate>
                 <DataTemplate>
-                    <Grid>
+                    <Grid HorizontalAlignment="Stretch">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto" />
                             <ColumnDefinition Width="Auto" />
                             <ColumnDefinition Width="Auto" />
                             <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="Auto" />
                         </Grid.ColumnDefinitions>
-                        
-                        <Image Grid.Column="0" Width="16" Height="16" Margin="0,1,6,1" Source="{Binding LastBuild.Result, Converter={StaticResource resultImage}}"/>
-                        <TextBlock Grid.Column="1" Margin="0,0,6,3" Text="{Binding DisplayName}" />
-                        <Separator Grid.Column="2" Margin="0,0,6,3" Style="{StaticResource VerticalSeparator}" />
-                        <TextBlock Grid.Column="3" Margin="0,0,6,3" Text="{Binding LastBuild.Timestamp, Converter={StaticResource relativeTime}}" />
+
+                        <Image Grid.Column="0" Width="16" Height="16" Margin="0,1,6,1" Source="{Binding LastStatus, Converter={StaticResource resultImage}}"/>
+                        <Image Grid.Column="1" Width="16" Margin="0,0,6,3" Source="{Binding IsFavourite, Converter={StaticResource favouriteMark}}" />
+                        <TextBlock Grid.Column="2" Margin="0,0,6,3" Text="{Binding DisplayName}" />
+                        <Separator Grid.Column="3" Margin="0,0,6,3" Style="{StaticResource VerticalSeparator}" />
+                        <TextBlock Grid.Column="4" Margin="0,0,6,3" Text="{Binding LastBuildTimestamp, Converter={StaticResource relativeTime}}" />                        
+                       
+                        <Grid.ContextMenu>
+                            <ContextMenu>
+                                <MenuItem Header="Add to favourites" CommandParameter="{Binding}" Click="AddToFavouritesClick" />
+                            </ContextMenu>
+                        </Grid.ContextMenu>
                     </Grid>
                 </DataTemplate>
             </ListView.ItemTemplate>

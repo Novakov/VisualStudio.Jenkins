@@ -3,13 +3,17 @@
   <Profiles />
   <Settings>
     <Setting Name="Instances" Type="JenkinsBuilds.Configuration.JenkinsInstances" Scope="User">
-      <Value Profile="(Default)">&lt;?xml version="1.0" encoding="utf-16"?&gt;
-&lt;ArrayOfJenkinsInstance xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;
-  &lt;JenkinsInstance&gt;
-    &lt;Url&gt;http://localhost/jenkins/&lt;/Url&gt;
-    &lt;DisplayName&gt;Localhost&lt;/DisplayName&gt;
-  &lt;/JenkinsInstance&gt;
-&lt;/ArrayOfJenkinsInstance&gt;</Value>
+      <Value Profile="(Default)">
+          &lt;ArrayOfJenkinsInstance xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;
+            &lt;JenkinsInstance&gt;
+              &lt;Url&gt;http://localhost/jenkins/&lt;/Url&gt;
+              &lt;DisplayName&gt;Localhost&lt;/DisplayName&gt;
+            &lt;/JenkinsInstance&gt;
+          &lt;/ArrayOfJenkinsInstance&gt;
+        </Value>
+    </Setting>
+    <Setting Name="FavouriteJobs" Type="JenkinsBuilds.Configuration.FavouriteJobs" Scope="User">
+      <Value Profile="(Default)" />
     </Setting>
   </Settings>
 </SettingsFile>
