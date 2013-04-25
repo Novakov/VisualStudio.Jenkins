@@ -5,7 +5,8 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:conv="clr-namespace:JenkinsBuilds.Converters"
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300">
+             d:DesignHeight="300" d:DesignWidth="300"
+             BorderThickness="0">
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -18,7 +19,7 @@
         </ResourceDictionary>
     </UserControl.Resources>
     <DockPanel>
-        <ListView ItemContainerStyle="{StaticResource ListBoxItemStyle}" ItemsSource="{Binding Jobs}">
+        <ListView ItemContainerStyle="{StaticResource ListBoxItemStyle}" ItemsSource="{Binding Jobs}" BorderThickness="0">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <Grid>

@@ -61,5 +61,14 @@ namespace JenkinsBuilds.Pages
         {
             this.Instances = instances;
         }
+
+        private void ViewJobsClick(object sender, RoutedEventArgs e)
+        {
+            var param = ((ICommandSource)sender).CommandParameter;
+            if (this.ViewJobsCommand != null && this.ViewJobsCommand.CanExecute(param))
+            {
+                this.ViewJobsCommand.Execute(param);
+            }
+        }
     }
 }

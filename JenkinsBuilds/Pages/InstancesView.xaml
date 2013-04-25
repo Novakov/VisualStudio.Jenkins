@@ -6,24 +6,36 @@
              xmlns:te="clr-namespace:Microsoft.TeamFoundation.Controls.WPF.TeamExplorer;assembly=Microsoft.TeamFoundation.Controls"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300"
-             >    
-    <DockPanel LastChildFill="True">  
+             BorderThickness="0">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary x:Uid="mergedResourceDictionary" Source="pack://application:,,,/Microsoft.TeamFoundation.Controls;component/WPF/SharedResources.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <DockPanel LastChildFill="True">
         <te:TextLink x:Name="a" Text="Add Jenkins" Command="{Binding AddInstanceCommand}" DockPanel.Dock="Top" IsLink="True" />
-        <ListView Height="284" VerticalAlignment="Top" ItemsSource="{Binding Instances}" ScrollViewer.HorizontalScrollBarVisibility="Auto">
-            <ListView.View>
-                <GridView>
-                    <GridViewColumn Header="Name" Width="100" DisplayMemberBinding="{Binding DisplayName}"/>
-                    <GridViewColumn Header="Actions" Width="150">
-                        <GridViewColumn.CellTemplate>
-                            <DataTemplate>
-                                <te:TextLink Text="View jobs" Command="{Binding ViewJobsCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}" CommandParameter="{Binding}" />
-                            </DataTemplate>
-                        </GridViewColumn.CellTemplate>
-                    </GridViewColumn>
-                    <GridViewColumn Header="Url" DisplayMemberBinding="{Binding Url}" />
-                </GridView>
-            </ListView.View>
+        <ListView ItemContainerStyle="{StaticResource ListBoxItemStyle}"  ItemsSource="{Binding Instances}" BorderThickness="0">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />                                                        
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Grid.Column="0" Margin="0,0,6,3" Text="{Binding DisplayName}" />
+                        <Separator Grid.Column="1" Margin="0,0,6,3" Style="{StaticResource VerticalSeparator}" />
+                        <TextBlock Grid.Column="2" Margin="0,0,6,3" Text="{Binding Url}" />                        
+                        <Grid.ContextMenu>
+                            <ContextMenu>
+                                <MenuItem Header="View jobs" CommandParameter="{Binding}" Click="ViewJobsClick"/>
+                            </ContextMenu>
+                        </Grid.ContextMenu>
+                    </Grid>
+                </DataTemplate>
+            </ListView.ItemTemplate>           
         </ListView>
-
     </DockPanel>
 </UserControl>
