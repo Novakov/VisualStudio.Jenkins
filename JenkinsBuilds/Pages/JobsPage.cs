@@ -57,6 +57,11 @@ namespace JenkinsBuilds.Pages
             this.IsBusy = false;
         }
 
+        public override void SaveContext(object sender, PageSaveContextEventArgs e)
+        {
+            e.Context = this.instance;
+        }
+
         public async override void Refresh()
         {
             this.IsBusy = true;

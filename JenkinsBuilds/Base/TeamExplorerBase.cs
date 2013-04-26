@@ -93,7 +93,7 @@ namespace JenkinsBuilds.Base
             this.GetService<ITeamExplorer>().ShowNotification(string.Format(message, args), NotificationType.Error, NotificationFlags.None, null, Guid.NewGuid());
         }
         
-        public void Dispose()
+        public virtual void Dispose()
         {
             this.UnsubscribeContextChanges();
         }

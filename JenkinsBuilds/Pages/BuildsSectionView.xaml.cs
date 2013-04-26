@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -20,21 +21,21 @@ namespace JenkinsBuilds.Pages
     /// </summary>
     public partial class BuildsSectionView : UserControl
     {
-        public IEnumerable<JobViewModel> Jobs
+        public ObservableCollection<JobViewModel> Jobs
         {
-            get { return (IEnumerable<JobViewModel>)GetValue(JobsProperty); }
+            get { return (ObservableCollection<JobViewModel>)GetValue(JobsProperty); }
             set { SetValue(JobsProperty, value); }
         }
 
         // Using a DependencyProperty as the backing store for Jobs.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty JobsProperty =
-            DependencyProperty.Register("Jobs", typeof(IEnumerable<JobViewModel>), typeof(BuildsSectionView), new PropertyMetadata(null));
+            DependencyProperty.Register("Jobs", typeof(ObservableCollection<JobViewModel>), typeof(BuildsSectionView), new PropertyMetadata());
 
         
         public BuildsSectionView()
         {
             this.DataContext = this;
-            InitializeComponent();
+            InitializeComponent();            
         }
     }
 }

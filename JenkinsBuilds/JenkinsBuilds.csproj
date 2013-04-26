@@ -146,11 +146,14 @@
     </COMReference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BackgroundJenkinsMonitor.cs" />
     <Compile Include="Base\NotifyPropertyChangeBase.cs" />
     <Compile Include="Base\TeamExplorerNavigationItemBase.cs" />
     <Compile Include="Base\TeamExplorerBase.cs" />
     <Compile Include="Base\TeamExplorerNavigationLinkBase.cs" />
     <Compile Include="Base\TeamExplorerSectionBase.cs" />
+    <Compile Include="BuildChangedEventArgs.cs" />
+    <Compile Include="ChangeType.cs" />
     <Compile Include="Commands\DelegateCommand.cs" />
     <Compile Include="Configuration\FavouriteJob.cs" />
     <Compile Include="Configuration\FavouriteJobs.cs" />
@@ -162,6 +165,7 @@
     <Compile Include="Base\TeamExplorerPageBase.cs" />
     <Compile Include="ImportServiceProviderAttribute.cs" />
     <Compile Include="JenkinsClientExtensions.cs" />
+    <Compile Include="JenkinsMonitor.cs" />
     <Compile Include="Pages\AddJenkinsPage.cs" />
     <Compile Include="Pages\AddJenkinsView.xaml.cs">
       <DependentUpon>AddJenkinsView.xaml</DependentUpon>
@@ -199,6 +203,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Configuration\JenkinsInstance.cs" />
     <Compile Include="Settings.cs" />
+    <Compile Include="UriExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources.resx">
@@ -231,6 +236,7 @@
     <Resource Include="Images\results\16\success.png" />
     <Resource Include="Images\star.png" />
     <Resource Include="Images\results\16\aborted.png" />
+    <Resource Include="Images\results\16\building.png" />
     <Content Include="Resources\Package.ico" />
   </ItemGroup>
   <ItemGroup>

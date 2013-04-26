@@ -9,13 +9,40 @@ namespace JenkinsBuilds.Pages
 {
     public class JobViewModel : Base.NotifyPropertyChangeBase
     {
-        public string DisplayName { get; set; }
+        public const string FetchTree = "name,color,displayName,url,lastBuild[url,number,building,result,timestamp]";
+
+        public string Name { get; set; }
+
+        private string displayName;
+        public string DisplayName
+        {
+            get { return this.displayName; }
+            set { this.displayName = value; this.RaisePropertyChanged(); }
+        }
 
         public Uri JobUrl { get; set; }
 
-        public string JobStatus { get; set; }
+        private string jobStatus;
+        public string JobStatus
+        {
+            get { return this.jobStatus; }
+            set { this.jobStatus = value; this.RaisePropertyChanged(); }
+        }
 
-        public DateTime? LastBuildTimestamp { get; set; }
+        private DateTime? lastBuildTimestamp;
+        public DateTime? LastBuildTimestamp
+        {
+            get { return this.lastBuildTimestamp; }
+            set { this.lastBuildTimestamp = value; this.RaisePropertyChanged(); }
+        }
+
+        public Uri ServerUrl
+        {
+            get
+            {
+                return this.JobUrl.AppendPath("../../");
+            }
+        }
 
         private bool isFavourite;
 
@@ -27,21 +54,32 @@ namespace JenkinsBuilds.Pages
 
         public JobViewModel LoadFrom(Job job)
         {
+            this.Name = job.Name;
             this.DisplayName = job.DisplayName;
             this.JobUrl = job.Url;
 
-            if (job.LastBuild !=null)
+            LoadFrom(job.LastBuild);
+
+            return this;
+        }
+
+        public void LoadFrom(Build build)
+        {
+            if (build != null)
             {
-                this.LastBuildTimestamp = job.LastBuild.Timestamp;
-                this.JobStatus = job.LastBuild.Result;
+                this.LastBuildTimestamp = build.Timestamp;
+                this.JobStatus = build.Result;
+
+                if (build.Building)
+                {
+                    this.JobStatus = "Building";
+                }
             }
             else
             {
                 this.LastBuildTimestamp = null;
                 this.JobStatus = null;
-            }            
-
-            return this;
+            }
         }
 
         public JobViewModel MarkFavourite(bool isFavourite)

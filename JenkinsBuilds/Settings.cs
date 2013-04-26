@@ -1,5 +1,6 @@
-﻿namespace JenkinsBuilds.Properties
-{
+﻿using System.ComponentModel.Composition;
+namespace JenkinsBuilds.Properties
+{    
     internal sealed partial class Settings
     {
         protected override void OnSettingsLoaded(object sender, System.Configuration.SettingsLoadedEventArgs e)
