@@ -1,0 +1,1 @@
+You have installed MSBuild intergration for aspectize. Your assembly will be automatically modified during compilation

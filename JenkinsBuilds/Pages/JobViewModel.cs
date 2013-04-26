@@ -13,28 +13,13 @@ namespace JenkinsBuilds.Pages
 
         public string Name { get; set; }
 
-        private string displayName;
-        public string DisplayName
-        {
-            get { return this.displayName; }
-            set { this.displayName = value; this.RaisePropertyChanged(); }
-        }
+        public string DisplayName { get; set; }
 
         public Uri JobUrl { get; set; }
 
-        private string jobStatus;
-        public string JobStatus
-        {
-            get { return this.jobStatus; }
-            set { this.jobStatus = value; this.RaisePropertyChanged(); }
-        }
+        public string JobStatus { get; [Aspects.Notify]set; }
 
-        private DateTime? lastBuildTimestamp;
-        public DateTime? LastBuildTimestamp
-        {
-            get { return this.lastBuildTimestamp; }
-            set { this.lastBuildTimestamp = value; this.RaisePropertyChanged(); }
-        }
+        public DateTime? LastBuildTimestamp { get; [Aspects.Notify]set; }
 
         public Uri ServerUrl
         {
@@ -43,14 +28,8 @@ namespace JenkinsBuilds.Pages
                 return this.JobUrl.AppendPath("../../");
             }
         }
-
-        private bool isFavourite;
-
-        public bool IsFavourite
-        {
-            get { return isFavourite; }
-            set { isFavourite = value; this.RaisePropertyChanged(); }
-        }
+        
+        public bool IsFavourite { get; [Aspects.Notify]set; }
 
         public JobViewModel LoadFrom(Job job)
         {
@@ -85,6 +64,7 @@ namespace JenkinsBuilds.Pages
         public JobViewModel MarkFavourite(bool isFavourite)
         {
             this.IsFavourite = isFavourite;
+
             return this;
         }
     }

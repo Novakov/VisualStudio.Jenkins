@@ -12,11 +12,11 @@ namespace JenkinsBuilds.Base
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
-        protected void RaisePropertyChanged([CallerMemberName]string propertyName = "")
+        protected internal void RaisePropertyChanged(string propertyName = null, [CallerMemberName]string callerName = "")
         {
             if (this.PropertyChanged != null)
             {
-                this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+                this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName ?? callerName));
             }
         }
     }

@@ -43,6 +43,9 @@
     <Reference Include="AGoGo">
       <HintPath>..\packages\AGoGo.1.0\lib\net40\AGoGo.dll</HintPath>
     </Reference>
+    <Reference Include="Aspectize">
+      <HintPath>..\packages\Aspectize.0.1\lib\net40\Aspectize.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Microsoft.TeamFoundation.Client, Version=11.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
     <Reference Include="Microsoft.TeamFoundation.Common, Version=11.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
@@ -146,6 +149,7 @@
     </COMReference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Aspects\NotifyAttribute.cs" />
     <Compile Include="BackgroundJenkinsMonitor.cs" />
     <Compile Include="Base\NotifyPropertyChangeBase.cs" />
     <Compile Include="Base\TeamExplorerNavigationItemBase.cs" />
@@ -267,6 +271,7 @@
   </PropertyGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(VSToolsPath)\VSSDK\Microsoft.VsSDK.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="..\packages\Aspectize.MSBuild.0.1\tools\Aspectize.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
