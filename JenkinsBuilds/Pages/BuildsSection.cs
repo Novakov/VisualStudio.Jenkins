@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel.Composition;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using JenkinsBuilds.Commands;
 using JenkinsBuilds.Properties;
 using Microsoft.TeamFoundation.Controls;
 using Niles.Client;
@@ -23,8 +25,13 @@ namespace JenkinsBuilds.Pages
 
         private Settings settings;
 
-        public BuildsSection()
+        private JenkinsClient client;
+
+        [ImportingConstructor]
+        public BuildsSection(JenkinsClient client)
         {
+            this.client = client;
+
             this.settings = Properties.Settings.Default;
 
             this.Title = "Favourite jobs";
@@ -35,6 +42,15 @@ namespace JenkinsBuilds.Pages
             this.IsVisible = true;
 
             this.monitors = new Dictionary<Uri, BackgroundJenkinsMonitor>();
+
+            this.view.BuildNowCommand = new DelegateCommand(BuildNow);
+        }
+
+        private void BuildNow(object obj)
+        {
+            var job = (JobViewModel)obj;
+
+            this.client.StartBuild(job.JobUrl);
         }
 
         public async override void Loaded(object sender, SectionLoadedEventArgs e)
@@ -46,12 +62,19 @@ namespace JenkinsBuilds.Pages
             this.IsBusy = false;
         }
 
-        private async Task RefeshAsync()
+        public async override void Refresh()
         {
-            var client = new JsonJenkinsClient();
+            this.IsBusy = true;
 
+            await RefeshAsync();
+
+            this.IsBusy = false;
+        }
+
+        private async Task RefeshAsync()
+        {          
             var jobFetchTasks = from j in this.settings.FavouriteJobs
-                                select client.GetResourceAsync<Job>(j.JobUrl, JobViewModel.FetchTree);
+                                select this.client.GetResourceAsync<Job>(j.JobUrl, JobViewModel.FetchTree);
 
             var jobs = await Task.WhenAll(jobFetchTasks);
 

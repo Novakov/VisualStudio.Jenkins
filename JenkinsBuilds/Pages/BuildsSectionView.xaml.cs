@@ -31,11 +31,29 @@ namespace JenkinsBuilds.Pages
         public static readonly DependencyProperty JobsProperty =
             DependencyProperty.Register("Jobs", typeof(ObservableCollection<JobViewModel>), typeof(BuildsSectionView), new PropertyMetadata());
 
-        
+        public ICommand BuildNowCommand
+        {
+            get { return (ICommand)GetValue(BuildNowCommandProperty); }
+            set { SetValue(BuildNowCommandProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for BuildNowCommand.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty BuildNowCommandProperty =
+            DependencyProperty.Register("BuildNowCommand", typeof(ICommand), typeof(BuildsSectionView), new PropertyMetadata(null));
+
         public BuildsSectionView()
         {
             this.DataContext = this;
-            InitializeComponent();            
+            InitializeComponent();
+        }
+
+        private void BuildNowClick(object sender, RoutedEventArgs e)
+        {
+            var param = ((ICommandSource)sender).CommandParameter;
+            if (this.BuildNowCommand != null && this.BuildNowCommand.CanExecute(param))
+            {
+                this.BuildNowCommand.Execute(param);
+            }
         }
     }
 }
