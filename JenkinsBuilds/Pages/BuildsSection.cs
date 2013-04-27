@@ -44,6 +44,18 @@ namespace JenkinsBuilds.Pages
             this.monitors = new Dictionary<Uri, BackgroundJenkinsMonitor>();
 
             this.view.BuildNowCommand = new DelegateCommand(BuildNow);
+            this.view.RemoveFromFavourites = new DelegateCommand(RemoveFromFavourites);
+        }
+
+        private void RemoveFromFavourites(object obj)
+        {
+            var job = (JobViewModel)obj;
+
+            var settingsItem = this.settings.FavouriteJobs.SingleOrDefault(x => new Uri(x.JobUrl) == job.JobUrl);
+
+            this.settings.FavouriteJobs.Remove(settingsItem);
+
+            this.view.Jobs.Remove(job);
         }
 
         private void BuildNow(object obj)
@@ -79,6 +91,13 @@ namespace JenkinsBuilds.Pages
             var jobs = await Task.WhenAll(jobFetchTasks);
 
             var vms = jobs.Select(x => new JobViewModel().LoadFrom(x)).ToArray();
+
+            foreach (var item in this.monitors)
+            {
+                item.Value.Stop();
+            }
+
+            this.monitors.Clear();
 
             foreach (var item in vms)
             {
