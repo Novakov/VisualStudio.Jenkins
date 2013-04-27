@@ -44,6 +44,9 @@
     <Reference Include="AGoGo">
       <HintPath>..\packages\AGoGo.1.0\lib\net40\AGoGo.dll</HintPath>
     </Reference>
+    <Reference Include="CredentialManagement">
+      <HintPath>..\packages\CredentialManagement.1.0.1\lib\net35\CredentialManagement.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Microsoft.TeamFoundation.Client, Version=11.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
     <Reference Include="Microsoft.TeamFoundation.Common, Version=11.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
@@ -167,6 +170,7 @@
     <Compile Include="Converters\JobStatusSmallImage.cs" />
     <Compile Include="Converters\FavouriteMarkImage.cs" />
     <Compile Include="Converters\RelativeTimeConverter.cs" />
+    <Compile Include="CredentialsPromptProvider.cs" />
     <Compile Include="Guids.cs" />
     <Compile Include="Base\TeamExplorerPageBase.cs" />
     <Compile Include="ImportServiceProviderAttribute.cs" />

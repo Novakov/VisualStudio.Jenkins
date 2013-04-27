@@ -13,5 +13,6 @@ namespace JenkinsBuilds.Pages
         public string Url { get; set; }
         public ICommand SaveCommand { get; set; }
         public ICommand CancelCommand { get; set; }
+        public bool RequiresAuthentication { get; set; }
     }
 }

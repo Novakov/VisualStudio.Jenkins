@@ -55,5 +55,15 @@ namespace JenkinsBuilds.Properties
 
             server.FavouriteJobs.Remove(job.ToString());
         }
+
+        public void AddInstance(string displayName, string serverUrl, bool requiresAuthentication)
+        {
+            this.Instances.Add(new JenkinsInstance
+            {
+                DisplayName = displayName,
+                Url = serverUrl,
+                RequiresAuthentication = requiresAuthentication
+            });
+        }
     }
 }

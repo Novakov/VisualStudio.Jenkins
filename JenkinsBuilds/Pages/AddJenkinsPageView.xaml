@@ -10,6 +10,7 @@
         <TextBox Height="23" TextWrapping="Wrap" Text="{Binding DisplayName, Mode=TwoWay}"/>
         <Label Content="Jenkins Url"/>
         <TextBox Height="23" TextWrapping="Wrap" Text="{Binding Url, Mode=TwoWay}"/>        
+        <CheckBox Content="Server requires authentication" IsChecked="{Binding RequiresAuthentication, Mode=TwoWay}" />
         <StackPanel Height="29" Orientation="Horizontal" FlowDirection="RightToLeft">
             <Button Content="Cancel" Width="75" Command="{Binding CancelCommand}"/>
             <Button Content="Add" Width="75" Command="{Binding SaveCommand}"/>

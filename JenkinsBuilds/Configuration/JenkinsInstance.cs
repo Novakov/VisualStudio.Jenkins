@@ -15,5 +15,7 @@ namespace JenkinsBuilds.Configuration
         public string DisplayName { get; set; }
 
         public List<string> FavouriteJobs { get; set; }
+
+        public bool RequiresAuthentication { get; set; }
     }
 }

@@ -4,6 +4,7 @@ using System.ComponentModel.Composition;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using CredentialManagement;
 using JenkinsBuilds.Commands;
 using Microsoft.TeamFoundation.Controls;
 
@@ -14,21 +15,42 @@ namespace JenkinsBuilds.Pages
     {
         public const string PageId = "{1256AA90-290A-4656-8BEB-4AF1B171B6BB}";
 
+        private BaseCredentialsPrompt prompt;
+
         public new AddJenkinsPageViewModel ViewModel { get { return (AddJenkinsPageViewModel)base.ViewModel; } }
 
-        public AddJenkinsPage()            
+        [ImportingConstructor]
+        public AddJenkinsPage(BaseCredentialsPrompt prompt)
         {
+            this.prompt = prompt;
+
             this.Title = "Add Jenkins";
-            this.IsBusy = false;      
+            this.IsBusy = false;
         }
 
         private void Save(object obj)
-        {
-            Properties.Settings.Default.Instances.Add(new Configuration.JenkinsInstance
-            {
-                DisplayName = this.ViewModel.DisplayName,
-                Url = this.ViewModel.Url
-            });
+        {            
+            if (this.ViewModel.RequiresAuthentication)
+            {                
+                if (this.prompt.ShowDialog() != DialogResult.OK)
+                {
+                    this.ShowError("If Jenkins requires authentication, valid credentials need to be provided");
+                    return;
+                }
+
+                var cred = new Credential
+                {
+                    Type = CredentialType.Generic,
+                    PersistanceType = PersistanceType.LocalComputer,
+                    Target = this.ViewModel.Url,
+                    Username = this.prompt.Username,
+                    Password = this.prompt.Password
+                };
+
+                var b = cred.Save();
+            }
+
+            Properties.Settings.Default.AddInstance(this.ViewModel.DisplayName, this.ViewModel.Url, this.ViewModel.RequiresAuthentication);
 
             Properties.Settings.Default.Save();
 
@@ -36,7 +58,7 @@ namespace JenkinsBuilds.Pages
         }
 
         private void Back(object obj)
-        {            
+        {
             this.Close();
         }
 
