@@ -31,6 +31,7 @@
                         <Grid.ContextMenu>
                             <ContextMenu>
                                 <MenuItem Header="View jobs" CommandParameter="{Binding}" Click="ViewJobsClick"/>
+                                <MenuItem Header="Remove instance" CommandParameter="{Binding}" Click="RemoveInstanceClick"/>
                             </ContextMenu>
                         </Grid.ContextMenu>
                     </Grid>

@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel.Composition;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using JenkinsBuilds.Commands;
+using JenkinsBuilds.Configuration;
 using JenkinsBuilds.Properties;
 using Microsoft.TeamFoundation.Controls;
 using Microsoft.VisualStudio.Shell;
@@ -43,7 +45,7 @@ namespace JenkinsBuilds.Pages
 
         public override void Refresh()
         {
-            this.ViewModel.Instances = Settings.Default.Instances;
+            this.ViewModel.Instances = new ObservableCollection<JenkinsInstance>(Settings.Default.Instances);
         }
 
         protected override InstancesSectionView CreateView()
@@ -56,8 +58,19 @@ namespace JenkinsBuilds.Pages
             return new InstancesSectionViewModel
             {
                 AddInstanceCommand = new DelegateCommand(OpenAddJenkinsPage),
-                ViewJobsCommand = new DelegateCommand(OpenJobsPage)
+                ViewJobsCommand = new DelegateCommand(OpenJobsPage),
+                RemoveInstanceCommand = new DelegateCommand(RemoveInstance)
             };
+        }
+
+        private void RemoveInstance(object obj)
+        {
+            var instance = (JenkinsInstance)obj;
+
+            Settings.Default.Instances.Remove(instance);
+            Settings.Default.Save();
+
+            this.Refresh();
         }
     }
 }

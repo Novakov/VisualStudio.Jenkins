@@ -30,5 +30,11 @@ namespace JenkinsBuilds.Pages
             var param = ((ICommandSource)sender).CommandParameter;
             this.ViewModel.ViewJobsCommand.ExecuteIfCan(param);
         }
+
+        private void RemoveInstanceClick(object sender, RoutedEventArgs e)
+        {
+            var param = ((ICommandSource)sender).CommandParameter;
+            this.ViewModel.RemoveInstanceCommand.ExecuteIfCan(param);
+        }
     }
 }
