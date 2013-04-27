@@ -167,9 +167,12 @@
     <Compile Include="CommandExtensions.cs" />
     <Compile Include="Commands\DelegateCommand.cs" />
     <Compile Include="Configuration\JenkinsInstances.cs" />
-    <Compile Include="Converters\IsFavouriteJobConverter.cs" />
+    <Compile Include="Converters\FavoriteJobMarkConverter.cs" />
+    <Compile Include="Converters\IsFavoriteJobConverter.cs" />
     <Compile Include="Converters\JobStatusSmallImage.cs" />
+    <Compile Include="Converters\NegatingConverter.cs" />
     <Compile Include="Converters\RelativeTimeConverter.cs" />
+    <Compile Include="Converters\VisibilityConverter.cs" />
     <Compile Include="CredentialsPromptProvider.cs" />
     <Compile Include="Guids.cs" />
     <Compile Include="Base\TeamExplorerPageBase.cs" />

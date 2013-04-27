@@ -45,7 +45,7 @@
                         <Grid.ContextMenu>
                             <ContextMenu>
                                 <MenuItem Header="Build now" CommandParameter="{Binding}" Click="BuildNowClick" />
-                                <MenuItem Header="Remove from favourites" CommandParameter="{Binding}" Click="RemoveFromFavouritesClick" />
+                                <MenuItem Header="Remove from favorites" CommandParameter="{Binding}" Click="RemoveFromFavoritesClick" />
                             </ContextMenu>
                         </Grid.ContextMenu>
                     </Grid>

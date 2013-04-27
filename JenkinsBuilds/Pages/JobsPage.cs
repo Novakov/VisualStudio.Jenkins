@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -22,7 +23,7 @@ namespace JenkinsBuilds.Pages
 
         public new JobsPageViewModel ViewModel { get { return (JobsPageViewModel)base.ViewModel; } }
 
-        private void AddToFavourites(object obj)
+        private void AddToFavorites(object obj)
         {         
             var job = (JobModel)obj;
 
@@ -73,7 +74,7 @@ namespace JenkinsBuilds.Pages
                 return;
             }
 
-            this.ViewModel.Jobs = node.Jobs.Select(x => new JobModel().LoadFrom(x)).ToArray();
+            this.ViewModel.Jobs = new ObservableCollection<JobModel>(node.Jobs.Select(x => new JobModel().LoadFrom(x)).ToArray());
         }
 
         protected override JobsPageView CreateView()
@@ -85,8 +86,19 @@ namespace JenkinsBuilds.Pages
         {
             return new JobsPageViewModel
             {
-                AddToFavouritesCommand = new DelegateCommand(this.AddToFavourites)
+                AddToFavoritesCommand = new DelegateCommand(this.AddToFavorites),
+                RemoveFromFavoritesCommand = new DelegateCommand(this.RemoveFromFavorites)
             };
+        }
+
+        private void RemoveFromFavorites(object obj)
+        {
+            var job = (JobModel)obj;
+
+            Settings.Default.RemoveJob(job.Url);
+            Settings.Default.Save();
+
+            job.IsFavorite = false;
         }
     }
 }

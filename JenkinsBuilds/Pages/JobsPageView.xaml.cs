@@ -25,10 +25,16 @@ namespace JenkinsBuilds.Pages
             InitializeComponent();
         }
 
-        private void AddToFavouritesClick(object sender, RoutedEventArgs e)
+        private void AddToFavoritesClick(object sender, RoutedEventArgs e)
         {
             var param = ((ICommandSource)sender).CommandParameter;
-            this.ViewModel.AddToFavouritesCommand.ExecuteIfCan(param);
+            this.ViewModel.AddToFavoritesCommand.ExecuteIfCan(param);
+        }
+
+        private void RemoveFromFavoritesClick(object sender, RoutedEventArgs e)
+        {
+            var param = ((ICommandSource)sender).CommandParameter;
+            this.ViewModel.RemoveFromFavoritesCommand.ExecuteIfCan(param);
         }
     }
 }

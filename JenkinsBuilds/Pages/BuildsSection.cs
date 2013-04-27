@@ -30,7 +30,7 @@ namespace JenkinsBuilds.Pages
         {
             this.settings = Properties.Settings.Default;
 
-            this.Title = "Favourite jobs";
+            this.Title = "Favorite jobs";
             
             this.IsExpanded = true;
             this.IsVisible = true;
@@ -38,7 +38,7 @@ namespace JenkinsBuilds.Pages
             this.monitors = new Dictionary<Uri, BackgroundJenkinsMonitor>();           
         }
 
-        private void RemoveFromFavourites(object obj)
+        private void RemoveFromFavorites(object obj)
         {
             var job = (JobModel)obj;
 
@@ -70,7 +70,7 @@ namespace JenkinsBuilds.Pages
         {
             var jobFetchTasks = from i in this.settings.Instances
                                 let client = new JenkinsClient(new Uri(i.Url))
-                                from j in i.FavouriteJobs
+                                from j in i.FavoriteJobs
                                 select client.GetResourceAsync<Job>(j, JobModel.FetchTree)
                                     .ContinueWith(z => new JobModel().LoadFrom(z.Result));
 
@@ -139,7 +139,7 @@ namespace JenkinsBuilds.Pages
             return new BuildsSectionViewModel
             {
                 BuildNowCommand = new DelegateCommand(BuildNow),
-                RemoveFromFavourites = new DelegateCommand(RemoveFromFavourites)
+                RemoveFromFavorites = new DelegateCommand(RemoveFromFavorites)
             };
         }
     }

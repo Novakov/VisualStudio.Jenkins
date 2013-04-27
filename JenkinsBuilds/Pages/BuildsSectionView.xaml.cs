@@ -43,10 +43,10 @@ namespace JenkinsBuilds.Pages
             Process.Start(job.Url.ToString());
         }
 
-        private void RemoveFromFavouritesClick(object sender, RoutedEventArgs e)
+        private void RemoveFromFavoritesClick(object sender, RoutedEventArgs e)
         {
             var param = ((ICommandSource)sender).CommandParameter;
-            this.ViewModel.RemoveFromFavourites.ExecuteIfCan(param);
+            this.ViewModel.RemoveFromFavorites.ExecuteIfCan(param);
         }
     }
 }

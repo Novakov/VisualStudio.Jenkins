@@ -9,12 +9,11 @@ using JenkinsBuilds.Model;
 
 namespace JenkinsBuilds.Converters
 {
-    public class FavouriteJobMarkConverter : IValueConverter
+    public class FavoriteJobMarkConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
-        {
-            var job = (JobModel)value;
-            if (Properties.Settings.Default.IsFavourite(job.Url))
+        {            
+            if ((bool)value)
             {
                 return new BitmapImage(new Uri("/JenkinsBuilds;component/Images/star.png", UriKind.Relative));
             }

@@ -14,7 +14,7 @@ namespace JenkinsBuilds.Pages
     {
         public ObservableCollection<JobModel> Jobs { get; set; }
 
-        public ICommand RemoveFromFavourites { get; set; }
+        public ICommand RemoveFromFavorites { get; set; }
 
         public ICommand BuildNowCommand { get; set; }
     }

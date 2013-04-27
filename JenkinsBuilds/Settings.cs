@@ -26,13 +26,13 @@ namespace JenkinsBuilds.Properties
         {
             var server = this[serverUrl];
 
-            server.FavouriteJobs.Add(jobUri.ToString());
+            server.FavoriteJobs.Add(jobUri.ToString());
         }
 
-        public bool IsFavourite(Uri jobUrl)
+        public bool IsFavorite(Uri jobUrl)
         {
             var q = from i in this.Instances
-                    from j in i.FavouriteJobs
+                    from j in i.FavoriteJobs
                     where new Uri(j) == jobUrl
                     select j;
 
@@ -42,7 +42,7 @@ namespace JenkinsBuilds.Properties
         public JenkinsInstance GetInstanceFromJob(Uri job)
         {
             var q = from i in this.Instances
-                    from j in i.FavouriteJobs
+                    from j in i.FavoriteJobs
                     where new Uri(j) == job
                     select i;
 
@@ -53,7 +53,7 @@ namespace JenkinsBuilds.Properties
         {
             var server = this.GetInstanceFromJob(job);
 
-            server.FavouriteJobs.Remove(job.ToString());
+            server.FavoriteJobs.Remove(job.ToString());
         }
 
         public void AddInstance(string displayName, string serverUrl, bool requiresAuthentication)

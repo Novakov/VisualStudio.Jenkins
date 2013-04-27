@@ -14,10 +14,10 @@
                 <ResourceDictionary>
                     <conv:JobStatusSmallImage x:Key="statusImage" />
                     <conv:RelativeTimeConverter x:Key="relativeTime" />                    
-                    <conv:FavouriteJobMarkConverter x:Key="isFavourite" />
-                    <ContextMenu x:Key="contextMenu">
-                        <MenuItem Header="Add to favourites" CommandParameter="{Binding}" Click="AddToFavouritesClick" />
-                    </ContextMenu>
+                    <conv:FavoriteJobMarkConverter x:Key="favoriteMark" />                    
+                    <conv:VisibilityConverter x:Key="showOnTrue" WhenTrue="Visible" WhenFalse="Collapsed" />
+                    <conv:VisibilityConverter x:Key="showOnFalse" WhenTrue="Hidden" WhenFalse="Visible" />
+                    <conv:NegatingConverter x:Key="not" />
                 </ResourceDictionary>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
@@ -26,7 +26,7 @@
         <ListView ItemContainerStyle="{StaticResource ListBoxItemStyle}" ItemsSource="{Binding Jobs}" BorderThickness="0" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch">
             <ListView.ItemTemplate>
                 <DataTemplate>
-                    <Grid HorizontalAlignment="Stretch" ContextMenu="{StaticResource contextMenu}">
+                    <Grid HorizontalAlignment="Stretch">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto" />
                             <ColumnDefinition Width="Auto" />
@@ -36,10 +36,17 @@
                         </Grid.ColumnDefinitions>
 
                         <Image Grid.Column="0" Width="16" Height="16" Margin="0,1,6,1" Source="{Binding LastBuild.Status, Converter={StaticResource statusImage}}"/>
-                        <Image Grid.Column="1" Width="16" Margin="0,0,6,3" Source="{Binding Converter={StaticResource isFavourite}}" />
+                        <Image Grid.Column="1" Width="16" Margin="0,0,6,3" Source="{Binding IsFavorite, Converter={StaticResource favoriteMark}}" />
                         <TextBlock Grid.Column="2" Margin="0,0,6,3" Text="{Binding DisplayName}" />
                         <Separator Grid.Column="3" Margin="0,0,6,3" Style="{StaticResource VerticalSeparator}" />
                         <TextBlock Grid.Column="4" Margin="0,0,6,3" Text="{Binding LastBuild.Timestamp, Converter={StaticResource relativeTime}, TargetNullValue='Not built'}" />                                                                       
+                        
+                        <Grid.ContextMenu>
+                            <ContextMenu>
+                                <MenuItem Header="Add to favorites" CommandParameter="{Binding}" Click="AddToFavoritesClick" IsEnabled="{Binding IsFavorite, Converter={StaticResource not}}"/>
+                                <MenuItem Header="Remove from favorites" CommandParameter="{Binding}" Click="RemoveFromFavoritesClick" IsEnabled="{Binding IsFavorite}"/>
+                            </ContextMenu>
+                        </Grid.ContextMenu>
                     </Grid>
                 </DataTemplate>
             </ListView.ItemTemplate>

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using JenkinsBuilds.Properties;
 using Niles.Model;
 
 namespace JenkinsBuilds.Model
@@ -19,6 +20,8 @@ namespace JenkinsBuilds.Model
 
         public BuildModel LastBuild { get; set; }
 
+        public bool IsFavorite { get; set; }
+
         public Uri ServerUrl
         {
             get
@@ -32,6 +35,8 @@ namespace JenkinsBuilds.Model
             this.Name = job.Name;
             this.DisplayName = job.DisplayName;
             this.Url = job.Url;
+
+            this.IsFavorite = Settings.Default.IsFavorite(job.Url);
 
             this.LastBuild = LoadBuild(job.LastBuild);
 
