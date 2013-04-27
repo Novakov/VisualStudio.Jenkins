@@ -28,8 +28,12 @@ namespace JenkinsBuilds
     // in the Help/About dialog of Visual Studio.
     [InstalledProductRegistration("#110", "#112", "1.0", IconResourceID = 400)]
     [Guid(GuidList.guidJenkinsBuildsPkgString)]
+    [ProvideToolWindow(typeof(BuildsDetails.BuildDetailsWindow), Style = VsDockStyle.Tabbed, Orientation = ToolWindowOrientation.Right, Window = EnvDTE.Constants.vsWindowKindMainWindow)]   
+    [ProvideAutoLoad("{4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}")]    
     public sealed class JenkinsBuildsPackage : Package
     {
+        public static JenkinsBuildsPackage Instance { get; private set; }
+
         /// <summary>
         /// Default constructor of the package.
         /// Inside this method you can place any initialization code that does not require 
@@ -40,6 +44,8 @@ namespace JenkinsBuilds
         public JenkinsBuildsPackage()
         {
             Debug.WriteLine(string.Format(CultureInfo.CurrentCulture, "Entering constructor for: {0}", this.ToString()));
+            
+            JenkinsBuildsPackage.Instance = this;
         }
 
 
@@ -55,8 +61,7 @@ namespace JenkinsBuilds
         protected override void Initialize()
         {
             Debug.WriteLine (string.Format(CultureInfo.CurrentCulture, "Entering Initialize() of: {0}", this.ToString()));
-            base.Initialize();
-
+            base.Initialize();            
         }
         #endregion
 

@@ -163,6 +163,11 @@
     <Compile Include="Base\TeamExplorerViewableBase.cs" />
     <Compile Include="Base\ViewModelBase.cs" />
     <Compile Include="BuildChangedEventArgs.cs" />
+    <Compile Include="BuildsDetails\BuildDetailsView.xaml.cs">
+      <DependentUpon>BuildDetailsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="BuildsDetails\BuildDetailsViewModel.cs" />
+    <Compile Include="BuildsDetails\BuildDetailsWindow.cs" />
     <Compile Include="ChangeType.cs" />
     <Compile Include="CommandExtensions.cs" />
     <Compile Include="Commands\DelegateCommand.cs" />
@@ -263,6 +268,10 @@
     <Content Include="Resources\Package.ico" />
   </ItemGroup>
   <ItemGroup>
+    <Page Include="BuildsDetails\BuildDetailsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Pages\AddJenkinsPageView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

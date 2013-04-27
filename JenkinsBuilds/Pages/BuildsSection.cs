@@ -9,6 +9,7 @@ using JenkinsBuilds.Commands;
 using JenkinsBuilds.Model;
 using JenkinsBuilds.Properties;
 using Microsoft.TeamFoundation.Controls;
+using Microsoft.VisualStudio.Shell.Interop;
 using Niles.Client;
 using Niles.Model;
 using Niles.Monitor;
@@ -139,8 +140,18 @@ namespace JenkinsBuilds.Pages
             return new BuildsSectionViewModel
             {
                 BuildNowCommand = new DelegateCommand(BuildNow),
-                RemoveFromFavorites = new DelegateCommand(RemoveFromFavorites)
+                RemoveFromFavorites = new DelegateCommand(RemoveFromFavorites),
+                OpenBuildDetailsCommand = new DelegateCommand(OpenBuildDetails)
             };
+        }
+
+        private void OpenBuildDetails(object obj)
+        {
+            var pkg = JenkinsBuildsPackage.Instance;
+
+            var window = (BuildsDetails.BuildDetailsWindow)pkg.FindWindowPane(typeof(BuildsDetails.BuildDetailsWindow), 0, true);
+            var frame = (IVsWindowFrame)window.Frame;
+            frame.Show();
         }
     }
 }

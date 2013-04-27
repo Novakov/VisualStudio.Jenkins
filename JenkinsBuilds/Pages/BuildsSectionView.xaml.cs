@@ -40,7 +40,7 @@ namespace JenkinsBuilds.Pages
         {
             var job = (JobModel)((ListViewItem)sender).DataContext;
 
-            Process.Start(job.Url.ToString());
+            this.ViewModel.OpenBuildDetailsCommand.ExecuteIfCan(job);
         }
 
         private void RemoveFromFavoritesClick(object sender, RoutedEventArgs e)

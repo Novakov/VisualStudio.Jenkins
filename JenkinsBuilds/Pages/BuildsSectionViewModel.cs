@@ -17,5 +17,7 @@ namespace JenkinsBuilds.Pages
         public ICommand RemoveFromFavorites { get; set; }
 
         public ICommand BuildNowCommand { get; set; }
+
+        public ICommand OpenBuildDetailsCommand { get; set; }
     }
 }
