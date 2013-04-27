@@ -1,4 +1,4 @@
-﻿<UserControl xmlns:te="clr-namespace:Microsoft.TeamFoundation.Controls.WPF;assembly=Microsoft.TeamFoundation.Controls"  x:Class="JenkinsBuilds.Pages.AddJenkinsView"
+﻿<UserControl xmlns:te="clr-namespace:Microsoft.TeamFoundation.Controls.WPF;assembly=Microsoft.TeamFoundation.Controls"  x:Class="JenkinsBuilds.Pages.AddJenkinsPageView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 

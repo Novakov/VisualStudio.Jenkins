@@ -9,6 +9,6 @@ namespace JenkinsBuilds.Configuration
 {
     [SettingsSerializeAs(SettingsSerializeAs.Xml)]
     public class JenkinsInstances : List<JenkinsInstance>
-    {
+    {        
     }
 }

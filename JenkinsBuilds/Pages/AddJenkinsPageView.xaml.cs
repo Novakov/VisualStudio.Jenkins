@@ -12,18 +12,13 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using Niles.Model;
-//using Niles.Model;
 
 namespace JenkinsBuilds.Pages
 {
-    /// <summary>
-    /// Interaction logic for BuildsPageView.xaml
-    /// </summary>
-    public partial class BuildsPageView : UserControl
-    {
-        public BuildsPageView()
-        {
+    public partial class AddJenkinsPageView : UserControl
+    {        
+        public AddJenkinsPageView()
+        {            
             InitializeComponent();
         }
     }

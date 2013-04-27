@@ -3,42 +3,22 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Controls;
 using Microsoft.TeamFoundation.Controls;
 
 namespace JenkinsBuilds.Base
 {
-    public abstract class TeamExplorerPageBase : TeamExplorerBase, ITeamExplorerPage
-    {
-        private string title;
-        private bool isBusy;
-        private object pageContent;
-
-        public bool IsBusy
-        {
-            get { return this.isBusy; }
-            set { this.isBusy = value; this.RaisePropertyChanged(); }
-        }
-
+    public abstract class TeamExplorerPageBase<TView> : TeamExplorerViewableBase<TView>, ITeamExplorerPage
+        where TView : UserControl
+    {                       
         public object PageContent
         {
-            get { return this.pageContent; }
-            set { this.pageContent = value; this.RaisePropertyChanged(); }
-        }
-
-        public string Title
-        {
-            get { return this.title; }
-            set { this.title = value; this.RaisePropertyChanged(); }
+            get { return this.View; }            
         }
 
         public TeamExplorerPageBase()
         {
-        }
-
-        public TeamExplorerPageBase(IServiceProvider serviceProvider)            
-        {
-            this.ServiceProvider = serviceProvider;
-        }
+        }        
 
         public virtual void Cancel()
         {
@@ -52,7 +32,12 @@ namespace JenkinsBuilds.Base
 
         public virtual void Initialize(object sender, PageInitializeEventArgs e)
         {
-            this.ServiceProvider = e.ServiceProvider;
+            if (this.ServiceProvider == null)
+            {
+                this.ServiceProvider = e.ServiceProvider;
+            }
+
+            base.InitializeBase();
         }
        
         public virtual void Loaded(object sender, PageLoadedEventArgs e)

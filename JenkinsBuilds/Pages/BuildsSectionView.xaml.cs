@@ -22,50 +22,17 @@ namespace JenkinsBuilds.Pages
     /// </summary>
     public partial class BuildsSectionView : UserControl
     {
-        public ObservableCollection<JobViewModel> Jobs
-        {
-            get { return (ObservableCollection<JobViewModel>)GetValue(JobsProperty); }
-            set { SetValue(JobsProperty, value); }
-        }
-
-        // Using a DependencyProperty as the backing store for Jobs.  This enables animation, styling, binding, etc...
-        public static readonly DependencyProperty JobsProperty =
-            DependencyProperty.Register("Jobs", typeof(ObservableCollection<JobViewModel>), typeof(BuildsSectionView), new PropertyMetadata());
-
-        public ICommand RemoveFromFavourites
-        {
-            get { return (ICommand)GetValue(RemoveFromFavourtiesProperty); }
-            set { SetValue(RemoveFromFavourtiesProperty, value); }
-        }
-
-        // Using a DependencyProperty as the backing store for RemoveFromFavourties.  This enables animation, styling, binding, etc...
-        public static readonly DependencyProperty RemoveFromFavourtiesProperty =
-            DependencyProperty.Register("RemoveFromFavourties", typeof(ICommand), typeof(BuildsSectionView), new PropertyMetadata(null));
-
-        
-        public ICommand BuildNowCommand
-        {
-            get { return (ICommand)GetValue(BuildNowCommandProperty); }
-            set { SetValue(BuildNowCommandProperty, value); }
-        }
-
-        // Using a DependencyProperty as the backing store for BuildNowCommand.  This enables animation, styling, binding, etc...
-        public static readonly DependencyProperty BuildNowCommandProperty =
-            DependencyProperty.Register("BuildNowCommand", typeof(ICommand), typeof(BuildsSectionView), new PropertyMetadata(null));
+        public BuildsSectionViewModel ViewModel { get { return (BuildsSectionViewModel)this.DataContext; } }
 
         public BuildsSectionView()
         {
-            this.DataContext = this;
             InitializeComponent();
         }
 
         private void BuildNowClick(object sender, RoutedEventArgs e)
         {
             var param = ((ICommandSource)sender).CommandParameter;
-            if (this.BuildNowCommand != null && this.BuildNowCommand.CanExecute(param))
-            {
-                this.BuildNowCommand.Execute(param);
-            }
+            this.ViewModel.BuildNowCommand.ExecuteIfCan(param);
         }
 
         private void ListView_MouseDoubleClick(object sender, MouseButtonEventArgs e)
@@ -78,10 +45,7 @@ namespace JenkinsBuilds.Pages
         private void RemoveFromFavouritesClick(object sender, RoutedEventArgs e)
         {
             var param = ((ICommandSource)sender).CommandParameter;
-            if (this.RemoveFromFavourites != null && this.RemoveFromFavourites.CanExecute(param))
-            {
-                this.RemoveFromFavourites.Execute(param);
-            }
+            this.ViewModel.RemoveFromFavourites.ExecuteIfCan(param);
         }
     }
 }

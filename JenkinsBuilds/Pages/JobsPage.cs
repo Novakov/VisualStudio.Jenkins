@@ -13,29 +13,17 @@ using Niles.Model;
 namespace JenkinsBuilds.Pages
 {
     [TeamExplorerPage(JobsPage.PageId, ParentPageId = BuildsPage.PageId)]
-    public class JobsPage : Base.TeamExplorerPageBase
+    public class JobsPage : Base.TeamExplorerPageBase<JobsPageView>
     {
         public const string PageId = "{074B6E0F-2690-4BAF-9CD3-F98C917DA15C}";
 
         private JenkinsInstance instance;
-        private JobsView view;
 
-        public JobsPage()
-        {
-            this.PageContent = this.view = new JobsView();
-
-            this.view.AddToFavouritesCommand = new DelegateCommand(AddToFavourites);
-        }
+        public new JobsPageViewModel ViewModel { get { return (JobsPageViewModel)base.ViewModel; } }
 
         private void AddToFavourites(object obj)
-        {
-            var job = new FavouriteJob
-            {
-                ServerUrl = this.instance.Url,
-                JobUrl = ((JobViewModel)obj).JobUrl.ToString()
-            };
-
-            Properties.Settings.Default.FavouriteJobs.Add(job);
+        {         
+            Properties.Settings.Default.AddJob(new Uri(this.instance.Url), ((JobViewModel)obj).JobUrl);
             Properties.Settings.Default.Save();
 
             this.Refresh();
@@ -43,18 +31,16 @@ namespace JenkinsBuilds.Pages
 
         public override void Initialize(object sender, PageInitializeEventArgs e)
         {
+            base.Initialize(sender, e);
+
             this.instance = (JenkinsInstance)e.Context;
 
             this.Title = "Jobs on " + instance.DisplayName;
         }
 
-        public async override void Loaded(object sender, PageLoadedEventArgs e)
+        public override void Loaded(object sender, PageLoadedEventArgs e)
         {
-            this.IsBusy = true;
-
-            await this.LoadAsync();
-
-            this.IsBusy = false;
+            this.DuringBusy(async () => await this.LoadAsync());
         }
 
         public override void SaveContext(object sender, PageSaveContextEventArgs e)
@@ -62,13 +48,9 @@ namespace JenkinsBuilds.Pages
             e.Context = this.instance;
         }
 
-        public async override void Refresh()
+        public override void Refresh()
         {
-            this.IsBusy = true;
-
-            await this.LoadAsync();
-
-            this.IsBusy = false;
+            this.DuringBusy(async () => await this.LoadAsync());
         }
 
         private async Task LoadAsync()
@@ -88,9 +70,22 @@ namespace JenkinsBuilds.Pages
                 return;
             }
 
-            this.view.Jobs = from j in node.Jobs
-                             let favourite = Settings.Default.FavouriteJobs.SingleOrDefault(x => new Uri(x.JobUrl) == j.Url)
-                             select new JobViewModel().LoadFrom(j).MarkFavourite(favourite != null);
+            this.ViewModel.Jobs = from j in node.Jobs
+                             let isFavourite = Settings.Default.IsFavourite(j.Url)
+                             select new JobViewModel().LoadFrom(j).MarkFavourite(isFavourite);
+        }
+
+        protected override JobsPageView CreateView()
+        {
+            return new JobsPageView();
+        }
+
+        protected override Base.ViewModelBase CreateViewModel()
+        {
+            return new JobsPageViewModel
+            {
+                AddToFavouritesCommand = new DelegateCommand(this.AddToFavourites)
+            };
         }
     }
 }

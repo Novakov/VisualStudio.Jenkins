@@ -13,18 +13,24 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Niles.Model;
-//using Niles.Model;
 
 namespace JenkinsBuilds.Pages
 {
-    /// <summary>
-    /// Interaction logic for BuildsPageView.xaml
-    /// </summary>
-    public partial class BuildsPageView : UserControl
+    public partial class JobsPageView : UserControl
     {
-        public BuildsPageView()
+        public JobsPageViewModel ViewModel { get { return (JobsPageViewModel)this.DataContext; } }
+
+        public JobsPageView()
         {
+            this.DataContext = this;
+
             InitializeComponent();
+        }
+
+        private void AddToFavouritesClick(object sender, RoutedEventArgs e)
+        {
+            var param = ((ICommandSource)sender).CommandParameter;
+            this.ViewModel.AddToFavouritesCommand.ExecuteIfCan(param);
         }
     }
 }

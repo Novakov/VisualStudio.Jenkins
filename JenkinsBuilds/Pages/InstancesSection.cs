@@ -12,23 +12,18 @@ using Microsoft.VisualStudio.Shell;
 namespace JenkinsBuilds.Pages
 {
     [TeamExplorerSection(InstancesSection.SectionId, BuildsPage.PageId, 20)]
-    public class InstancesSection : Base.TeamExplorerSectionBase
+    public class InstancesSection : Base.TeamExplorerSectionBase<InstancesSectionView>
     {
         public const string SectionId = "62A1A1D3-AAC9-401D-8627-621D4C013C8B";
 
-        private InstancesView view;
+        public new InstancesSectionViewModel ViewModel { get { return (InstancesSectionViewModel)base.ViewModel; } }
 
-        [ImportingConstructor]
-        public InstancesSection([Import(typeof(SVsServiceProvider))]IServiceProvider serviceProvider)
-            : base(serviceProvider)
+        public InstancesSection()           
         {
             this.Title = "Instances";
-            this.SectionContent = this.view = new InstancesView();
+            
             this.IsExpanded = true;
-            this.IsVisible = true;
-
-            this.view.AddInstanceCommand = new DelegateCommand(OpenAddJenkinsPage);
-            this.view.ViewJobsCommand = new DelegateCommand(OpenJobsPage);
+            this.IsVisible = true;            
         }
 
         private void OpenJobsPage(object obj)
@@ -48,7 +43,21 @@ namespace JenkinsBuilds.Pages
 
         public override void Refresh()
         {
-            ((InstancesView)this.SectionContent).LoadInstances(Settings.Default.Instances);
+            this.ViewModel.Instances = Settings.Default.Instances;
+        }
+
+        protected override InstancesSectionView CreateView()
+        {
+            return new InstancesSectionView();
+        }
+
+        protected override Base.ViewModelBase CreateViewModel()
+        {
+            return new InstancesSectionViewModel
+            {
+                AddInstanceCommand = new DelegateCommand(OpenAddJenkinsPage),
+                ViewJobsCommand = new DelegateCommand(OpenJobsPage)
+            };
         }
     }
 }

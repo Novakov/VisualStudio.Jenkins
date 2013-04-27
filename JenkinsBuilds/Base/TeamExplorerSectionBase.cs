@@ -3,24 +3,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Controls;
 using Microsoft.TeamFoundation.Controls;
 
 namespace JenkinsBuilds.Base
 {
-    public abstract class TeamExplorerSectionBase : TeamExplorerBase, ITeamExplorerSection
-    {
-        private bool isBusy;
+    public abstract class TeamExplorerSectionBase<TView> : TeamExplorerViewableBase<TView>, ITeamExplorerSection
+        where TView : UserControl
+    {        
         private bool isExpanded;
-        private bool isVisible;
-        private object sectionContent;
-        private string title;
-
-        public bool IsBusy
-        {
-            get { return this.isBusy; }
-            set { this.isBusy = value; this.RaisePropertyChanged(); }
-        }
-
+        private bool isVisible;        
+  
         public bool IsExpanded
         {
             get { return this.isExpanded; }
@@ -35,23 +28,11 @@ namespace JenkinsBuilds.Base
 
         public object SectionContent
         {
-            get { return this.sectionContent; }
-            set { this.sectionContent = value; this.RaisePropertyChanged(); }
+            get { return this.View; }
         }
-
-        public string Title
-        {
-            get { return this.title; }
-            set { this.title = value; this.RaisePropertyChanged(); }
-        }
-
+     
         public TeamExplorerSectionBase()
         {
-        }
-
-        public TeamExplorerSectionBase(IServiceProvider serviceProvider)            
-        {
-            this.ServiceProvider = serviceProvider;
         }
 
         public virtual void Cancel()
@@ -64,11 +45,15 @@ namespace JenkinsBuilds.Base
         }
 
         public virtual void Initialize(object sender, SectionInitializeEventArgs e)
-        {            
+        {
+            if (this.ServiceProvider == null)
+            {
+                this.ServiceProvider = e.ServiceProvider;
+            }
+
+            base.InitializeBase();
         }
-
-       
-
+      
         public virtual void Loaded(object sender, SectionLoadedEventArgs e)
         {         
         }

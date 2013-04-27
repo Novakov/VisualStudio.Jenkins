@@ -15,17 +15,17 @@ using Niles.Monitor;
 namespace JenkinsBuilds.Pages
 {
     [TeamExplorerSection(BuildsSection.SectionId, BuildsPage.PageId, 10)]
-    public class BuildsSection : Base.TeamExplorerSectionBase
+    public class BuildsSection : Base.TeamExplorerSectionBase<BuildsSectionView>
     {
-        public const string SectionId = "{5D23BE7D-C7AA-4938-ACED-C4A26587CF7F}";
-
-        private BuildsSectionView view;
+        public const string SectionId = "{5D23BE7D-C7AA-4938-ACED-C4A26587CF7F}";        
 
         private IDictionary<Uri, BackgroundJenkinsMonitor> monitors;
 
         private Settings settings;
 
         private JenkinsClient client;
+
+        public new BuildsSectionViewModel ViewModel { get { return (BuildsSectionViewModel)base.ViewModel; } }
 
         [ImportingConstructor]
         public BuildsSection(JenkinsClient client)
@@ -35,27 +35,20 @@ namespace JenkinsBuilds.Pages
             this.settings = Properties.Settings.Default;
 
             this.Title = "Favourite jobs";
-
-            this.SectionContent = this.view = new BuildsSectionView();
-
+            
             this.IsExpanded = true;
             this.IsVisible = true;
 
-            this.monitors = new Dictionary<Uri, BackgroundJenkinsMonitor>();
-
-            this.view.BuildNowCommand = new DelegateCommand(BuildNow);
-            this.view.RemoveFromFavourites = new DelegateCommand(RemoveFromFavourites);
+            this.monitors = new Dictionary<Uri, BackgroundJenkinsMonitor>();           
         }
 
         private void RemoveFromFavourites(object obj)
         {
             var job = (JobViewModel)obj;
 
-            var settingsItem = this.settings.FavouriteJobs.SingleOrDefault(x => new Uri(x.JobUrl) == job.JobUrl);
+            this.settings.RemoveJob(job.JobUrl);
 
-            this.settings.FavouriteJobs.Remove(settingsItem);
-
-            this.view.Jobs.Remove(job);
+            this.settings.Save();
         }
 
         private void BuildNow(object obj)
@@ -65,39 +58,27 @@ namespace JenkinsBuilds.Pages
             this.client.StartBuild(job.JobUrl);
         }
 
-        public async override void Loaded(object sender, SectionLoadedEventArgs e)
+        public override void Loaded(object sender, SectionLoadedEventArgs e)
         {
-            this.IsBusy = true;
-
-            await RefeshAsync();
-
-            this.IsBusy = false;
+            this.DuringBusy(async () => await this.RefeshAsync());
         }
 
-        public async override void Refresh()
+        public override void Refresh()
         {
-            this.IsBusy = true;
-
-            await RefeshAsync();
-
-            this.IsBusy = false;
+            this.DuringBusy(async () => await this.RefeshAsync());
         }
 
         private async Task RefeshAsync()
         {          
-            var jobFetchTasks = from j in this.settings.FavouriteJobs
-                                select this.client.GetResourceAsync<Job>(j.JobUrl, JobViewModel.FetchTree);
+            var jobFetchTasks = from i in this.settings.Instances
+                                from j in i.FavouriteJobs
+                                select this.client.GetResourceAsync<Job>(j, JobViewModel.FetchTree);
 
             var jobs = await Task.WhenAll(jobFetchTasks);
 
             var vms = jobs.Select(x => new JobViewModel().LoadFrom(x)).ToArray();
 
-            foreach (var item in this.monitors)
-            {
-                item.Value.Stop();
-            }
-
-            this.monitors.Clear();
+            this.StopMonitors();
 
             foreach (var item in vms)
             {
@@ -119,7 +100,7 @@ namespace JenkinsBuilds.Pages
                 item.Value.Start();
             }
 
-            this.view.Jobs = new ObservableCollection<JobViewModel>(vms);
+            this.ViewModel.Jobs = new ObservableCollection<JobViewModel>(vms);
         }
 
         private void SubscribeMonitorEvents(JobViewModel item, BackgroundJenkinsMonitor monitor)
@@ -135,12 +116,33 @@ namespace JenkinsBuilds.Pages
 
         public override void Dispose()
         {
+            StopMonitors();
+
+            base.Dispose();
+        }
+
+        private void StopMonitors()
+        {
             foreach (var item in this.monitors)
             {
                 item.Value.Stop();
             }
 
-            base.Dispose();
+            this.monitors.Clear();
+        }
+
+        protected override BuildsSectionView CreateView()
+        {
+            return new BuildsSectionView();
+        }
+
+        protected override Base.ViewModelBase CreateViewModel()
+        {
+            return new BuildsSectionViewModel
+            {
+                BuildNowCommand = new DelegateCommand(BuildNow),
+                RemoveFromFavourites = new DelegateCommand(RemoveFromFavourites)
+            };
         }
     }
 }

@@ -25,31 +25,15 @@ namespace JenkinsBuilds.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute(@"
-          <ArrayOfJenkinsInstance xmlns:xsi=""http://www.w3.org/2001/XMLSchema-instance"" xmlns:xsd=""http://www.w3.org/2001/XMLSchema"">
-            <JenkinsInstance>
-              <Url>http://localhost/jenkins/</Url>
-              <DisplayName>Localhost</DisplayName>
-            </JenkinsInstance>
-          </ArrayOfJenkinsInstance>
-        ")]
+        [global::System.Configuration.DefaultSettingValueAttribute("<?xml version=\"1.0\" encoding=\"utf-16\"?>\r\n<ArrayOfJenkinsInstance xmlns:xsi=\"http:" +
+            "//www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchem" +
+            "a\" />")]
         public global::JenkinsBuilds.Configuration.JenkinsInstances Instances {
             get {
                 return ((global::JenkinsBuilds.Configuration.JenkinsInstances)(this["Instances"]));
             }
             set {
                 this["Instances"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        public global::JenkinsBuilds.Configuration.FavouriteJobs FavouriteJobs {
-            get {
-                return ((global::JenkinsBuilds.Configuration.FavouriteJobs)(this["FavouriteJobs"]));
-            }
-            set {
-                this["FavouriteJobs"] = value;
             }
         }
     }

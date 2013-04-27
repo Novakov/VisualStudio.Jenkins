@@ -12,19 +12,23 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using Niles.Model;
-//using Niles.Model;
+using Microsoft.TeamFoundation.MVVM;
 
 namespace JenkinsBuilds.Pages
 {
-    /// <summary>
-    /// Interaction logic for BuildsPageView.xaml
-    /// </summary>
-    public partial class BuildsPageView : UserControl
+    public partial class InstancesSectionView : UserControl
     {
-        public BuildsPageView()
+        public InstancesSectionViewModel ViewModel { get { return (InstancesSectionViewModel)this.DataContext; } }
+
+        public InstancesSectionView()
         {
             InitializeComponent();
+        }
+
+        private void ViewJobsClick(object sender, RoutedEventArgs e)
+        {
+            var param = ((ICommandSource)sender).CommandParameter;
+            this.ViewModel.ViewJobsCommand.ExecuteIfCan(param);
         }
     }
 }
