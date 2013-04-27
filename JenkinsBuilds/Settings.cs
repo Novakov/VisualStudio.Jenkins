@@ -62,7 +62,8 @@ namespace JenkinsBuilds.Properties
             {
                 DisplayName = displayName,
                 Url = serverUrl,
-                RequiresAuthentication = requiresAuthentication
+                RequiresAuthentication = requiresAuthentication,
+                FavoriteJobs = new System.Collections.Generic.List<string>()
             });
         }
     }
