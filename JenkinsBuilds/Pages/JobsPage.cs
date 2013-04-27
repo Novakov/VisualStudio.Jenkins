@@ -55,7 +55,7 @@ namespace JenkinsBuilds.Pages
 
         private async Task LoadAsync()
         {
-            var client = new JsonJenkinsClient();
+            var client = new JenkinsClient(new Uri(this.instance.Url));
 
             Node node;
 

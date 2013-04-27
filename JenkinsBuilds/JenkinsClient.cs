@@ -8,10 +8,16 @@ using System.Threading.Tasks;
 using Niles.Client;
 
 namespace JenkinsBuilds
-{
-    [Export]
+{    
     public class JenkinsClient : JsonJenkinsClient
     {
+        public Uri ServerUrl { get; private set; }
+
+        public JenkinsClient(Uri serverUrl)
+        {
+            this.ServerUrl = serverUrl;
+        }
+
         public void StartBuild(Uri jobUrl)
         {
             var buildUrl = jobUrl.AppendPath("build");

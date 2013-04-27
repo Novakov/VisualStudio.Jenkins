@@ -23,15 +23,10 @@ namespace JenkinsBuilds.Pages
 
         private Settings settings;
 
-        private JenkinsClient client;
-
         public new BuildsSectionViewModel ViewModel { get { return (BuildsSectionViewModel)base.ViewModel; } }
-
-        [ImportingConstructor]
-        public BuildsSection(JenkinsClient client)
+        
+        public BuildsSection()
         {
-            this.client = client;
-
             this.settings = Properties.Settings.Default;
 
             this.Title = "Favourite jobs";
@@ -55,7 +50,7 @@ namespace JenkinsBuilds.Pages
         {
             var job = (JobViewModel)obj;
 
-            this.client.StartBuild(job.JobUrl);
+            new JenkinsClient(job.ServerUrl).StartBuild(job.JobUrl);
         }
 
         public override void Loaded(object sender, SectionLoadedEventArgs e)
@@ -71,8 +66,9 @@ namespace JenkinsBuilds.Pages
         private async Task RefeshAsync()
         {          
             var jobFetchTasks = from i in this.settings.Instances
+                                let client = new JenkinsClient(new Uri(i.Url))
                                 from j in i.FavouriteJobs
-                                select this.client.GetResourceAsync<Job>(j, JobViewModel.FetchTree);
+                                select client.GetResourceAsync<Job>(j, JobViewModel.FetchTree);
 
             var jobs = await Task.WhenAll(jobFetchTasks);
 
