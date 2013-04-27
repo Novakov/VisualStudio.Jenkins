@@ -14,6 +14,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using JenkinsBuilds.Model;
 
 namespace JenkinsBuilds.Pages
 {
@@ -37,9 +38,9 @@ namespace JenkinsBuilds.Pages
 
         private void ListView_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            var job = (JobViewModel)((ListViewItem)sender).DataContext;
+            var job = (JobModel)((ListViewItem)sender).DataContext;
 
-            Process.Start(job.JobUrl.ToString());
+            Process.Start(job.Url.ToString());
         }
 
         private void RemoveFromFavouritesClick(object sender, RoutedEventArgs e)

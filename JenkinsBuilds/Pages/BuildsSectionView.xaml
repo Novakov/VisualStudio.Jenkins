@@ -36,11 +36,11 @@
                             <ColumnDefinition Width="Auto" />
                         </Grid.ColumnDefinitions>
 
-                        <Image Width="16" Grid.Column="0" Margin="0,0,6,3" Source="{Binding JobStatus, Converter={StaticResource resultImage}}" />
+                        <Image Width="16" Grid.Column="0" Margin="0,0,6,3" Source="{Binding LastBuild.Status, Converter={StaticResource resultImage}}" />
                         <Separator Grid.Column="1" Margin="0,0,6,3" Style="{StaticResource VerticalSeparator}" />
                         <TextBlock Grid.Column="2" Margin="0,0,6,3" Text="{Binding DisplayName}" />
                         <Separator Grid.Column="3" Margin="0,0,6,3" Style="{StaticResource VerticalSeparator}" />
-                        <TextBlock Grid.Column="4" Margin="0,0,6,3" Text="{Binding LastBuildTimestamp, Converter={StaticResource relativeTime}, TargetNullValue='Not built'}" />
+                        <TextBlock Grid.Column="4" Margin="0,0,6,3" Text="{Binding LastBuild.Timestamp, Converter={StaticResource relativeTime}, TargetNullValue='Not built'}" />
                         
                         <Grid.ContextMenu>
                             <ContextMenu>

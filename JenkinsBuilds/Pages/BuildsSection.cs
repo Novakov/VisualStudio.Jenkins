@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using JenkinsBuilds.Commands;
+using JenkinsBuilds.Model;
 using JenkinsBuilds.Properties;
 using Microsoft.TeamFoundation.Controls;
 using Niles.Client;
@@ -39,18 +40,20 @@ namespace JenkinsBuilds.Pages
 
         private void RemoveFromFavourites(object obj)
         {
-            var job = (JobViewModel)obj;
+            var job = (JobModel)obj;
 
-            this.settings.RemoveJob(job.JobUrl);
+            this.settings.RemoveJob(job.Url);
 
             this.settings.Save();
+
+            this.Refresh();
         }
 
         private void BuildNow(object obj)
         {
-            var job = (JobViewModel)obj;
+            var job = (JobModel)obj;
 
-            new JenkinsClient(job.ServerUrl).StartBuild(job.JobUrl);
+            new JenkinsClient(job.ServerUrl).StartBuild(job.Url);
         }
 
         public override void Loaded(object sender, SectionLoadedEventArgs e)
@@ -64,15 +67,14 @@ namespace JenkinsBuilds.Pages
         }
 
         private async Task RefeshAsync()
-        {          
+        {
             var jobFetchTasks = from i in this.settings.Instances
                                 let client = new JenkinsClient(new Uri(i.Url))
                                 from j in i.FavouriteJobs
-                                select client.GetResourceAsync<Job>(j, JobViewModel.FetchTree);
+                                select client.GetResourceAsync<Job>(j, JobModel.FetchTree)
+                                    .ContinueWith(z => new JobModel().LoadFrom(z.Result));
 
-            var jobs = await Task.WhenAll(jobFetchTasks);
-
-            var vms = jobs.Select(x => new JobViewModel().LoadFrom(x)).ToArray();
+            var vms = await Task.WhenAll(jobFetchTasks);
 
             this.StopMonitors();
 
@@ -83,7 +85,7 @@ namespace JenkinsBuilds.Pages
                 if (!this.monitors.TryGetValue(item.ServerUrl, out monitor))
                 {
                     monitor = new BackgroundJenkinsMonitor(item.ServerUrl);
-                    monitor.JobFetchTree = JobViewModel.FetchTree;
+                    monitor.JobFetchTree = JobModel.FetchTree;
 
                     this.monitors.Add(item.ServerUrl, monitor);
                 }
@@ -96,14 +98,14 @@ namespace JenkinsBuilds.Pages
                 item.Value.Start();
             }
 
-            this.ViewModel.Jobs = new ObservableCollection<JobViewModel>(vms);
+            this.ViewModel.Jobs = new ObservableCollection<JobModel>(vms);
         }
 
-        private void SubscribeMonitorEvents(JobViewModel item, BackgroundJenkinsMonitor monitor)
+        private void SubscribeMonitorEvents(JobModel item, BackgroundJenkinsMonitor monitor)
         {
             monitor.BuildChanged += (s, e) =>
             {
-                if (e.Job.Url == item.JobUrl) 
+                if (e.Job.Url == item.Url) 
                 {
                     item.LoadFrom(e.Job);               
                 }

@@ -167,8 +167,8 @@
     <Compile Include="CommandExtensions.cs" />
     <Compile Include="Commands\DelegateCommand.cs" />
     <Compile Include="Configuration\JenkinsInstances.cs" />
+    <Compile Include="Converters\IsFavouriteJobConverter.cs" />
     <Compile Include="Converters\JobStatusSmallImage.cs" />
-    <Compile Include="Converters\FavouriteMarkImage.cs" />
     <Compile Include="Converters\RelativeTimeConverter.cs" />
     <Compile Include="CredentialsPromptProvider.cs" />
     <Compile Include="Guids.cs" />
@@ -177,6 +177,10 @@
     <Compile Include="JenkinsClient.cs" />
     <Compile Include="JenkinsClientExtensions.cs" />
     <Compile Include="JenkinsMonitor.cs" />
+    <Compile Include="Model\BuildModel.cs" />
+    <Compile Include="Model\BuildStatus.cs" />
+    <Compile Include="Model\JobModel.cs" />
+    <Compile Include="Model\NullBuildModel.cs" />
     <Compile Include="Pages\AddJenkinsPage.cs" />
     <Compile Include="Pages\AddJenkinsPageView.xaml.cs">
       <DependentUpon>AddJenkinsPageView.xaml</DependentUpon>
@@ -202,7 +206,6 @@
     <Compile Include="Pages\JobsPageView.xaml.cs">
       <DependentUpon>JobsPageView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\JobViewModel.cs" />
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>

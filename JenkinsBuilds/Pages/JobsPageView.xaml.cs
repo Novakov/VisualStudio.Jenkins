@@ -21,9 +21,7 @@ namespace JenkinsBuilds.Pages
         public JobsPageViewModel ViewModel { get { return (JobsPageViewModel)this.DataContext; } }
 
         public JobsPageView()
-        {
-            this.DataContext = this;
-
+        {            
             InitializeComponent();
         }
 

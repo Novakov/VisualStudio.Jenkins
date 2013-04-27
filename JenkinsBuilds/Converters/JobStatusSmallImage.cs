@@ -17,8 +17,8 @@ namespace JenkinsBuilds.Converters
                 return null;
             }
 
-            if (!(value is string))
-                throw new NotImplementedException();
+            //if (!(value is ))
+            //    throw new NotImplementedException();
 
             String path = null;
             path = "Images/results/16/" + value.ToString() + ".png";

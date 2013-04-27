@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using JenkinsBuilds.Commands;
 using JenkinsBuilds.Configuration;
+using JenkinsBuilds.Model;
 using JenkinsBuilds.Properties;
 using Microsoft.TeamFoundation.Controls;
 using Niles.Client;
@@ -23,7 +24,9 @@ namespace JenkinsBuilds.Pages
 
         private void AddToFavourites(object obj)
         {         
-            Properties.Settings.Default.AddJob(new Uri(this.instance.Url), ((JobViewModel)obj).JobUrl);
+            var job = (JobModel)obj;
+
+            Properties.Settings.Default.AddJob(new Uri(this.instance.Url), job.Url);
             Properties.Settings.Default.Save();
 
             this.Refresh();
@@ -61,7 +64,7 @@ namespace JenkinsBuilds.Pages
 
             try
             {
-                node = await client.GetResourceAsync<Node>(this.instance.Url, "jobs[name,color,displayName,url,lastBuild[url,number,building,result,timestamp]]");
+                node = await client.GetResourceAsync<Node>(this.instance.Url, "jobs[" + JobModel.FetchTree + "]");
             }
             catch (Exception e)
             {
@@ -70,9 +73,7 @@ namespace JenkinsBuilds.Pages
                 return;
             }
 
-            this.ViewModel.Jobs = from j in node.Jobs
-                             let isFavourite = Settings.Default.IsFavourite(j.Url)
-                             select new JobViewModel().LoadFrom(j).MarkFavourite(isFavourite);
+            this.ViewModel.Jobs = node.Jobs.Select(x => new JobModel().LoadFrom(x)).ToArray();
         }
 
         protected override JobsPageView CreateView()
