@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -54,6 +55,13 @@ namespace JenkinsBuilds.Pages
             {
                 this.BuildNowCommand.Execute(param);
             }
+        }
+
+        private void ListView_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            var job = (JobViewModel)((ListViewItem)sender).DataContext;
+
+            Process.Start(job.JobUrl.ToString());
         }
     }
 }

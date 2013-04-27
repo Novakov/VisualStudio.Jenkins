@@ -14,13 +14,17 @@
                 <ResourceDictionary>
                     <conv:JobStatusSmallImage x:Key="resultImage" />
                     <conv:RelativeTimeConverter x:Key="relativeTime" />
+                    
+                    <Style x:Key="DoubleClickListBoxItemStyle" BasedOn="{StaticResource ListBoxItemStyle}" TargetType="{x:Type ListViewItem}">
+                        <EventSetter Event="MouseDoubleClick" Handler="ListView_MouseDoubleClick" />
+                    </Style>
                 </ResourceDictionary>
             </ResourceDictionary.MergedDictionaries>            
         </ResourceDictionary>
     </UserControl.Resources>
     
-    <DockPanel LastChildFill="True">        
-        <ListView ItemContainerStyle="{StaticResource ListBoxItemStyle}" BorderThickness="0" ItemsSource="{Binding Jobs}">
+    <DockPanel LastChildFill="True">
+        <ListView ItemContainerStyle="{StaticResource DoubleClickListBoxItemStyle}" BorderThickness="0" ItemsSource="{Binding Jobs}">                    
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <Grid>

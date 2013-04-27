@@ -7,6 +7,7 @@ using Niles.Model;
 
 namespace JenkinsBuilds.Pages
 {
+    [PropertyChanged.ImplementPropertyChanged]
     public class JobViewModel : Base.NotifyPropertyChangeBase
     {
         public const string FetchTree = "name,color,displayName,url,lastBuild[url,number,building,result,timestamp]";
@@ -17,9 +18,9 @@ namespace JenkinsBuilds.Pages
 
         public Uri JobUrl { get; set; }
 
-        public string JobStatus { get; [Aspects.Notify]set; }
+        public string JobStatus { get; set; }
 
-        public DateTime? LastBuildTimestamp { get; [Aspects.Notify]set; }
+        public DateTime? LastBuildTimestamp { get; set; }
 
         public Uri ServerUrl
         {
@@ -29,7 +30,7 @@ namespace JenkinsBuilds.Pages
             }
         }
         
-        public bool IsFavourite { get; [Aspects.Notify]set; }
+        public bool IsFavourite { get; set; }
 
         public JobViewModel LoadFrom(Job job)
         {
