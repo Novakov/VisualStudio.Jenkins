@@ -5,31 +5,32 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:JenkinsBuilds.BuildsDetails" 
              xmlns:Converters="clr-namespace:JenkinsBuilds.Converters" 
-             xmlns:model="clr-namespace:JenkinsBuilds.Model"             
+             xmlns:model="clr-namespace:JenkinsBuilds.Model"                          
              x:Class="JenkinsBuilds.BuildsDetails.BuildDetailsView"     
-             mc:Ignorable="d" 
-             
+             mc:Ignorable="d"              
              d:DesignHeight="600" d:DesignWidth="800" Height="Auto" Width="Auto">
     <UserControl.Resources>
         <ResourceDictionary>
-            <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary x:Uid="mergedResourceDictionary" Source="pack://application:,,,/Microsoft.TeamFoundation.Controls;component/WPF/SharedResources.xaml" />
+            <ResourceDictionary.MergedDictionaries>                
+                <ResourceDictionary Source="../themes/generic.xaml" />
             </ResourceDictionary.MergedDictionaries>
+            
             <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
             <local:WarningTextLinkConverter x:Key="WarningTextLinkConverter"/>
             <Converters:RelativeTimeConverter x:Key="RelativeTimeConverter"/>
-            <Converters:JobStatusImage x:Key="JobStatusImage" Size="32"/>
-           
-            <Style x:Key="TopLinkStyle" TargetType="{x:Type TeamExplorer:TextLink}">
-                <Setter Property="FontSize" Value="10" />
-            </Style>
-            
-            <Style x:Key="SectionHeaderStyle" TargetType="{x:Type Label}">
-                <Setter Property="FontSize" Value="17" />
-            </Style>            
+            <Converters:JobStatusImage x:Key="JobStatusImage" Size="32"/>                                            
         </ResourceDictionary>
     </UserControl.Resources>
     <StackPanel d:DataContext="{d:DesignInstance Type=local:DesignBuildDetailsViewModel,IsDesignTimeCreatable=True}">
+        <StackPanel.Resources>
+            <Style x:Key="TopLinkStyle" TargetType="{x:Type TeamExplorer:TextLink}">
+                <Setter Property="FontSize" Value="10" />
+            </Style>
+
+            <Style x:Key="SectionHeaderStyle" TargetType="{x:Type Label}" BasedOn="{StaticResource {x:Type Label}}">
+                <Setter Property="FontSize" Value="17" />
+            </Style>
+        </StackPanel.Resources>
         <StackPanel Orientation="Horizontal">
             <TeamExplorer:TextLink Text="Open build page" Command="{Binding OpenBuildPageCommand}" Style="{StaticResource TopLinkStyle}"/>
             <Separator Style="{StaticResource VerticalSeparator}"/>
@@ -49,7 +50,7 @@
             </Grid.ColumnDefinitions>
             <Image HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.RowSpan="2" Source="{Binding Build.Status, Converter={StaticResource JobStatusImage}}" />
             <Label Content="{Binding Build.FullDisplayName}" Grid.Column="1" VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch" FontWeight="Bold" FontSize="22"/>
-            <TextBlock Grid.Column="1" Grid.Row="1" VerticalAlignment="Center" Height="16" Margin="0,0,0,7">
+            <TextBlock Grid.Column="1" Grid.Row="1" VerticalAlignment="Center" Height="16" Margin="0,0,0,7" >
                 Completed in <Run Text="{Binding Build.Duration, StringFormat=%m\' minutes \'ss\' seconds\'}" />. Finshed <Run Text="{Binding Build.Timestamp, Converter={StaticResource RelativeTimeConverter}}" />.
             </TextBlock>
         </Grid>
@@ -67,7 +68,7 @@
                     <StackPanel Orientation="Horizontal">
                         <Image Source="/JenkinsBuilds;component/Images/warnings/normal.png" Width="16" Height="16"/>
                         <TeamExplorer:TextLink Text="{Binding Converter={StaticResource WarningTextLinkConverter}, Mode=OneWay}" Margin="5,0,0,0" CommandParameter="{Binding Mode=OneWay}" Command="{Binding DataContext.OpenWarningCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}" />
-                        <TextBlock Text="{Binding Message}" Margin="6,0,0,0"/>
+                        <Label Content="{Binding Message}" Margin="6,0,0,0" Padding="0"/>
                     </StackPanel>
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
