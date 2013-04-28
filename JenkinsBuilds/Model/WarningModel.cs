@@ -19,5 +19,16 @@ namespace JenkinsBuilds.Model
         public string Message { get; set; }
 
         public string Priority { get; set; }
+
+        public WarningModel LoadFrom(Jenkins.Warning warning)
+        {
+            this.FileName = warning.FileName;
+            this.LineNumber = warning.PrimaryLineNumber;
+            this.Key = warning.Key;
+            this.Message = warning.Message;
+            this.Priority = warning.Priority;
+
+            return this;
+        }
     }
 }

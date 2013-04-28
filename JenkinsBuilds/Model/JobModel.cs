@@ -28,7 +28,7 @@ namespace JenkinsBuilds.Model
             {
                 return this.Url.AppendPath("../../");
             }
-        }
+        }        
 
         public JobModel LoadFrom(Job job)
         {

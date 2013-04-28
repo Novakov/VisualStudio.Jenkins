@@ -20,6 +20,14 @@ namespace JenkinsBuilds.Model
 
         public DateTime? Timestamp { get; set; }        
 
+        public Uri WarningsReportUrl
+        {
+            get 
+            {
+                return this.Url.AppendPath("warnings32Result");
+            }
+        }
+
         public BuildModel LoadFrom(Build build)
         {            
             this.Timestamp = build.Timestamp;

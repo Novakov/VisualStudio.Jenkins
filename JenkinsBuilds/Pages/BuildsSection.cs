@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using JenkinsBuilds.Commands;
+using JenkinsBuilds.Jenkins;
 using JenkinsBuilds.Model;
 using JenkinsBuilds.Properties;
 using Microsoft.TeamFoundation.Controls;
@@ -161,6 +162,15 @@ namespace JenkinsBuilds.Pages
             var buildModel = new ExtendedBuildModel().LoadFrom(build);
 
             window.LoadFrom(job, buildModel);
+
+            var warnings = client.GetResourceIfAvailable<BuildWarnings>(buildModel.WarningsReportUrl, WarningsModel.FetchTree);          
+
+            if (warnings != null)
+            {
+                var warningsModel = new WarningsModel().LoadFrom(warnings);
+
+                window.LoadWarnings(warningsModel);
+            }
 
             frame.Show();
         }

@@ -187,6 +187,8 @@
     <Compile Include="JenkinsClient.cs" />
     <Compile Include="JenkinsClientExtensions.cs" />
     <Compile Include="JenkinsMonitor.cs" />
+    <Compile Include="Jenkins\Warning.cs" />
+    <Compile Include="Jenkins\BuildWarnings.cs" />
     <Compile Include="Model\BuildModel.cs" />
     <Compile Include="Model\BuildStatus.cs" />
     <Compile Include="Model\ExtendedBuildModel.cs" />
@@ -308,9 +310,7 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Jenkins\" />
-  </ItemGroup>
+  <ItemGroup />
   <PropertyGroup>
     <UseCodebase>true</UseCodebase>
   </PropertyGroup>

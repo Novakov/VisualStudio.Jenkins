@@ -42,6 +42,8 @@ namespace JenkinsBuilds.BuildsDetails
         {
             this.viewModel.Warnings = warnings;
 
+            this.viewModel.HasWarningsReport = true;
+
             return this;
         }
     }

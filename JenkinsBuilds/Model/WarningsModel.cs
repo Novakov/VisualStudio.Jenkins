@@ -20,5 +20,17 @@ namespace JenkinsBuilds.Model
         public int NewCount { get; set; }
 
         public List<WarningModel> Warnings { get; set; }
+
+        public WarningsModel LoadFrom(Jenkins.BuildWarnings warnings)
+        {
+            this.Delta = warnings.WarningsDelta;
+            this.Count = warnings.NumberOfWarnings;
+            this.NewCount = warnings.NumberOfNewWarnings;
+            this.FixedCount = warnings.NumberOfFixedWarnings;
+
+            this.Warnings = warnings.Warnings.Select(x => new WarningModel().LoadFrom(x)).ToList();
+
+            return this;
+        }
     }
 }

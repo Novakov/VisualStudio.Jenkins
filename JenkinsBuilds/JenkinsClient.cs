@@ -6,17 +6,24 @@ using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using CredentialManagement;
+using JenkinsBuilds.Jenkins;
 using Niles.Client;
+using Niles.Json;
+using Niles.Model;
 
 namespace JenkinsBuilds
-{    
+{
     public class JenkinsClient : JsonJenkinsClient
     {
+        private JenkinsJsonSerializer serializer;
+
         public Uri ServerUrl { get; private set; }
 
         public JenkinsClient(Uri serverUrl)
         {
             this.ServerUrl = serverUrl;
+
+            this.serializer = new JenkinsJsonSerializer();
         }
 
         public void StartBuild(Uri jobUrl)
@@ -26,7 +33,7 @@ namespace JenkinsBuilds
             try
             {
                 var request = CreateRequest(buildUrl);
-                
+
                 request.Method = "POST";
                 request.AllowAutoRedirect = false;
 
@@ -41,6 +48,31 @@ namespace JenkinsBuilds
             catch (WebException e)
             {
                 throw new ClientException("Could not access resource at: " + buildUrl, e);
+            }
+        }
+
+        public T GetResourceIfAvailable<T>(Uri url, string fetchTree)
+            where T : class, IResource
+        {
+            try
+            {
+                var request = CreateRequest(GetAbsoluteUri(url, fetchTree));
+
+                request.Method = "GET";
+                request.AllowAutoRedirect = false;                
+
+                var resp = request.GetResponse();
+
+                return this.serializer.ReadObject<T>(resp.GetResponseStream());
+            }
+            catch (WebException e)
+            {
+                if (((HttpWebResponse)e.Response).StatusCode == HttpStatusCode.NotFound)
+                {
+                    return default(T);
+                }
+
+                throw new ClientException("Could not access resource at: " + url, e);
             }
         }
 
@@ -67,5 +99,16 @@ namespace JenkinsBuilds
 
             return request;
         }
+
+        private Uri GetAbsoluteUri(Uri resourceUri, string tree)
+        {
+            var relativeUri = ApiSuffix;
+            if (!string.IsNullOrWhiteSpace(tree))
+                relativeUri += "?tree=" + tree;
+
+            var absoluteUri = new Uri(resourceUri, relativeUri);
+            return absoluteUri;
+        }
+
     }
 }
