@@ -12,7 +12,7 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary x:Uid="mergedResourceDictionary" Source="pack://application:,,,/Microsoft.TeamFoundation.Controls;component/WPF/SharedResources.xaml" />
                 <ResourceDictionary>
-                    <conv:JobStatusSmallImage x:Key="resultImage" />
+                    <conv:JobStatusImage x:Key="resultImage" />
                     <conv:RelativeTimeConverter x:Key="relativeTime" />
                     
                     <Style x:Key="DoubleClickListBoxItemStyle" BasedOn="{StaticResource ListBoxItemStyle}" TargetType="{x:Type ListViewItem}">

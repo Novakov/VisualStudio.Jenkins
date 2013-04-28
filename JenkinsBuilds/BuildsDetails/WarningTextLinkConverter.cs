@@ -4,32 +4,22 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Data;
-using System.Windows.Media.Imaging;
+using JenkinsBuilds.Model;
 
-namespace JenkinsBuilds.Converters
+namespace JenkinsBuilds.BuildsDetails
 {
-    public class JobStatusSmallImage : IValueConverter
+    public class WarningTextLinkConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {
-            if (value == null)
-            {
-                return null;
-            }
+            var w = (WarningModel)value;
 
-            //if (!(value is ))
-            //    throw new NotImplementedException();
-
-            String path = null;
-            path = "Images/results/16/" + value.ToString() + ".png";
-
-            return new BitmapImage(new Uri("/JenkinsBuilds;component/" + path, UriKind.Relative));
+            return string.Format("{0} ({1}):", w.FileName, w.LineNumber);
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {
             throw new NotImplementedException();
         }
-
     }
 }

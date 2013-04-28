@@ -168,13 +168,15 @@
     </Compile>
     <Compile Include="BuildsDetails\BuildDetailsViewModel.cs" />
     <Compile Include="BuildsDetails\BuildDetailsWindow.cs" />
+    <Compile Include="BuildsDetails\DesignBuildDetailsViewModel.cs" />
+    <Compile Include="BuildsDetails\WarningTextLinkConverter.cs" />
     <Compile Include="ChangeType.cs" />
     <Compile Include="CommandExtensions.cs" />
     <Compile Include="Commands\DelegateCommand.cs" />
     <Compile Include="Configuration\JenkinsInstances.cs" />
     <Compile Include="Converters\FavoriteJobMarkConverter.cs" />
     <Compile Include="Converters\IsFavoriteJobConverter.cs" />
-    <Compile Include="Converters\JobStatusSmallImage.cs" />
+    <Compile Include="Converters\JobStatusImage.cs" />
     <Compile Include="Converters\NegatingConverter.cs" />
     <Compile Include="Converters\RelativeTimeConverter.cs" />
     <Compile Include="Converters\VisibilityConverter.cs" />
@@ -187,8 +189,11 @@
     <Compile Include="JenkinsMonitor.cs" />
     <Compile Include="Model\BuildModel.cs" />
     <Compile Include="Model\BuildStatus.cs" />
+    <Compile Include="Model\ExtendedBuildModel.cs" />
     <Compile Include="Model\JobModel.cs" />
     <Compile Include="Model\NullBuildModel.cs" />
+    <Compile Include="Model\WarningModel.cs" />
+    <Compile Include="Model\WarningsModel.cs" />
     <Compile Include="Pages\AddJenkinsPage.cs" />
     <Compile Include="Pages\AddJenkinsPageView.xaml.cs">
       <DependentUpon>AddJenkinsPageView.xaml</DependentUpon>
@@ -265,6 +270,12 @@
     <Resource Include="Images\results\16\aborted.png" />
     <Resource Include="Images\results\16\building.png" />
     <Resource Include="FodyWeavers.xml" />
+    <Resource Include="Images\results\32\success.png" />
+    <Resource Include="Images\results\32\failure.png" />
+    <Resource Include="Images\results\32\building.png" />
+    <Resource Include="Images\results\32\aborted.png" />
+    <Resource Include="Images\results\32\unstable.png" />
+    <Resource Include="Images\warnings\normal.png" />
     <Content Include="Resources\Package.ico" />
   </ItemGroup>
   <ItemGroup>

@@ -12,7 +12,7 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary x:Uid="mergedResourceDictionary" Source="pack://application:,,,/Microsoft.TeamFoundation.Controls;component/WPF/SharedResources.xaml" />
                 <ResourceDictionary>
-                    <conv:JobStatusSmallImage x:Key="statusImage" />
+                    <conv:JobStatusImage x:Key="statusImage" />
                     <conv:RelativeTimeConverter x:Key="relativeTime" />                    
                     <conv:FavoriteJobMarkConverter x:Key="favoriteMark" />                    
                     <conv:VisibilityConverter x:Key="showOnTrue" WhenTrue="Visible" WhenFalse="Collapsed" />

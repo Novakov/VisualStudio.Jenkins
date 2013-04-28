@@ -151,6 +151,11 @@ namespace JenkinsBuilds.Pages
 
             var window = (BuildsDetails.BuildDetailsWindow)pkg.FindWindowPane(typeof(BuildsDetails.BuildDetailsWindow), 0, true);
             var frame = (IVsWindowFrame)window.Frame;
+
+            var job = (JobModel)obj;
+
+            //window.LoadFrom(job, job.LastBuild);
+
             frame.Show();
         }
     }

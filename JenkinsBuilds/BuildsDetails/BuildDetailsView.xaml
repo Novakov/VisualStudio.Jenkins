@@ -1,11 +1,77 @@
-﻿<UserControl x:Class="JenkinsBuilds.BuildsDetails.BuildDetailsView"
+﻿<UserControl xmlns:TeamExplorer="clr-namespace:Microsoft.TeamFoundation.Controls.WPF.TeamExplorer;assembly=Microsoft.TeamFoundation.Controls" 
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:JenkinsBuilds.BuildsDetails" 
+             xmlns:Converters="clr-namespace:JenkinsBuilds.Converters" 
+             xmlns:model="clr-namespace:JenkinsBuilds.Model"             
+             x:Class="JenkinsBuilds.BuildsDetails.BuildDetailsView"     
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300">
-    <Grid>
-        <Button Content="aaa" Height="50" Width="100"/>
-    </Grid>
+             
+             d:DesignHeight="600" d:DesignWidth="800" Height="Auto" Width="Auto">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary x:Uid="mergedResourceDictionary" Source="pack://application:,,,/Microsoft.TeamFoundation.Controls;component/WPF/SharedResources.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+            <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+            <local:WarningTextLinkConverter x:Key="WarningTextLinkConverter"/>
+            <Converters:RelativeTimeConverter x:Key="RelativeTimeConverter"/>
+            <Converters:JobStatusImage x:Key="JobStatusImage" Size="32"/>
+           
+            <Style x:Key="TopLinkStyle" TargetType="{x:Type TeamExplorer:TextLink}">
+                <Setter Property="FontSize" Value="10" />
+            </Style>
+            
+            <Style x:Key="SectionHeaderStyle" TargetType="{x:Type Label}">
+                <Setter Property="FontSize" Value="17" />
+            </Style>            
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <StackPanel d:DataContext="{d:DesignInstance Type=local:DesignBuildDetailsViewModel,IsDesignTimeCreatable=True}">
+        <StackPanel Orientation="Horizontal">
+            <TeamExplorer:TextLink Text="Open build page" Command="{Binding OpenBuildPageCommand}" Style="{StaticResource TopLinkStyle}"/>
+            <Separator Style="{StaticResource VerticalSeparator}"/>
+            <TeamExplorer:TextLink Text="Rebuild" Command="{Binding RebuildCommand}" Style="{StaticResource TopLinkStyle}"/>
+            <Separator Style="{StaticResource VerticalSeparator}"/>
+            <TeamExplorer:TextLink Text="Open console log" Command="{Binding OpenConsoleLogCommand}" Style="{StaticResource TopLinkStyle}"/>
+        </StackPanel>
+
+        <Grid Height="72">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="34*"/>
+                <RowDefinition Height="23*"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="45"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <Image HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.RowSpan="2" Source="{Binding Build.Status, Converter={StaticResource JobStatusImage}}" />
+            <Label Content="{Binding Build.FullDisplayName}" Grid.Column="1" VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch" FontWeight="Bold" FontSize="22"/>
+            <TextBlock Grid.Column="1" Grid.Row="1" VerticalAlignment="Center" Height="16" Margin="0,0,0,7">
+                Completed in <Run Text="{Binding Build.Duration, StringFormat=%m\' minutes \'ss\' seconds\'}" />. Finshed <Run Text="{Binding Build.Timestamp, Converter={StaticResource RelativeTimeConverter}}" />.
+            </TextBlock>
+        </Grid>
+
+        <Label Content="Summary" Style="{StaticResource SectionHeaderStyle}"/>
+        <StackPanel Orientation="Horizontal">
+            <ToggleButton x:Name="toggleWarnings" UseLayoutRounding="False" Style="{StaticResource ExpandCollapseToggleStyle}" HorizontalAlignment="Left" Margin="15,0,0,0" IsChecked="True"/>
+            <TextBlock TextWrapping="Wrap" DataContext="{Binding Build.Warnings}" VerticalAlignment="Center">
+                <Run Text="{Binding NumberOfWarnings}" /> warnings (<Run Text="{Binding NumberOfNewWarnings}" /> new, <Run Text="{Binding NumberOfFixedWarnings}" /> fixed).
+            </TextBlock>
+        </StackPanel>       
+        <ItemsControl ItemsSource="{Binding Build.Warnings.Warnings}" Margin="20,0,0,0" BorderBrush="{x:Null}" Background="{x:Null}" Visibility="{Binding IsChecked, Converter={StaticResource BooleanToVisibilityConverter}, ElementName=toggleWarnings}">
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="/JenkinsBuilds;component/Images/warnings/normal.png" Width="16" Height="16"/>
+                        <TeamExplorer:TextLink Text="{Binding Converter={StaticResource WarningTextLinkConverter}, Mode=OneWay}" Margin="5,0,0,0" CommandParameter="{Binding Mode=OneWay}" Command="{Binding DataContext.OpenWarningCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}" />
+                        <TextBlock Text="{Binding Message}" Margin="6,0,0,0"/>
+                    </StackPanel>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
+        <Label Content="Label"/>
+    </StackPanel>
 </UserControl>
