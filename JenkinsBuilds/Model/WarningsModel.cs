@@ -9,13 +9,15 @@ namespace JenkinsBuilds.Model
     [PropertyChanged.ImplementPropertyChanged]
     public class WarningsModel
     {
-        public int WarningsDelta { get; set; }
+        public const string FetchTree = "warningsDelta,numberOfWarnings,numberOfNewWarnings,numberOfFixedWarnings,warnings[" + WarningModel.FetchTree + "]";
 
-        public int NumberOfWarnings { get; set; }
+        public int Delta { get; set; }
 
-        public int NumberOfFixedWarnings { get; set; }
+        public int Count { get; set; }
 
-        public int NumberOfNewWarnings { get; set; }
+        public int FixedCount { get; set; }
+
+        public int NewCount { get; set; }
 
         public List<WarningModel> Warnings { get; set; }
     }

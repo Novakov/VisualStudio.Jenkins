@@ -8,6 +8,8 @@ namespace JenkinsBuilds.Model
     [PropertyChanged.ImplementPropertyChanged]
     public class WarningModel
     {
+        public const string FetchTree = "fileName,key,message,primaryLineNumber,priority";
+
         public string FileName { get; set; }
 
         public int LineNumber { get; set; }

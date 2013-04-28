@@ -11,9 +11,13 @@ namespace JenkinsBuilds.BuildsDetails
     [PropertyChanged.ImplementPropertyChanged]
     public class BuildDetailsViewModel
     {
-        public ExtendedBuildModel Build { get; set; }
+        public ExtendedBuildModel Build { get; set; }        
 
         public JobModel Job { get; set; }
+
+        public bool HasWarningsReport { get; set; }
+
+        public WarningsModel Warnings { get; set; }
 
         public ICommand OpenBuildPageCommand { get; set; }
 

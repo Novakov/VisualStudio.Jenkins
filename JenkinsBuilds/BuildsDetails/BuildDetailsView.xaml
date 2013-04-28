@@ -11,14 +11,14 @@
              d:DesignHeight="600" d:DesignWidth="800" Height="Auto" Width="Auto">
     <UserControl.Resources>
         <ResourceDictionary>
-            <ResourceDictionary.MergedDictionaries>                
+            <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="../themes/generic.xaml" />
             </ResourceDictionary.MergedDictionaries>
-            
+
             <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
             <local:WarningTextLinkConverter x:Key="WarningTextLinkConverter"/>
             <Converters:RelativeTimeConverter x:Key="RelativeTimeConverter"/>
-            <Converters:JobStatusImage x:Key="JobStatusImage" Size="32"/>                                            
+            <Converters:JobStatusImage x:Key="JobStatusImage" Size="32"/>
         </ResourceDictionary>
     </UserControl.Resources>
     <StackPanel d:DataContext="{d:DesignInstance Type=local:DesignBuildDetailsViewModel,IsDesignTimeCreatable=True}">
@@ -56,23 +56,26 @@
         </Grid>
 
         <Label Content="Summary" Style="{StaticResource SectionHeaderStyle}"/>
-        <StackPanel Orientation="Horizontal">
-            <ToggleButton x:Name="toggleWarnings" UseLayoutRounding="False" Style="{StaticResource ExpandCollapseToggleStyle}" HorizontalAlignment="Left" Margin="15,0,0,0" IsChecked="True"/>
-            <TextBlock TextWrapping="Wrap" DataContext="{Binding Build.Warnings}" VerticalAlignment="Center">
-                <Run Text="{Binding NumberOfWarnings}" /> warnings (<Run Text="{Binding NumberOfNewWarnings}" /> new, <Run Text="{Binding NumberOfFixedWarnings}" /> fixed).
-            </TextBlock>
-        </StackPanel>       
-        <ItemsControl ItemsSource="{Binding Build.Warnings.Warnings}" Margin="20,0,0,0" BorderBrush="{x:Null}" Background="{x:Null}" Visibility="{Binding IsChecked, Converter={StaticResource BooleanToVisibilityConverter}, ElementName=toggleWarnings}">
-            <ItemsControl.ItemTemplate>
-                <DataTemplate>
-                    <StackPanel Orientation="Horizontal">
-                        <Image Source="/JenkinsBuilds;component/Images/warnings/normal.png" Width="16" Height="16"/>
-                        <TeamExplorer:TextLink Text="{Binding Converter={StaticResource WarningTextLinkConverter}, Mode=OneWay}" Margin="5,0,0,0" CommandParameter="{Binding Mode=OneWay}" Command="{Binding DataContext.OpenWarningCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}" />
-                        <Label Content="{Binding Message}" Margin="6,0,0,0" Padding="0"/>
-                    </StackPanel>
-                </DataTemplate>
-            </ItemsControl.ItemTemplate>
-        </ItemsControl>
+
+        <StackPanel  Visibility="{Binding HasWarningsReport, Converter={StaticResource BooleanToVisibilityConverter}}">
+            <StackPanel Orientation="Horizontal">
+                <ToggleButton x:Name="toggleWarnings" UseLayoutRounding="False" Style="{StaticResource ExpandCollapseToggleStyle}" HorizontalAlignment="Left" Margin="15,0,0,0" IsChecked="True"/>
+                <TextBlock TextWrapping="Wrap" DataContext="{Binding Warnings}" VerticalAlignment="Center">
+                <Run Text="{Binding Count}" /> warnings (<Run Text="{Binding NewCount}" /> new, <Run Text="{Binding FixedCount}" /> fixed).
+                </TextBlock>
+            </StackPanel>
+            <ItemsControl ItemsSource="{Binding Warnings.Warnings}" Margin="20,0,0,0" BorderBrush="{x:Null}" Background="{x:Null}" Visibility="{Binding IsChecked, Converter={StaticResource BooleanToVisibilityConverter}, ElementName=toggleWarnings}">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal">
+                            <Image Source="/JenkinsBuilds;component/Images/warnings/normal.png" Width="16" Height="16"/>
+                            <TeamExplorer:TextLink Text="{Binding Converter={StaticResource WarningTextLinkConverter}, Mode=OneWay}" Margin="5,0,0,0" CommandParameter="{Binding Mode=OneWay}" Command="{Binding DataContext.OpenWarningCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}" />
+                            <Label Content="{Binding Message}" Margin="6,0,0,0" Padding="0"/>
+                        </StackPanel>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </StackPanel>
         <Label Content="Label"/>
     </StackPanel>
 </UserControl>

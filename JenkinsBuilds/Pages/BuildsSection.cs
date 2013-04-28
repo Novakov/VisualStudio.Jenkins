@@ -154,7 +154,13 @@ namespace JenkinsBuilds.Pages
 
             var job = (JobModel)obj;
 
-            //window.LoadFrom(job, job.LastBuild);
+            var client = new JenkinsClient(job.ServerUrl);
+
+            var build = client.GetResource<Build>(job.LastBuild.Url, ExtendedBuildModel.FetchTree);
+
+            var buildModel = new ExtendedBuildModel().LoadFrom(build);
+
+            window.LoadFrom(job, buildModel);
 
             frame.Show();
         }
