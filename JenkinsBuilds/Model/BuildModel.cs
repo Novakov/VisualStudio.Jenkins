@@ -10,7 +10,7 @@ namespace JenkinsBuilds.Model
     [PropertyChanged.ImplementPropertyChanged]
     public class BuildModel
     {
-        public const string FetchTree = "number,url,timestamp,result,building";
+        public const string FetchTree = "fullDisplayName,number,url,timestamp,result,building";
 
         public Uri Url { get; set; }
 
@@ -18,7 +18,9 @@ namespace JenkinsBuilds.Model
 
         public BuildStatus Status { get; set; }
 
-        public DateTime? Timestamp { get; set; }        
+        public DateTime? Timestamp { get; set; }
+
+        public string FullDisplayName { get; set; }
 
         public Uri WarningsReportUrl
         {
@@ -34,6 +36,7 @@ namespace JenkinsBuilds.Model
             this.Status = DecodeBuildStatus(build);
             this.Number = build.Number;
             this.Url = build.Url;
+            this.FullDisplayName = build.FullDisplayName;            
 
             return this;
         }

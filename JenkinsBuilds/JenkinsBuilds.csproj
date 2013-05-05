@@ -170,6 +170,11 @@
     <Compile Include="BuildsDetails\BuildDetailsWindow.cs" />
     <Compile Include="BuildsDetails\DesignBuildDetailsViewModel.cs" />
     <Compile Include="BuildsDetails\WarningTextLinkConverter.cs" />
+    <Compile Include="BuildsExplorer\BuildsExplorerView.xaml.cs">
+      <DependentUpon>BuildsExplorerView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="BuildsExplorer\BuildsExplorerViewModel.cs" />
+    <Compile Include="BuildsExplorer\BuildsExplorerWindow.cs" />
     <Compile Include="ChangeType.cs" />
     <Compile Include="CommandExtensions.cs" />
     <Compile Include="Commands\DelegateCommand.cs" />
@@ -201,11 +206,9 @@
       <DependentUpon>AddJenkinsPageView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\AddJenkinsPageViewModel.cs" />
+    <Compile Include="Pages\BuildExplorerItem.cs" />
     <Compile Include="Pages\BuildsLink.cs" />
     <Compile Include="Pages\BuildsPage.cs" />
-    <Compile Include="Pages\BuildsPageView.xaml.cs">
-      <DependentUpon>BuildsPageView.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Pages\BuildsSection.cs" />
     <Compile Include="Pages\BuildsSectionView.xaml.cs">
       <DependentUpon>BuildsSectionView.xaml</DependentUpon>
@@ -285,11 +288,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Pages\AddJenkinsPageView.xaml">
+    <Page Include="BuildsExplorer\BuildsExplorerView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Pages\BuildsPageView.xaml">
+    <Page Include="Pages\AddJenkinsPageView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

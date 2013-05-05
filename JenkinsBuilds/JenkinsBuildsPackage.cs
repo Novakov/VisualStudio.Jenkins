@@ -28,7 +28,8 @@ namespace JenkinsBuilds
     // in the Help/About dialog of Visual Studio.
     [InstalledProductRegistration("#110", "#112", "1.0", IconResourceID = 400)]
     [Guid(GuidList.guidJenkinsBuildsPkgString)]
-    [ProvideToolWindow(typeof(BuildsDetails.BuildDetailsWindow), Style = VsDockStyle.Tabbed, Orientation = ToolWindowOrientation.Right, Window = EnvDTE.Constants.vsWindowKindMainWindow)]   
+    [ProvideToolWindow(typeof(BuildsDetails.BuildDetailsWindow), Style = VsDockStyle.Tabbed, Orientation = ToolWindowOrientation.Right, Window = EnvDTE.Constants.vsWindowKindMainWindow)]
+    [ProvideToolWindow(typeof(BuildsExplorer.BuildsExplorerWindow), Style = VsDockStyle.Tabbed, Orientation = ToolWindowOrientation.Right, Window = EnvDTE.Constants.vsWindowKindMainWindow)]   
     [ProvideAutoLoad("{4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}")]    
     public sealed class JenkinsBuildsPackage : Package
     {
@@ -65,5 +66,10 @@ namespace JenkinsBuilds
         }
         #endregion
 
+        public TWindow FindWindow<TWindow>(bool create, int id = 0)
+            where TWindow : ToolWindowPane
+        {
+            return (TWindow)this.FindToolWindow(typeof(TWindow), id, create);
+        }
     }
 }

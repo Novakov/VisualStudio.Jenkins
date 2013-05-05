@@ -142,8 +142,23 @@ namespace JenkinsBuilds.Pages
             {
                 BuildNowCommand = new DelegateCommand(BuildNow),
                 RemoveFromFavorites = new DelegateCommand(RemoveFromFavorites),
-                OpenBuildDetailsCommand = new DelegateCommand(OpenBuildDetails)
+                OpenBuildDetailsCommand = new DelegateCommand(OpenBuildDetails),
+                ViewBuildsCommand = new DelegateCommand(ViewBuilds)
             };
+        }
+
+        private void ViewBuilds(object obj)
+        {
+            var pkg = JenkinsBuildsPackage.Instance;
+
+            var window = (BuildsExplorer.BuildsExplorerWindow)pkg.FindWindowPane(typeof(BuildsExplorer.BuildsExplorerWindow), 0, true);
+            var frame = (IVsWindowFrame)window.Frame;
+
+            var job = (JobModel)obj;
+
+            //window.LoadFrom(job);
+
+            frame.Show();
         }
 
         private void OpenBuildDetails(object obj)

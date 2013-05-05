@@ -30,20 +30,27 @@ namespace JenkinsBuilds
 
         public void Poll()
         {
-            var jobs = this.client.GetResource<Node>(this.url, FetchJobsTree).Jobs;
-
-            var changedBuilds = jobs.Where(x => IsChanged(x)).ToArray();
-
-            foreach (var item in changedBuilds)
+            try
             {
-                var changeType = GetChangeType(item);
+                var jobs = this.client.GetResource<Node>(this.url, FetchJobsTree).Jobs;
 
-                OnBuildChanged(item, changeType);
+                var changedBuilds = jobs.Where(x => IsChanged(x)).ToArray();
+
+                foreach (var item in changedBuilds)
+                {
+                    var changeType = GetChangeType(item);
+
+                    OnBuildChanged(item, changeType);
+                }
+
+                foreach (var item in jobs)
+                {
+                    UpdateStatus(item);
+                }
             }
-
-            foreach (var item in jobs)
+            catch (Exception)
             {
-                UpdateStatus(item);
+               //TODO: raise event OnError(e)
             }
         }
 

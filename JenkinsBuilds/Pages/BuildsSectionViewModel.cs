@@ -19,5 +19,7 @@ namespace JenkinsBuilds.Pages
         public ICommand BuildNowCommand { get; set; }
 
         public ICommand OpenBuildDetailsCommand { get; set; }
+
+        public ICommand ViewBuildsCommand { get; set; }
     }
 }

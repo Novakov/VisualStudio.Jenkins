@@ -12,6 +12,8 @@ namespace JenkinsBuilds.Model
     {
         public const string FetchTree = "name,displayName,url,lastBuild[" + BuildModel.FetchTree + "]";
 
+        public const string WithBuildsTree = "url,builds[" + BuildModel.FetchTree + "]";
+
         public string Name { get; set; }
 
         public string DisplayName { get; set; }

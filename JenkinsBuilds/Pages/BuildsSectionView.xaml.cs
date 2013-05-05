@@ -48,5 +48,11 @@ namespace JenkinsBuilds.Pages
             var param = ((ICommandSource)sender).CommandParameter;
             this.ViewModel.RemoveFromFavorites.ExecuteIfCan(param);
         }
+
+        private void ViewBuildsClick(object sender, RoutedEventArgs e)
+        {
+            var param = ((ICommandSource)sender).CommandParameter;
+            this.ViewModel.ViewBuildsCommand.ExecuteIfCan(param);
+        }
     }
 }
