@@ -10,7 +10,7 @@
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary x:Uid="mergedResourceDictionary" Source="pack://application:,,,/Microsoft.TeamFoundation.Controls;component/WPF/SharedResources.xaml" />
+                <ResourceDictionary x:Uid="mergedResourceDictionary" Source="pack://application:,,,/Microsoft.TeamFoundation.Controls;component/WPF/SharedResources.xaml" />                
                 <ResourceDictionary>
                     <conv:JobStatusImage x:Key="statusImage" />
                     <conv:RelativeTimeConverter x:Key="relativeTime" />                    

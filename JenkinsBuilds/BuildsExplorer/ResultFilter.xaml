@@ -1,0 +1,12 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:JenkinsBuilds.BuildsExplorer"
+                    xmlns:model="clr-namespace:JenkinsBuilds.Model">
+    <local:ResultFilterItems x:Key="resultFilterItems">
+        <local:ResultFilterItem Status="{x:Null}" DisplayName="(All results)"/>
+        <local:ResultFilterItem Status="Success" DisplayName="Success" />        
+        <local:ResultFilterItem Status="Failure" DisplayName="Failure" />        
+        <local:ResultFilterItem Status="Unstable" DisplayName="Unstable" />
+        <local:ResultFilterItem Status="Aborted" DisplayName="Aborted" />
+    </local:ResultFilterItems>
+</ResourceDictionary>

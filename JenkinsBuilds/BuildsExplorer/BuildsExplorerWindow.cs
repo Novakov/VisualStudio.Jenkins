@@ -69,14 +69,23 @@ namespace JenkinsBuilds.BuildsExplorer
         {
             this.client = new JenkinsClient(new Uri(this.viewModel.SelectedInstance.Url));
 
+            List<BuildModel> builds;
+
             if (this.viewModel.SelectedJob is AllJobsModel)
             {
-                this.viewModel.Builds = await SearchBuildsInAllJobs();
+                builds = await SearchBuildsInAllJobs();
             }
             else
             {
-                this.viewModel.Builds = await SearchBuildsInJob(this.viewModel.SelectedJob);
-            }            
+                builds = await SearchBuildsInJob(this.viewModel.SelectedJob);
+            }
+
+            if (this.viewModel.SelectedStatus.Status != null)
+            {
+                builds = builds.Where(x => x.Status == this.viewModel.SelectedStatus.Status).ToList();
+            }
+
+            this.viewModel.Builds = builds;
         }
 
         private async Task<List<BuildModel>> SearchBuildsInJob(JobModel jobModel)

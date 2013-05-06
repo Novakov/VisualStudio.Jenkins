@@ -24,5 +24,7 @@ namespace JenkinsBuilds.BuildsExplorer
         public List<BuildModel> Builds { get; set; }
 
         public ICommand OpenBuildDetailsCommand { get; set; }
+
+        public ResultFilterItem SelectedStatus { get; set; }
     }
 }

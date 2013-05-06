@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -34,8 +35,8 @@ namespace JenkinsBuilds.BuildsExplorer
         {
             InitializeComponent();
 
-            this.clientFactory = u => new JenkinsClient(u);
-        }
+            this.clientFactory = u => new JenkinsClient(u);            
+        }        
 
         private async void SelectedInstanceChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -61,6 +62,21 @@ namespace JenkinsBuilds.BuildsExplorer
             var build = (sender as DataGrid).SelectedItem as BuildModel;
 
             this.ViewModel.OpenBuildDetailsCommand.ExecuteIfCan(build);
+        }
+
+        private void UserControl_Loaded(object sender, RoutedEventArgs e)
+        {
+            this.ViewModel.SelectedStatus = ((IEnumerable<ResultFilterItem>)this.Resources["resultFilterItems"]).FirstOrDefault();
+
+            ((INotifyPropertyChanged)this.ViewModel).PropertyChanged += ViewModelPropertyChanged;
+        }
+
+        private void ViewModelPropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == "Jobs")
+            {
+                this.ViewModel.SelectedJob = this.ViewModel.Jobs.FirstOrDefault();
+            }
         }
     }
 }

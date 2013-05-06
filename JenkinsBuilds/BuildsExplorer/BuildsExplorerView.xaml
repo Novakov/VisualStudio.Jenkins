@@ -5,13 +5,15 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:JenkinsBuilds.BuildsExplorer" 
              xmlns:conv="clr-namespace:JenkinsBuilds.Converters"
+             xmlns:model="clr-namespace:JenkinsBuilds.Model"
              x:Class="JenkinsBuilds.BuildsExplorer.BuildsExplorerView" 
              mc:Ignorable="d" 
-             d:DesignHeight="600" d:DesignWidth="800">
+             d:DesignHeight="600" d:DesignWidth="800" Loaded="UserControl_Loaded">
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="../themes/generic.xaml" />
+                <ResourceDictionary Source="ResultFilter.xaml" />
             </ResourceDictionary.MergedDictionaries>
 
             <Style x:Key="Filter" TargetType="{x:Type ComboBox}">
@@ -61,7 +63,7 @@
 				Grid.Column="1"
 				Grid.Row="1"
 				Style="{StaticResource Filter}" 
-                SelectedValue="{Binding SelectedJob}" 
+                SelectedValue="{Binding SelectedJob, Mode=TwoWay}" 
                 ItemsSource="{Binding Jobs}"
                 DisplayMemberPath="DisplayName">               
             </ComboBox>
@@ -74,13 +76,11 @@
 				Grid.Column="2"
 				Grid.Row="1"
 				Style="{StaticResource Filter}"
-				SelectedIndex="0"
-                >
-                <ComboBoxItem DataContext="{x:Null}" Content="(All results)"/>
-                <ComboBoxItem DataContext="Success" Content="Success"/>
-                <ComboBoxItem DataContext="Aborted" Content="Aborted"/>
-                <ComboBoxItem DataContext="Failure" Content="Failure"/>
-                <ComboBoxItem DataContext="Unstable" Content="Unstable"/>
+				SelectedIndex="0" 
+                SelectedValue="{Binding SelectedStatus}"
+                ItemsSource="{Binding Source={StaticResource resultFilterItems}}" 
+                DisplayMemberPath="DisplayName"
+                >               
             </ComboBox>
 
             <!--<Label 
