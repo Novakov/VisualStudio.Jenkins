@@ -30,6 +30,14 @@ namespace JenkinsBuilds.Model
             }
         }
 
+        public Uri JobUrl
+        {
+            get
+            {
+                return this.Url.AppendPath("..");
+            }
+        }
+
         public BuildModel LoadFrom(Build build)
         {            
             this.Timestamp = build.Timestamp;

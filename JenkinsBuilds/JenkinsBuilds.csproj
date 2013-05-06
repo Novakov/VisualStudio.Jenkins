@@ -170,6 +170,7 @@
     <Compile Include="BuildsDetails\BuildDetailsWindow.cs" />
     <Compile Include="BuildsDetails\DesignBuildDetailsViewModel.cs" />
     <Compile Include="BuildsDetails\WarningTextLinkConverter.cs" />
+    <Compile Include="BuildsExplorer\AllJobsModel.cs" />
     <Compile Include="BuildsExplorer\BuildsExplorerView.xaml.cs">
       <DependentUpon>BuildsExplorerView.xaml</DependentUpon>
     </Compile>

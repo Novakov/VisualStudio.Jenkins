@@ -43,8 +43,10 @@ namespace JenkinsBuilds.BuildsExplorer
         {
             var client = new JenkinsClient(new Uri(this.viewModel.SelectedInstance.Url));
 
-            var job = client.GetResourceAsync<Job>(this.viewModel.SelectedJob.Url, JobModel.FetchTree);
-            var build = client.GetResourceAsync<Build>(((BuildModel)obj).Url, ExtendedBuildModel.FetchTree);
+            var selectedBuild = ((BuildModel)obj);
+
+            var job = client.GetResourceAsync<Job>(selectedBuild.JobUrl, JobModel.FetchTree);
+            var build = client.GetResourceAsync<Build>(selectedBuild.Url, ExtendedBuildModel.FetchTree);
 
             var jobModel = new JobModel().LoadFrom(await job);
             var buildModel = new ExtendedBuildModel().LoadFrom(await build);
@@ -67,21 +69,35 @@ namespace JenkinsBuilds.BuildsExplorer
         {
             this.client = new JenkinsClient(new Uri(this.viewModel.SelectedInstance.Url));
 
-            var job = await this.client.GetResourceAsync<Job>(this.viewModel.SelectedJob.Url, JobModel.WithBuildsTree);
-
-            this.viewModel.Builds = job.Builds.Select(x => new BuildModel().LoadFrom(x)).ToList();
+            if (this.viewModel.SelectedJob is AllJobsModel)
+            {
+                this.viewModel.Builds = await SearchBuildsInAllJobs();
+            }
+            else
+            {
+                this.viewModel.Builds = await SearchBuildsInJob(this.viewModel.SelectedJob);
+            }            
         }
 
-        //private void SelectedInstanceChanged(object sender, PropertyChangedEventArgs e)
-        //{
-        //    if (e.PropertyName == "SelectedInstance")
-        //    {
-        //        this.client = new JenkinsClient(new Uri(this.viewModel.SelectedInstance.Url));
+        private async Task<List<BuildModel>> SearchBuildsInJob(JobModel jobModel)
+        {
+            var job = await this.client.GetResourceAsync<Job>(this.viewModel.SelectedJob.Url, JobModel.WithBuildsTree);
 
-        //        this.viewModel.Jobs = this.client.GetResource<Node>(new Uri(this.viewModel.SelectedInstance.Url), "jobs[" + JobModel.FetchTree + "]")
-        //            .Jobs.Select(x => new JobModel().LoadFrom(x))
-        //            .ToList();
-        //    }
-        //}        
+            return job.Builds.Select(x => new BuildModel().LoadFrom(x)).OrderByDescending(x => x.Timestamp).ToList();
+        }
+
+        private async Task<List<BuildModel>> SearchBuildsInAllJobs()
+        {
+            var tree = "jobs[" + JobModel.WithBuildsTree + "]";
+
+            var node = await this.client.GetResourceAsync<Node>(new Uri(this.viewModel.SelectedInstance.Url), tree);
+
+            var q = from j in node.Jobs
+                    from b in j.Builds
+                    orderby b.Timestamp descending
+                    select new BuildModel().LoadFrom(b);
+
+            return q.ToList();
+        }       
     }
 }

@@ -39,7 +39,12 @@ namespace JenkinsBuilds.BuildsExplorer
 
         private async void SelectedInstanceChanged(object sender, SelectionChangedEventArgs e)
         {
-            this.ViewModel.Jobs = await this.GetJobsFromInstance(this.ViewModel.SelectedInstance.Url);
+            this.ViewModel.SelectedJob = null;
+            var jobs = await this.GetJobsFromInstance(this.ViewModel.SelectedInstance.Url);
+
+            jobs.Insert(0, new AllJobsModel());
+
+            this.ViewModel.Jobs = jobs;
         }
 
         private async Task<List<JobModel>> GetJobsFromInstance(string instanceUrl)

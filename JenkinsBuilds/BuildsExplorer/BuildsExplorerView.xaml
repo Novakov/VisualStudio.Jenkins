@@ -61,9 +61,10 @@
 				Grid.Column="1"
 				Grid.Row="1"
 				Style="{StaticResource Filter}" 
-                ItemsSource="{Binding Jobs}" 
                 SelectedValue="{Binding SelectedJob}" 
-                DisplayMemberPath="DisplayName"/>
+                ItemsSource="{Binding Jobs}"
+                DisplayMemberPath="DisplayName">               
+            </ComboBox>
 
             <Label 
 				Grid.Column="2"
