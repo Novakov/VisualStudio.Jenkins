@@ -195,6 +195,9 @@
     <Compile Include="JenkinsClient.cs" />
     <Compile Include="JenkinsClientExtensions.cs" />
     <Compile Include="JenkinsMonitor.cs" />
+    <Compile Include="Jenkins\Suite.cs" />
+    <Compile Include="Jenkins\TestCase.cs" />
+    <Compile Include="Jenkins\TestResults.cs" />
     <Compile Include="Jenkins\Warning.cs" />
     <Compile Include="Jenkins\BuildWarnings.cs" />
     <Compile Include="Model\BuildModel.cs" />
@@ -202,6 +205,9 @@
     <Compile Include="Model\ExtendedBuildModel.cs" />
     <Compile Include="Model\JobModel.cs" />
     <Compile Include="Model\NullBuildModel.cs" />
+    <Compile Include="Model\TestCaseModel.cs" />
+    <Compile Include="Model\TestResultModel.cs" />
+    <Compile Include="Model\TestSuiteModel.cs" />
     <Compile Include="Model\WarningModel.cs" />
     <Compile Include="Model\WarningsModel.cs" />
     <Compile Include="Pages\AddJenkinsPage.cs" />

@@ -187,6 +187,13 @@ namespace JenkinsBuilds.Pages
                 window.LoadWarnings(warningsModel);
             }
 
+            var testResult = client.GetResourceIfAvailable<TestResults>(buildModel.TestReportUrl, TestResultModel.FetchTree);
+
+            if (testResult != null)
+            {
+                var testModel = new TestResultModel().LoadFrom(testResult);
+            }
+
             frame.Show();
         }
     }

@@ -52,7 +52,7 @@ namespace JenkinsBuilds
         }
 
         public T GetResourceIfAvailable<T>(Uri url, string fetchTree)
-            where T : class, IResource
+            where T : class
         {
             try
             {

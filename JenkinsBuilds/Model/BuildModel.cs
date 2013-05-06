@@ -30,6 +30,14 @@ namespace JenkinsBuilds.Model
             }
         }
 
+        public Uri TestReportUrl
+        {
+            get
+            {
+                return this.Url.AppendPath("testReport/");
+            }
+        }
+
         public Uri JobUrl
         {
             get
