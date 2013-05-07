@@ -19,6 +19,10 @@ namespace JenkinsBuilds.BuildsDetails
 
         public WarningsModel Warnings { get; set; }
 
+        public TestResultModel TestResults { get; set; }
+
+        public bool HasTestResults { get; set; }
+
         public ICommand OpenBuildPageCommand { get; set; }
 
         public ICommand RebuildCommand { get; set; }

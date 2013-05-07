@@ -187,6 +187,7 @@
     <Compile Include="Converters\JobStatusImage.cs" />
     <Compile Include="Converters\NegatingConverter.cs" />
     <Compile Include="Converters\RelativeTimeConverter.cs" />
+    <Compile Include="Converters\TestResultImage.cs" />
     <Compile Include="Converters\VisibilityConverter.cs" />
     <Compile Include="CredentialsPromptProvider.cs" />
     <Compile Include="Guids.cs" />
@@ -206,6 +207,7 @@
     <Compile Include="Model\JobModel.cs" />
     <Compile Include="Model\NullBuildModel.cs" />
     <Compile Include="Model\TestCaseModel.cs" />
+    <Compile Include="Model\TestCaseStatus.cs" />
     <Compile Include="Model\TestResultModel.cs" />
     <Compile Include="Model\TestSuiteModel.cs" />
     <Compile Include="Model\WarningModel.cs" />
@@ -277,19 +279,22 @@
     <None Include="Key.snk" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Images\results\16\failure.png" />
-    <Resource Include="Images\results\16\unstable.png" />
-    <Resource Include="Images\results\16\success.png" />
+    <Resource Include="Images\buildResults\16\failure.png" />
+    <Resource Include="Images\buildResults\16\unstable.png" />
+    <Resource Include="Images\buildResults\16\success.png" />
     <Resource Include="Images\star.png" />
-    <Resource Include="Images\results\16\aborted.png" />
-    <Resource Include="Images\results\16\building.png" />
+    <Resource Include="Images\buildResults\16\aborted.png" />
+    <Resource Include="Images\buildResults\16\building.png" />
     <Resource Include="FodyWeavers.xml" />
-    <Resource Include="Images\results\32\success.png" />
-    <Resource Include="Images\results\32\failure.png" />
-    <Resource Include="Images\results\32\building.png" />
-    <Resource Include="Images\results\32\aborted.png" />
-    <Resource Include="Images\results\32\unstable.png" />
+    <Resource Include="Images\buildResults\32\success.png" />
+    <Resource Include="Images\buildResults\32\failure.png" />
+    <Resource Include="Images\buildResults\32\building.png" />
+    <Resource Include="Images\buildResults\32\aborted.png" />
+    <Resource Include="Images\buildResults\32\unstable.png" />
     <Resource Include="Images\warnings\normal.png" />
+    <Resource Include="Images\testResults\passed.png" />
+    <Resource Include="Images\testResults\failed.png" />
+    <Resource Include="Images\testResults\skipped.png" />
     <Content Include="Resources\Package.ico" />
   </ItemGroup>
   <ItemGroup>

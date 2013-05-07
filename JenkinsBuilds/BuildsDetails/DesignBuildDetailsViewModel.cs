@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using JenkinsBuilds.Commands;
+using JenkinsBuilds.Model;
 
 namespace JenkinsBuilds.BuildsDetails
 {
@@ -33,9 +34,45 @@ namespace JenkinsBuilds.BuildsDetails
                     new Model.WarningModel { Key = 2, FileName="src/file2.cs", LineNumber = 20, Priority = "NORMAL", Message = @"The variable 'e' is declared but never used" },
                     new Model.WarningModel { Key = 3, FileName="src/file3.cs", LineNumber = 20, Priority = "NORMAL", Message = @"The variable 'e' is declared but never used [D:\Jenkins\Clinic\workspace\src\Queries\Queries.csproj]" },
                     new Model.WarningModel { Key = 4, FileName="src/file4.cs", LineNumber = 20, Priority = "NORMAL", Message = @"The variable 'e' is declared but never used" },
-                    new Model.WarningModel { Key = 5, FileName="src/file5.cs", LineNumber = 20, Priority = "NORMAL", Message = @"The variable 'e' is declared but never used [D:\Jenkins\Clinic\workspace\src\Queries\Queries.csproj]" }
+                    new Model.WarningModel { Key = 5, FileName="src/file5.cs", LineNumber = 20, Priority = "NORMAL", Message = @"The variable 'e' is declared but never used [D:\Jenkins\Clinic\workspace\src\Queries\Queries.csproj]" },
+                    new Model.WarningModel { Key = 6, FileName="src/file5.cs", LineNumber = 20, Priority = "NORMAL", Message = @"The variable 'e' is declared but never used [D:\Jenkins\Clinic\workspace\src\Queries\Queries.csproj] The variable 'e' is declared but never used [D:\Jenkins\Clinic\workspace\src\Queries\Queries.csproj]" }
                 }
             };
+
+            this.TestResults = new Model.TestResultModel
+            {
+                Duration = TimeSpan.FromSeconds(1.7),
+                FailCount = 1,
+                PassCount = 39,
+                SkipCount = 2,
+                Suites = new List<Model.TestSuiteModel>
+                {
+                    new Model.TestSuiteModel
+                    {
+                        Name = "Suite1",
+                        Duration = TimeSpan.FromSeconds(0.5),
+                        Cases = new List<Model.TestCaseModel>
+                        {
+                            new Model.TestCaseModel {Name = "Test1", ClassName = "Suite1", Status = TestCaseStatus.Passed },
+                            new Model.TestCaseModel {Name = "Test2", ClassName = "Suite1", Status = TestCaseStatus.Passed },
+                            new Model.TestCaseModel {Name = "Test3", ClassName = "Suite1", Status = TestCaseStatus.Passed },
+                        }
+                    },
+                    new Model.TestSuiteModel
+                    {
+                        Name = "Suite2",
+                        Duration = TimeSpan.FromSeconds(1.2),
+                        Cases = new List<Model.TestCaseModel>
+                        {
+                            new Model.TestCaseModel {Name = "Test1", ClassName = "Suite2", Status = TestCaseStatus.Passed },
+                            new Model.TestCaseModel {Name = "Test2", ClassName = "Suite2", Status = TestCaseStatus.Failed },
+                            new Model.TestCaseModel {Name = "Test3", ClassName = "Suite2", Status = TestCaseStatus.Skipped },
+                        }
+                    }
+                }
+            };
+
+            this.HasTestResults = true;
 
             this.Job = new Model.JobModel
             {
@@ -46,6 +83,6 @@ namespace JenkinsBuilds.BuildsDetails
             this.RebuildCommand = new DelegateCommand(o => { });
             this.OpenConsoleLogCommand = new DelegateCommand(o => { });
             this.OpenWarningCommand = new DelegateCommand(o => { });
-        }
+        }        
     }
 }

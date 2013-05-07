@@ -5,26 +5,17 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Data;
 using System.Windows.Media.Imaging;
+using JenkinsBuilds.Model;
 
 namespace JenkinsBuilds.Converters
 {
-    public class JobStatusImage : IValueConverter
+    public class TestResultImage : IValueConverter
     {
-        public string Size { get; set; }
-
-        public JobStatusImage()
-        {
-            this.Size = "16";
-        }
-
         public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {
-            if (value == null)
-            {
-                return null;
-            }
-            
-            var path = string.Format("/JenkinsBuilds;component/Images/buildResults/{0}/{1}.png", this.Size, value);
+            var status = (TestCaseStatus)value;
+
+            var path = string.Format("/JenkinsBuilds;component/Images/testResults/{0}.png", value);
 
             return new BitmapImage(new Uri(path, UriKind.Relative));
         }
@@ -33,6 +24,5 @@ namespace JenkinsBuilds.Converters
         {
             throw new NotImplementedException();
         }
-
     }
 }

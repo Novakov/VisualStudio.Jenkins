@@ -192,6 +192,8 @@ namespace JenkinsBuilds.Pages
             if (testResult != null)
             {
                 var testModel = new TestResultModel().LoadFrom(testResult);
+
+                window.LoadTests(testModel);
             }
 
             frame.Show();

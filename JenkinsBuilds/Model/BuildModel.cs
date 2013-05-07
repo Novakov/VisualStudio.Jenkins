@@ -26,7 +26,7 @@ namespace JenkinsBuilds.Model
         {
             get 
             {
-                return this.Url.AppendPath("warnings32Result");
+                return this.Url.AppendPath("warnings32Result/");
             }
         }
 

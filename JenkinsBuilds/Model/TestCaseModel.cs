@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using JenkinsBuilds.Jenkins;
@@ -7,11 +8,12 @@ using JenkinsBuilds.Jenkins;
 namespace JenkinsBuilds.Model
 {
     [PropertyChanged.ImplementPropertyChanged]
+    [DebuggerDisplay("Case = [{Status}]{Name}")]
     public class TestCaseModel
     {
         public const string FetchTree = "status,skippedMessage,skipped,name,errorStackTrace,errorDetails,className,duration";
 
-        public string Status { get; set; }
+        public TestCaseStatus Status { get; set; }
 
         public string SkippedMessage { get; set; }
 
@@ -36,9 +38,24 @@ namespace JenkinsBuilds.Model
             this.Name = testCase.Name;
             this.Skipped = testCase.Skipped;
             this.SkippedMessage = testCase.SkippedMessage;
-            this.Status = testCase.Status;
+            this.Status = DecodeStatus(testCase.Status);
 
             return this;
+        }
+
+        private TestCaseStatus DecodeStatus(string status)
+        {
+            switch (status)
+            {
+                case "PASSED":
+                    return TestCaseStatus.Passed;
+                case "FAILED":
+                    return TestCaseStatus.Failed;
+                case "SKIPPED":
+                    return TestCaseStatus.Skipped;
+                default:
+                    return TestCaseStatus.Passed;
+            }
         }        
     }
 }

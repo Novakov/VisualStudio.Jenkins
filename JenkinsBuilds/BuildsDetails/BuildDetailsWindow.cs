@@ -18,14 +18,25 @@ namespace JenkinsBuilds.BuildsDetails
         {
             this.viewModel = new BuildDetailsViewModel
             {
-                HasWarningsReport = false
+                HasWarningsReport = false,
+                HasTestResults = false
             };
             //this.viewModel = new DesignBuildDetailsViewModel();
 
-            this.Content = new BuildDetailsView
+            this.Content = new ScrollViewer
             {
-                DataContext = this.viewModel
-            };
+                Content = new BuildDetailsView
+                {
+                    DataContext = this.viewModel
+                }
+            };             
+        }
+
+        protected override void OnClose()
+        {
+            base.OnClose();
+
+            this.Dispose();
         }
 
         public BuildDetailsWindow LoadFrom(Model.JobModel job, Model.ExtendedBuildModel build)
@@ -43,6 +54,15 @@ namespace JenkinsBuilds.BuildsDetails
             this.viewModel.Warnings = warnings;
 
             this.viewModel.HasWarningsReport = true;
+
+            return this;
+        }
+
+        public BuildDetailsWindow LoadTests(TestResultModel testModel)
+        {
+            this.viewModel.TestResults = testModel;
+
+            this.viewModel.HasTestResults = true;
 
             return this;
         }

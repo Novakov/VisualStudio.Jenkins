@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using JenkinsBuilds.Jenkins;
@@ -7,6 +8,7 @@ using JenkinsBuilds.Jenkins;
 namespace JenkinsBuilds.Model
 {
     [PropertyChanged.ImplementPropertyChanged]
+    [DebuggerDisplay("Suite = {Name}")]
     public class TestSuiteModel
     {
         public const string FetchTree = "duration,name,cases[" + TestCaseModel.FetchTree + "]";
@@ -16,6 +18,21 @@ namespace JenkinsBuilds.Model
         public string Name { get; set; }
 
         public List<TestCaseModel> Cases { get; set; }
+
+        public int PassCount
+        {
+            get { return this.Cases.Count(x => x.Status == TestCaseStatus.Passed); }
+        }
+
+        public int FailCount
+        {
+            get { return this.Cases.Count(x => x.Status == TestCaseStatus.Failed); }
+        }
+
+        public int SkipCount
+        {
+            get { return this.Cases.Count(x => x.Status == TestCaseStatus.Skipped); }
+        }
 
         public TestSuiteModel LoadFrom(Suite suite)
         {
