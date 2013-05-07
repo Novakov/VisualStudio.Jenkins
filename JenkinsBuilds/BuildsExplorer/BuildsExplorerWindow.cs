@@ -39,30 +39,11 @@ namespace JenkinsBuilds.BuildsExplorer
             this.Caption = "Builds explorer";
         }
 
-        private async void OpenBuildDetails(object obj)
-        {
-            var client = new JenkinsClient(new Uri(this.viewModel.SelectedInstance.Url));
+        private void OpenBuildDetails(object obj)
+        {            
+            var selectedBuild = ((BuildModel)obj);            
 
-            var selectedBuild = ((BuildModel)obj);
-
-            var job = client.GetResourceAsync<Job>(selectedBuild.JobUrl, JobModel.FetchTree);
-            var build = client.GetResourceAsync<Build>(selectedBuild.Url, ExtendedBuildModel.FetchTree);
-
-            var jobModel = new JobModel().LoadFrom(await job);
-            var buildModel = new ExtendedBuildModel().LoadFrom(await build);
-
-            var detailsWindow = JenkinsBuildsPackage.Instance.FindWindow<BuildsDetails.BuildDetailsWindow>(create: true);
-
-            var warnings = client.GetResourceIfAvailable<BuildWarnings>(buildModel.WarningsReportUrl, WarningsModel.FetchTree);
-
-            detailsWindow.LoadFrom(jobModel, buildModel);
-
-            if (warnings != null)
-            {
-                detailsWindow.LoadWarnings(new WarningsModel().LoadFrom(warnings));
-            }
-
-            ((IVsWindowFrame)detailsWindow.Frame).Show();
+            JenkinsBuildsPackage.Instance.OpenBuildDetails(selectedBuild.ServerUrl, selectedBuild);
         }
 
         private async void SearchBuilds(object obj)

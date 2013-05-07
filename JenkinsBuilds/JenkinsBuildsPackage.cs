@@ -8,68 +8,84 @@ using Microsoft.VisualStudio;
 using Microsoft.VisualStudio.Shell.Interop;
 using Microsoft.VisualStudio.OLE.Interop;
 using Microsoft.VisualStudio.Shell;
+using JenkinsBuilds.Model;
+using JenkinsBuilds.BuildsDetails;
+using Niles.Model;
+using JenkinsBuilds.Jenkins;
 
 namespace JenkinsBuilds
 {
-    /// <summary>
-    /// This is the class that implements the package exposed by this assembly.
-    ///
-    /// The minimum requirement for a class to be considered a valid package for Visual Studio
-    /// is to implement the IVsPackage interface and register itself with the shell.
-    /// This package uses the helper classes defined inside the Managed Package Framework (MPF)
-    /// to do it: it derives from the Package class that provides the implementation of the 
-    /// IVsPackage interface and uses the registration attributes defined in the framework to 
-    /// register itself and its components with the shell.
-    /// </summary>
-    // This attribute tells the PkgDef creation utility (CreatePkgDef.exe) that this class is
-    // a package.
     [PackageRegistration(UseManagedResourcesOnly = true)]
-    // This attribute is used to register the information needed to show this package
-    // in the Help/About dialog of Visual Studio.
     [InstalledProductRegistration("#110", "#112", "1.0", IconResourceID = 400)]
     [Guid(GuidList.guidJenkinsBuildsPkgString)]
-    [ProvideToolWindow(typeof(BuildsDetails.BuildDetailsWindow), Style = VsDockStyle.Tabbed, Orientation = ToolWindowOrientation.Right, Window = EnvDTE.Constants.vsWindowKindMainWindow)]
-    [ProvideToolWindow(typeof(BuildsExplorer.BuildsExplorerWindow), Style = VsDockStyle.Tabbed, Orientation = ToolWindowOrientation.Right, Window = EnvDTE.Constants.vsWindowKindMainWindow)]   
-    [ProvideAutoLoad("{4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}")]    
+    [ProvideToolWindow(typeof(BuildsDetails.BuildDetailsWindow), Style = VsDockStyle.Tabbed, Orientation = ToolWindowOrientation.Right, Window = EnvDTE.Constants.vsWindowKindMainWindow, MultiInstances = true, DocumentLikeTool = true)]
+    [ProvideToolWindow(typeof(BuildsExplorer.BuildsExplorerWindow), Style = VsDockStyle.Tabbed, Orientation = ToolWindowOrientation.Right, Window = EnvDTE.Constants.vsWindowKindMainWindow, DocumentLikeTool = true)]
+    [ProvideAutoLoad("{4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}")]
     public sealed class JenkinsBuildsPackage : Package
     {
         public static JenkinsBuildsPackage Instance { get; private set; }
 
-        /// <summary>
-        /// Default constructor of the package.
-        /// Inside this method you can place any initialization code that does not require 
-        /// any Visual Studio service because at this point the package object is created but 
-        /// not sited yet inside Visual Studio environment. The place to do all the other 
-        /// initialization is the Initialize method.
-        /// </summary>
         public JenkinsBuildsPackage()
         {
-            Debug.WriteLine(string.Format(CultureInfo.CurrentCulture, "Entering constructor for: {0}", this.ToString()));
-            
             JenkinsBuildsPackage.Instance = this;
         }
-
-
-
-        /////////////////////////////////////////////////////////////////////////////
-        // Overridden Package Implementation
-        #region Package Members
-
-        /// <summary>
-        /// Initialization of the package; this method is called right after the package is sited, so this is the place
-        /// where you can put all the initialization code that rely on services provided by VisualStudio.
-        /// </summary>
-        protected override void Initialize()
-        {
-            Debug.WriteLine (string.Format(CultureInfo.CurrentCulture, "Entering Initialize() of: {0}", this.ToString()));
-            base.Initialize();            
-        }
-        #endregion
 
         public TWindow FindWindow<TWindow>(bool create, int id = 0)
             where TWindow : ToolWindowPane
         {
             return (TWindow)this.FindToolWindow(typeof(TWindow), id, create);
+        }
+
+        public TWindow CreateWindow<TWindow>()
+            where TWindow : ToolWindowPane
+        {
+            for (int i = 0; ; i++)
+            {
+                var window = this.FindWindowPane(typeof(TWindow), i, false);
+
+                if (window == null)
+                {
+                    return (TWindow)this.CreateToolWindow(typeof(TWindow), i);
+                }
+            }
+        }
+
+        public void OpenBuildDetails(Uri serverUrl, BuildModel selectedBuild)
+        {
+            var window = this.CreateWindow<BuildDetailsWindow>();
+            var frame = (IVsWindowFrame)window.Frame;
+
+            var client = new JenkinsClient(serverUrl);
+
+            var build = client.GetResource<Build>(selectedBuild.Url, ExtendedBuildModel.FetchTree);
+
+            var job = client.GetResource<Job>(selectedBuild.JobUrl, JobModel.FetchTree);
+
+            var jobModel = new JobModel().LoadFrom(job);
+
+            var buildModel = new ExtendedBuildModel().LoadFrom(build);
+
+            window.LoadFrom(jobModel, buildModel);
+
+            var warnings = client.GetResourceIfAvailable<BuildWarnings>(buildModel.WarningsReportUrl, WarningsModel.FetchTree);
+
+            if (warnings != null)
+            {
+                var warningsModel = new WarningsModel().LoadFrom(warnings);
+
+                window.LoadWarnings(warningsModel);
+            }
+
+            var testResult = client.GetResourceIfAvailable<TestResults>(buildModel.TestReportUrl, TestResultModel.FetchTree);
+
+            if (testResult != null)
+            {
+                var testModel = new TestResultModel().LoadFrom(testResult);
+
+                window.LoadTests(testModel);
+            }
+
+            frame.Show();
         }
     }
 }

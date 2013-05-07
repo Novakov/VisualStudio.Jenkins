@@ -1,10 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
 using JenkinsBuilds.Model;
+using Microsoft.VisualStudio;
 using Microsoft.VisualStudio.Shell;
 using Microsoft.VisualStudio.Shell.Interop;
 
@@ -20,8 +23,7 @@ namespace JenkinsBuilds.BuildsDetails
             {
                 HasWarningsReport = false,
                 HasTestResults = false
-            };
-            //this.viewModel = new DesignBuildDetailsViewModel();
+            };            
 
             this.Content = new ScrollViewer
             {
@@ -37,7 +39,7 @@ namespace JenkinsBuilds.BuildsDetails
             base.OnClose();
 
             this.Dispose();
-        }
+        }       
 
         public BuildDetailsWindow LoadFrom(Model.JobModel job, Model.ExtendedBuildModel build)
         {

@@ -163,40 +163,9 @@ namespace JenkinsBuilds.Pages
 
         private void OpenBuildDetails(object obj)
         {
-            var pkg = JenkinsBuildsPackage.Instance;
-
-            var window = (BuildsDetails.BuildDetailsWindow)pkg.FindWindowPane(typeof(BuildsDetails.BuildDetailsWindow), 0, true);
-            var frame = (IVsWindowFrame)window.Frame;
-
             var job = (JobModel)obj;
 
-            var client = new JenkinsClient(job.ServerUrl);
-
-            var build = client.GetResource<Build>(job.LastBuild.Url, ExtendedBuildModel.FetchTree);
-
-            var buildModel = new ExtendedBuildModel().LoadFrom(build);
-
-            window.LoadFrom(job, buildModel);
-
-            var warnings = client.GetResourceIfAvailable<BuildWarnings>(buildModel.WarningsReportUrl, WarningsModel.FetchTree);          
-
-            if (warnings != null)
-            {
-                var warningsModel = new WarningsModel().LoadFrom(warnings);
-
-                window.LoadWarnings(warningsModel);
-            }
-
-            var testResult = client.GetResourceIfAvailable<TestResults>(buildModel.TestReportUrl, TestResultModel.FetchTree);
-
-            if (testResult != null)
-            {
-                var testModel = new TestResultModel().LoadFrom(testResult);
-
-                window.LoadTests(testModel);
-            }
-
-            frame.Show();
+            JenkinsBuildsPackage.Instance.OpenBuildDetails(job.ServerUrl, job.LastBuild);
         }
     }
 }
