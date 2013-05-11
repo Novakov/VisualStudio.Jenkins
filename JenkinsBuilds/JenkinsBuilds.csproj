@@ -196,6 +196,10 @@
     <Compile Include="JenkinsClient.cs" />
     <Compile Include="JenkinsClientExtensions.cs" />
     <Compile Include="JenkinsMonitor.cs" />
+    <Compile Include="Jenkins\BuildActions.cs" />
+    <Compile Include="Jenkins\BuildCause.cs" />
+    <Compile Include="Jenkins\BuildsActionsConverter.cs" />
+    <Compile Include="Jenkins\ExtendedBuild.cs" />
     <Compile Include="Jenkins\Suite.cs" />
     <Compile Include="Jenkins\TestCase.cs" />
     <Compile Include="Jenkins\TestResults.cs" />

@@ -57,7 +57,7 @@ namespace JenkinsBuilds
 
             var client = new JenkinsClient(serverUrl);
 
-            var build = client.GetResource<Build>(selectedBuild.Url, ExtendedBuildModel.FetchTree);
+            var build = client.GetResource<ExtendedBuild>(selectedBuild.Url, ExtendedBuildModel.FetchTree);
 
             var job = client.GetResource<Job>(selectedBuild.JobUrl, JobModel.FetchTree);
 

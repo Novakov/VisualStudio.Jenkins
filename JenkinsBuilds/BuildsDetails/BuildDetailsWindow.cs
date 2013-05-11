@@ -6,6 +6,7 @@ using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
+using JenkinsBuilds.Commands;
 using JenkinsBuilds.Model;
 using Microsoft.VisualStudio;
 using Microsoft.VisualStudio.Shell;
@@ -22,7 +23,7 @@ namespace JenkinsBuilds.BuildsDetails
             this.viewModel = new BuildDetailsViewModel
             {
                 HasWarningsReport = false,
-                HasTestResults = false
+                HasTestResults = false,                
             };            
 
             this.Content = new ScrollViewer
@@ -32,7 +33,7 @@ namespace JenkinsBuilds.BuildsDetails
                     DataContext = this.viewModel
                 }
             };             
-        }
+        }       
 
         protected override void OnClose()
         {

@@ -15,6 +15,7 @@ namespace JenkinsBuilds.BuildsDetails
             this.Build = new Model.ExtendedBuildModel
             {
                 FullDisplayName = "My Job Name #14",
+                Cause = "Started by user Jan Kowalski",
                 Status = Model.BuildStatus.Success,
                 Duration = TimeSpan.FromMinutes(2) + TimeSpan.FromSeconds(15),
                 Timestamp = new DateTime(2013, 04, 07, 12, 56, 12),
