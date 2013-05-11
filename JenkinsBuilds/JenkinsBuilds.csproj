@@ -207,6 +207,7 @@
     <Compile Include="Jenkins\BuildWarnings.cs" />
     <Compile Include="Model\BuildModel.cs" />
     <Compile Include="Model\BuildStatus.cs" />
+    <Compile Include="Model\ChangeSetModel.cs" />
     <Compile Include="Model\ExtendedBuildModel.cs" />
     <Compile Include="Model\JobModel.cs" />
     <Compile Include="Model\NullBuildModel.cs" />

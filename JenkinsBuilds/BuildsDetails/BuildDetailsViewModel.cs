@@ -23,6 +23,11 @@ namespace JenkinsBuilds.BuildsDetails
 
         public bool HasTestResults { get; set; }
 
+        public bool HasChangeSets
+        {
+            get { return this.Build.ChangeSets.Any(); }
+        }
+
         public ICommand OpenBuildPageCommand { get; set; }
 
         public ICommand RebuildCommand { get; set; }

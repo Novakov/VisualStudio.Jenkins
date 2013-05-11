@@ -19,6 +19,12 @@ namespace JenkinsBuilds.BuildsDetails
                 Status = Model.BuildStatus.Success,
                 Duration = TimeSpan.FromMinutes(2) + TimeSpan.FromSeconds(15),
                 Timestamp = new DateTime(2013, 04, 07, 12, 56, 12),
+
+                ChangeSets = new []
+                {
+                    new ChangeSetModel { Author = "Jack O'Neill", Date = DateTime.Now.AddDays(-1), Message = "Dialed the stargate" },
+                    new ChangeSetModel { Author = "Sam Carter", Date = DateTime.Now.AddDays(-1), Message = "Fixed it!" },
+                }
             };
 
             this.HasWarningsReport = true;

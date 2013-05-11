@@ -62,6 +62,20 @@
             
         </Grid>
 
+        <StackPanel Visibility="{Binding HasChangeSets, Converter={StaticResource BooleanToVisibilityConverter}, Mode=OneWay}">
+            <Label Content="Change sets" Style="{StaticResource SectionHeaderStyle}"/>
+            
+            <ItemsControl ItemsSource="{Binding Build.ChangeSets}">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Margin="20,0,0,0">
+                            <Run Text="{Binding Message}" FontWeight="Bold"/> by <Run Text="{Binding Author}" /> at <Run Text="{Binding Date, StringFormat={}{0:dd MMM yyy HH:mm}}" />  
+                        </TextBlock>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </StackPanel>
+        
         <Label Content="Summary" Style="{StaticResource SectionHeaderStyle}"/>
 
         <StackPanel  Visibility="{Binding HasWarningsReport, Converter={StaticResource BooleanToVisibilityConverter}}">
