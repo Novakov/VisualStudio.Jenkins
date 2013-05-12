@@ -38,6 +38,6 @@ namespace JenkinsBuilds.Model
             }
 
             return this;
-        }
+        }        
     }
 }

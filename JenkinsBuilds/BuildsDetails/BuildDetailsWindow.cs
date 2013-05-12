@@ -69,5 +69,12 @@ namespace JenkinsBuilds.BuildsDetails
 
             return this;
         }
+
+        public BuildDetailsWindow LoadLazyBuildLog(Task<string> log)
+        {
+            this.viewModel.BuildLog = log;
+
+            return this;
+        }
     }
 }

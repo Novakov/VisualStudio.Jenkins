@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Text;
@@ -110,5 +111,17 @@ namespace JenkinsBuilds
             return absoluteUri;
         }
 
+
+        public async Task<string> GetRawDataAsync(Uri uri)
+        {
+            var request = this.CreateRequest(uri);
+
+            var response = await request.GetResponseAsync();
+
+            using (var reader = new StreamReader(response.GetResponseStream()))
+            {
+                return await reader.ReadToEndAsync();
+            }
+        }
     }
 }

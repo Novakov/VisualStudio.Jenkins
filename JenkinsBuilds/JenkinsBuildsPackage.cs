@@ -85,6 +85,8 @@ namespace JenkinsBuilds
                 window.LoadTests(testModel);
             }
 
+            window.LoadLazyBuildLog(client.GetRawDataAsync(buildModel.LogUrl));
+
             frame.Show();
         }
     }

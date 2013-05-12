@@ -86,10 +86,24 @@ namespace JenkinsBuilds.BuildsDetails
                 Name = "My Job name"
             };
 
+            this.BuildLog = Task.FromResult(CreateLog());
+
             this.OpenBuildPageCommand = new DelegateCommand(o => { });
             this.RebuildCommand = new DelegateCommand(o => { });
             this.OpenConsoleLogCommand = new DelegateCommand(o => { });
             this.OpenWarningCommand = new DelegateCommand(o => { });
+        }
+
+        private string CreateLog()
+        {
+            var sb = new StringBuilder();
+
+            for (int i = 0; i < 200; i++)
+            {
+                sb.AppendLine(new string(i.ToString()[0], 80));
+            }
+
+            return sb.ToString();
         }
     }
 }

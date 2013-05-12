@@ -28,12 +28,14 @@ namespace JenkinsBuilds.BuildsDetails
             get { return this.Build.ChangeSets.Any(); }
         }
 
+        public Task<string> BuildLog { get; set; }
+
         public ICommand OpenBuildPageCommand { get; set; }
 
         public ICommand RebuildCommand { get; set; }
 
         public ICommand OpenConsoleLogCommand { get; set; }
 
-        public ICommand OpenWarningCommand { get; set; }
+        public ICommand OpenWarningCommand { get; set; }        
     }
 }

@@ -23,6 +23,6 @@ namespace JenkinsBuilds.BuildsDetails
         public BuildDetailsView()
         {
             InitializeComponent();
-        }
+        }               
     }
 }

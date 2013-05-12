@@ -13,11 +13,11 @@
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="../themes/generic.xaml" />
-            </ResourceDictionary.MergedDictionaries>            
+            </ResourceDictionary.MergedDictionaries>
 
-            <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>            
+            <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
             <Converters:RelativeTimeConverter x:Key="RelativeTimeConverter"/>
-            <Converters:JobStatusImage x:Key="JobStatusImage" Size="32"/>            
+            <Converters:JobStatusImage x:Key="JobStatusImage" Size="32"/>
         </ResourceDictionary>
     </UserControl.Resources>
 
@@ -32,7 +32,7 @@
             </Style>
         </DockPanel.Resources>
 
-        <StackPanel DockPanel.Dock="Top" Orientation="Vertical">
+        <StackPanel DockPanel.Dock="Top" Orientation="Vertical" x:Name="header">
             <StackPanel Orientation="Horizontal">
                 <TeamExplorer:TextLink Text="Open build page" Command="{Binding OpenBuildPageCommand}" Style="{StaticResource TopLinkStyle}"/>
                 <Separator Style="{StaticResource VerticalSeparator}"/>
@@ -57,15 +57,24 @@
 
                 <TextBlock Grid.Column="2" Grid.Row="2" Text="{Binding Build.Cause}" VerticalAlignment="Center"/>
 
-            </Grid>
+            </Grid>           
         </StackPanel>
-        
-        <TabControl SelectedIndex="0" BorderThickness="0,1,0,0" Background="Transparent" >
+
+        <TabControl SelectedIndex="2" BorderThickness="0,1,0,0" Background="Transparent">
             <TabItem Header="Summary">
                 <local:SummaryTab DataContext="{Binding}"/>
             </TabItem>
             <TabItem Header="Change Sets" Visibility="{Binding HasChangeSets, Converter={StaticResource BooleanToVisibilityConverter}, Mode=OneWay}">
                 <local:ChangeSetTab DataContext="{Binding}" />
+            </TabItem>
+            <TabItem Header="Build log" x:Name="logTabHeader">                
+                <FlowDocumentReader ViewingMode="Scroll" VerticalContentAlignment="Stretch" VerticalAlignment="Top" ScrollViewer.VerticalScrollBarVisibility="Auto">
+                    <FlowDocument PagePadding="0">
+                        <Paragraph TextAlignment="Left" FontSize="12" FontFamily="Consolas" Margin="0" LineStackingStrategy="BlockLineHeight">
+                            <Run Text="{Binding BuildLog.Result, IsAsync=True, Mode=OneWay, FallbackValue='Loading build log...'}" />
+                        </Paragraph>
+                    </FlowDocument>
+                </FlowDocumentReader>
             </TabItem>
         </TabControl>
     </DockPanel>

@@ -24,7 +24,7 @@ namespace JenkinsBuilds.Model
 
         public Uri WarningsReportUrl
         {
-            get 
+            get
             {
                 return this.Url.AppendPath("warnings32Result/");
             }
@@ -54,13 +54,21 @@ namespace JenkinsBuilds.Model
             }
         }
 
+        public Uri LogUrl
+        {
+            get
+            {
+                return this.Url.AppendPath("consoleText/");
+            }
+        }
+
         public BuildModel LoadFrom(Build build)
-        {            
+        {
             this.Timestamp = build.Timestamp;
             this.Status = DecodeBuildStatus(build);
             this.Number = build.Number;
             this.Url = build.Url;
-            this.FullDisplayName = build.FullDisplayName;            
+            this.FullDisplayName = build.FullDisplayName;
 
             return this;
         }
