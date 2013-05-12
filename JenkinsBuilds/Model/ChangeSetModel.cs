@@ -9,18 +9,15 @@ namespace JenkinsBuilds.Model
     [PropertyChanged.ImplementPropertyChanged]
     public class ChangeSetModel
     {
-        public const string FetchTree = "changeSet[items[date,msg,author[fullName]]]";
+        public const string FetchTree = "changeSet[items[msg,author[fullName]]]";
 
         public string Author { get; set; }
-
-        public DateTime Date { get; set; }
-
+        
         public string Message { get; set; }
 
         public ChangeSetModel LoadFrom(ChangeSetItem set)
         {
-            this.Author = set.Author.FullName;
-            this.Date = set.Date;
+            this.Author = set.Author.FullName;            
             this.Message = set.Message;                
 
             return this;

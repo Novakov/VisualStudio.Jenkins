@@ -20,10 +20,10 @@ namespace JenkinsBuilds.BuildsDetails
                 Duration = TimeSpan.FromMinutes(2) + TimeSpan.FromSeconds(15),
                 Timestamp = new DateTime(2013, 04, 07, 12, 56, 12),
 
-                ChangeSets = new []
+                ChangeSets = new[]
                 {
-                    new ChangeSetModel { Author = "Jack O'Neill", Date = DateTime.Now.AddDays(-1), Message = "Dialed the stargate" },
-                    new ChangeSetModel { Author = "Sam Carter", Date = DateTime.Now.AddDays(-1), Message = "Fixed it!" },
+                    new ChangeSetModel { Author = "Jack O'Neill",  Message = "Dialed the stargate" },
+                    new ChangeSetModel { Author = "Sam Carter", Message = "Fixed it!" },
                 }
             };
 
@@ -90,6 +90,6 @@ namespace JenkinsBuilds.BuildsDetails
             this.RebuildCommand = new DelegateCommand(o => { });
             this.OpenConsoleLogCommand = new DelegateCommand(o => { });
             this.OpenWarningCommand = new DelegateCommand(o => { });
-        }        
+        }
     }
 }

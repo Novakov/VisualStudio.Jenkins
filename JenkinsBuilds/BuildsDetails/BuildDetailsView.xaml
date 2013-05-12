@@ -13,19 +13,16 @@
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="../themes/generic.xaml" />
-            </ResourceDictionary.MergedDictionaries>
-            <Converters:TestResultImage x:Key="TestResultImage"/>
+            </ResourceDictionary.MergedDictionaries>            
 
-            <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
-            <local:WarningTextLinkConverter x:Key="WarningTextLinkConverter"/>
+            <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>            
             <Converters:RelativeTimeConverter x:Key="RelativeTimeConverter"/>
-            <Converters:JobStatusImage x:Key="JobStatusImage" Size="32"/>
-
-            <Style x:Key="test" TargetType="ToggleButton" BasedOn="{StaticResource ExpandCollapseToggleStyle}" />
+            <Converters:JobStatusImage x:Key="JobStatusImage" Size="32"/>            
         </ResourceDictionary>
     </UserControl.Resources>
-    <StackPanel d:DataContext="{d:DesignInstance Type=local:DesignBuildDetailsViewModel,IsDesignTimeCreatable=True}">
-        <StackPanel.Resources>
+
+    <DockPanel LastChildFill="True" d:DataContext="{d:DesignInstance IsDesignTimeCreatable=True, Type={x:Type local:DesignBuildDetailsViewModel}}">
+        <DockPanel.Resources>
             <Style x:Key="TopLinkStyle" TargetType="{x:Type TeamExplorer:TextLink}">
                 <Setter Property="FontSize" Value="10" />
             </Style>
@@ -33,127 +30,43 @@
             <Style x:Key="SectionHeaderStyle" TargetType="{x:Type Label}" BasedOn="{StaticResource {x:Type Label}}">
                 <Setter Property="FontSize" Value="17" />
             </Style>
-        </StackPanel.Resources>
-        <StackPanel Orientation="Horizontal">
-            <TeamExplorer:TextLink Text="Open build page" Command="{Binding OpenBuildPageCommand}" Style="{StaticResource TopLinkStyle}"/>            
-            <Separator Style="{StaticResource VerticalSeparator}"/>
-            <TeamExplorer:TextLink Text="Open console log" Command="{Binding OpenConsoleLogCommand}" Style="{StaticResource TopLinkStyle}"/>
-        </StackPanel>
+        </DockPanel.Resources>
 
-        <Grid Height="80">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="40"/>
-                <RowDefinition Height="21"/>
-                <RowDefinition Height="21"/>
-            </Grid.RowDefinitions>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="45"/>
-                <ColumnDefinition Width="Auto"/>
-            </Grid.ColumnDefinitions>
-            <Image HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.RowSpan="2" Source="{Binding Build.Status, Converter={StaticResource JobStatusImage}}" />
-            
-            <Label Content="{Binding Build.FullDisplayName}" Grid.Column="1" VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch" FontWeight="Bold" FontSize="22"/>
-            
-            <TextBlock Grid.Column="1" Grid.Row="1" VerticalAlignment="Center" Margin="0,0,0,7" >
-                Completed in <Run Text="{Binding Build.Duration, StringFormat=%m\' minutes \'ss\' seconds\'}" />. Finshed <Run Text="{Binding Build.Timestamp, Converter={StaticResource RelativeTimeConverter}}" />.
-            </TextBlock>
-            
-            <TextBlock Grid.Column="2" Grid.Row="2" Text="{Binding Build.Cause}" VerticalAlignment="Center"/>
-            
-        </Grid>
+        <StackPanel DockPanel.Dock="Top" Orientation="Vertical">
+            <StackPanel Orientation="Horizontal">
+                <TeamExplorer:TextLink Text="Open build page" Command="{Binding OpenBuildPageCommand}" Style="{StaticResource TopLinkStyle}"/>
+                <Separator Style="{StaticResource VerticalSeparator}"/>
+                <TeamExplorer:TextLink Text="Open console log" Command="{Binding OpenConsoleLogCommand}" Style="{StaticResource TopLinkStyle}"/>
+            </StackPanel>
 
-        <StackPanel Visibility="{Binding HasChangeSets, Converter={StaticResource BooleanToVisibilityConverter}, Mode=OneWay}">
-            <Label Content="Change sets" Style="{StaticResource SectionHeaderStyle}"/>
-            
-            <ItemsControl ItemsSource="{Binding Build.ChangeSets}">
-                <ItemsControl.ItemTemplate>
-                    <DataTemplate>
-                        <TextBlock Margin="20,0,0,0">
-                            <Run Text="{Binding Message}" FontWeight="Bold"/> by <Run Text="{Binding Author}" /> at <Run Text="{Binding Date, StringFormat={}{0:dd MMM yyy HH:mm}}" />  
-                        </TextBlock>
-                    </DataTemplate>
-                </ItemsControl.ItemTemplate>
-            </ItemsControl>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="40"/>
+                    <RowDefinition Height="21"/>
+                    <RowDefinition Height="21"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="45"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <Image HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.RowSpan="2" Source="{Binding Build.Status, Converter={StaticResource JobStatusImage}}" />
+
+                <Label Content="{Binding Build.FullDisplayName}" Grid.Column="1" VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch" FontWeight="Bold" FontSize="22"/>
+
+                <TextBlock Grid.Column="1" Grid.Row="1" VerticalAlignment="Center" Margin="0,0,0,7" ><Run Text="Completed in "/><Run Text="{Binding Build.Duration, StringFormat=%m\' minutes \'ss\' seconds\'}" /><Run Text=". Finshed "/><Run Text="{Binding Build.Timestamp, Converter={StaticResource RelativeTimeConverter}}" /><Run Text="."/></TextBlock>
+
+                <TextBlock Grid.Column="2" Grid.Row="2" Text="{Binding Build.Cause}" VerticalAlignment="Center"/>
+
+            </Grid>
         </StackPanel>
         
-        <Label Content="Summary" Style="{StaticResource SectionHeaderStyle}"/>
-
-        <StackPanel  Visibility="{Binding HasWarningsReport, Converter={StaticResource BooleanToVisibilityConverter}}">
-            <StackPanel Orientation="Horizontal">
-                <ToggleButton x:Name="toggleWarnings" UseLayoutRounding="False" Style="{StaticResource ExpandCollapseToggleStyle}" HorizontalAlignment="Left" Margin="15,0,0,0" IsChecked="False"/>
-                <TextBlock TextWrapping="Wrap" DataContext="{Binding Warnings}" VerticalAlignment="Center">
-                <Run Text="{Binding Count}" /> warnings (<Run Text="{Binding NewCount}" /> new, <Run Text="{Binding FixedCount}" /> fixed).
-                </TextBlock>
-            </StackPanel>
-            <ItemsControl ItemsSource="{Binding Warnings.Warnings}" Margin="20,0,0,0" BorderBrush="{x:Null}" Background="{x:Null}" Visibility="{Binding IsChecked, Converter={StaticResource BooleanToVisibilityConverter}, ElementName=toggleWarnings}">
-                <ItemsControl.ItemTemplate>
-                    <DataTemplate>                     
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="16"/>
-                                <ColumnDefinition Width="Auto" />
-                                <ColumnDefinition Width="*"/>
-                            </Grid.ColumnDefinitions>
-                            <Grid.RowDefinitions>
-                                <RowDefinition />
-                            </Grid.RowDefinitions>
-
-                            <Image Grid.Column="0" Grid.Row="0" Source="/JenkinsBuilds;component/Images/warnings/normal.png" Width="16" Height="16" VerticalAlignment="Top"/>
-                            <TeamExplorer:TextLink Grid.Column="1" Grid.Row="0"  Text="{Binding Converter={StaticResource WarningTextLinkConverter}, Mode=OneWay}" Margin="5,0,0,0" CommandParameter="{Binding Mode=OneWay}" Command="{Binding DataContext.OpenWarningCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}" />
-                            <Label Grid.Column="2" Grid.Row="0"  Margin="0" Padding="0">
-                                <TextBlock Text="{Binding Message}" Margin="6,0,0,0" Padding="0" TextWrapping="Wrap" />
-                            </Label>
-                        </Grid>
-                    </DataTemplate>
-                </ItemsControl.ItemTemplate>
-            </ItemsControl>
-        </StackPanel>
-
-        <StackPanel  Visibility="{Binding HasTestResults, Converter={StaticResource BooleanToVisibilityConverter}}">
-            <StackPanel Orientation="Horizontal">
-                <ToggleButton x:Name="toggleTestResults" UseLayoutRounding="False" Style="{StaticResource ExpandCollapseToggleStyle}" HorizontalAlignment="Left" Margin="15,0,0,0" IsChecked="False"/>
-                <TextBlock TextWrapping="Wrap" DataContext="{Binding TestResults}" VerticalAlignment="Center">
-                <Run Text="{Binding Count, Mode=OneWay}" /> tests (<Run Text="{Binding PassCount}" /> passed, <Run Text="{Binding FailCount}" /> failed, <Run Text="{Binding SkipCount}" /> skipped). Completed in <Run Text="{Binding Duration, StringFormat={}{0:%m\' minutes \'s\' seconds\'}}" />.
-                </TextBlock>
-            </StackPanel>
-
-            <ItemsControl ItemsSource="{Binding TestResults.Suites}" Margin="20,0,0,0" BorderBrush="{x:Null}" Background="{x:Null}" Visibility="{Binding IsChecked, Converter={StaticResource BooleanToVisibilityConverter}, ElementName=toggleTestResults}">
-                <ItemsControl.ItemTemplate>
-                    <DataTemplate>
-                        <StackPanel>
-                            <StackPanel Orientation="Horizontal">
-                                <ToggleButton x:Name="toggleSuite" 
-                                              UseLayoutRounding="False" 
-                                              Style="{StaticResource test}" 
-                                              HorizontalAlignment="Left" 
-                                              Margin="10,0,0,0" 
-                                              IsChecked="False"
-                                              />
-                                <TextBlock Margin="5,0,0,0" Padding="0">
-                                    <Run Text="{Binding Name}"/> (<Run Text="{Binding PassCount, Mode=OneWay}" /> passed, 
-                                                                  <Run Text="{Binding FailCount, Mode=OneWay}" /> failed,
-                                                                  <Run Text="{Binding SkipCount, Mode=OneWay}" /> skipped)
-                                </TextBlock>
-                            </StackPanel>
-
-                            <ItemsControl ItemsSource="{Binding Cases}" 
-                                          Margin="30,0,0,0" 
-                                          Visibility="{Binding IsChecked, Converter={StaticResource BooleanToVisibilityConverter}, ElementName=toggleSuite}">
-                                <ItemsControl.ItemTemplate>
-                                    <DataTemplate>
-                                        <StackPanel Orientation="Horizontal">
-                                            <Image Source="{Binding Status, Converter={StaticResource TestResultImage}}" Width="16" Height="16"/>
-                                            <TextBlock>
-                                                <Run Text="{Binding Name}" />
-                                            </TextBlock>
-                                        </StackPanel>
-                                    </DataTemplate>
-                                </ItemsControl.ItemTemplate>
-                            </ItemsControl>
-                        </StackPanel>
-                    </DataTemplate>
-                </ItemsControl.ItemTemplate>
-            </ItemsControl>
-        </StackPanel>
-    </StackPanel>
+        <TabControl SelectedIndex="0" BorderThickness="0,1,0,0" Background="Transparent" >
+            <TabItem Header="Summary">
+                <local:SummaryTab DataContext="{Binding}"/>
+            </TabItem>
+            <TabItem Header="Change Sets" Visibility="{Binding HasChangeSets, Converter={StaticResource BooleanToVisibilityConverter}, Mode=OneWay}">
+                <local:ChangeSetTab DataContext="{Binding}" />
+            </TabItem>
+        </TabControl>
+    </DockPanel>
 </UserControl>

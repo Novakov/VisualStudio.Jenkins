@@ -168,7 +168,13 @@
     </Compile>
     <Compile Include="BuildsDetails\BuildDetailsViewModel.cs" />
     <Compile Include="BuildsDetails\BuildDetailsWindow.cs" />
+    <Compile Include="BuildsDetails\ChangeSetTab.xaml.cs">
+      <DependentUpon>ChangeSetTab.xaml</DependentUpon>
+    </Compile>
     <Compile Include="BuildsDetails\DesignBuildDetailsViewModel.cs" />
+    <Compile Include="BuildsDetails\SummaryTab.xaml.cs">
+      <DependentUpon>SummaryTab.xaml</DependentUpon>
+    </Compile>
     <Compile Include="BuildsDetails\WarningTextLinkConverter.cs" />
     <Compile Include="BuildsExplorer\AllJobsModel.cs" />
     <Compile Include="BuildsExplorer\BuildsExplorerView.xaml.cs">
@@ -304,6 +310,14 @@
   </ItemGroup>
   <ItemGroup>
     <Page Include="BuildsDetails\BuildDetailsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="BuildsDetails\ChangeSetTab.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="BuildsDetails\SummaryTab.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
