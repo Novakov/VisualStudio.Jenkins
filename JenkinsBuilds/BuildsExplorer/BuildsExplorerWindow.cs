@@ -19,6 +19,7 @@ namespace JenkinsBuilds.BuildsExplorer
         private BuildsExplorerViewModel viewModel;
 
         private JenkinsClient client;
+        private JobModel preselectedJob;
 
         public BuildsExplorerWindow()
         {
@@ -88,6 +89,12 @@ namespace JenkinsBuilds.BuildsExplorer
                     select new BuildModel().LoadFrom(b);
 
             return q.ToList();
-        }       
+        }
+
+        public void SelectJob(JobModel jobModel)
+        {
+            this.viewModel.SelectedInstance = this.viewModel.Instances.SingleOrDefault(x => new Uri(x.Url) == jobModel.ServerUrl);
+            ((BuildsExplorerView)this.Content).PreselectedJob = jobModel;
+        }
     }
 }

@@ -25,6 +25,8 @@ namespace JenkinsBuilds.BuildsExplorer
     {
         private Func<Uri, JenkinsClient> clientFactory;
 
+        public JobModel PreselectedJob { get; set; }
+
         public BuildsExplorerViewModel ViewModel
         {
             get { return (BuildsExplorerViewModel)this.DataContext; }
@@ -46,6 +48,13 @@ namespace JenkinsBuilds.BuildsExplorer
             jobs.Insert(0, new AllJobsModel());
 
             this.ViewModel.Jobs = jobs;
+
+            if (this.PreselectedJob !=null)
+            {
+                this.ViewModel.SelectedJob = jobs.SingleOrDefault(x => x.Url == this.PreselectedJob.Url);
+
+                this.PreselectedJob = null;
+            }
         }
 
         private async Task<List<JobModel>> GetJobsFromInstance(string instanceUrl)
@@ -77,6 +86,6 @@ namespace JenkinsBuilds.BuildsExplorer
             {
                 this.ViewModel.SelectedJob = this.ViewModel.Jobs.FirstOrDefault();
             }
-        }
+        }        
     }
 }
