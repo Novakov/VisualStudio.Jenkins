@@ -20,24 +20,24 @@ namespace JenkinsBuilds.Pages
     [TeamExplorerSection(BuildsSection.SectionId, BuildsPage.PageId, 10)]
     public class BuildsSection : Base.TeamExplorerSectionBase<BuildsSectionView>
     {
-        public const string SectionId = "{5D23BE7D-C7AA-4938-ACED-C4A26587CF7F}";        
+        public const string SectionId = "{5D23BE7D-C7AA-4938-ACED-C4A26587CF7F}";
 
         private IDictionary<Uri, BackgroundJenkinsMonitor> monitors;
 
         private Settings settings;
 
         public new BuildsSectionViewModel ViewModel { get { return (BuildsSectionViewModel)base.ViewModel; } }
-        
+
         public BuildsSection()
         {
             this.settings = Properties.Settings.Default;
 
             this.Title = "Favorite jobs";
-            
+
             this.IsExpanded = true;
             this.IsVisible = true;
 
-            this.monitors = new Dictionary<Uri, BackgroundJenkinsMonitor>();           
+            this.monitors = new Dictionary<Uri, BackgroundJenkinsMonitor>();
         }
 
         private void RemoveFromFavorites(object obj)
@@ -73,17 +73,30 @@ namespace JenkinsBuilds.Pages
             var jobFetchTasks = from i in this.settings.Instances
                                 let client = new JenkinsClient(new Uri(i.Url))
                                 from j in i.FavoriteJobs
-                                select client.GetResourceAsync<Job>(j, JobModel.FetchTree)
-                                    .ContinueWith(z => new JobModel().LoadFrom(z.Result));
-
-            var vms = await Task.WhenAll(jobFetchTasks);
+                                select client.GetResourceAsync<Job>(j, JobModel.FetchTree);                                              
 
             this.StopMonitors();
 
-            foreach (var item in vms)
+            var jobs = new List<JobModel>();
+
+            foreach (var task in jobFetchTasks)
             {
+                JobModel item;
+
+                try
+                {
+                    item = new JobModel().LoadFrom(await task);
+                }
+                catch (Exception e)
+                {
+                    this.ShowError("Failed to get job: {0}", e.Message);
+                    continue;
+                }
+
+                jobs.Add(item);
+
                 BackgroundJenkinsMonitor monitor;
-                
+
                 if (!this.monitors.TryGetValue(item.ServerUrl, out monitor))
                 {
                     monitor = new BackgroundJenkinsMonitor(item.ServerUrl);
@@ -100,16 +113,16 @@ namespace JenkinsBuilds.Pages
                 item.Value.Start();
             }
 
-            this.ViewModel.Jobs = new ObservableCollection<JobModel>(vms);
+            this.ViewModel.Jobs = new ObservableCollection<JobModel>(jobs);
         }
 
         private void SubscribeMonitorEvents(JobModel item, BackgroundJenkinsMonitor monitor)
         {
             monitor.BuildChanged += (s, e) =>
             {
-                if (e.Job.Url == item.Url) 
+                if (e.Job.Url == item.Url)
                 {
-                    item.LoadFrom(e.Job);               
+                    item.LoadFrom(e.Job);
                 }
             };
         }
