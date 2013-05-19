@@ -306,6 +306,11 @@
     <Resource Include="Images\testResults\passed.png" />
     <Resource Include="Images\testResults\failed.png" />
     <Resource Include="Images\testResults\skipped.png" />
+    <Resource Include="Resources\lunapic_136899334771306_2.png" />
+    <Content Include="Resources\logo.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
     <Content Include="Resources\Package.ico" />
   </ItemGroup>
   <ItemGroup>

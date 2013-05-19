@@ -33,11 +33,11 @@
         </DockPanel.Resources>
 
         <StackPanel DockPanel.Dock="Top" Orientation="Vertical" x:Name="header">
-            <StackPanel Orientation="Horizontal">
+            <!--<StackPanel Orientation="Horizontal">
                 <TeamExplorer:TextLink Text="Open build page" Command="{Binding OpenBuildPageCommand}" Style="{StaticResource TopLinkStyle}"/>
                 <Separator Style="{StaticResource VerticalSeparator}"/>
                 <TeamExplorer:TextLink Text="Open console log" Command="{Binding OpenConsoleLogCommand}" Style="{StaticResource TopLinkStyle}"/>
-            </StackPanel>
+            </StackPanel>-->
 
             <Grid>
                 <Grid.RowDefinitions>

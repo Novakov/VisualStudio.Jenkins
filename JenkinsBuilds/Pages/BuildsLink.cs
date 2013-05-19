@@ -18,7 +18,9 @@ namespace JenkinsBuilds.Pages
         public BuildsLink([Import(typeof(SVsServiceProvider))]IServiceProvider serviceProvider)
             : base(serviceProvider)
         {
-            this.Text = "Jenkins";                      
+            this.Text = "Jenkins";
+
+            this.Image = Resources.SmallIco;
         }
 
         public override void Execute()

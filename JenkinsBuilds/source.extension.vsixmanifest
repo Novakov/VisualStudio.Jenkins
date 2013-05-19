@@ -4,6 +4,8 @@
     <Identity Id="9408590f-6811-4ff2-9580-e0d89ecfc9f7" Version="1.0" Language="en-US" Publisher="Maciej Nowak" />
     <DisplayName>JenkinsBuilds</DisplayName>
     <Description>Manage Jenkins build's from Visual Studio</Description>
+    <Icon>Resources\logo.png</Icon>
+    <Tags>Jenkins</Tags>
   </Metadata>
   <Installation InstalledByMsi="false">
     <InstallationTarget Id="Microsoft.VisualStudio.Pro" Version="11.0" />
