@@ -15,5 +15,17 @@ namespace JenkinsBuilds
 
             return builder.Uri;
         }
+
+        public static Uri EnsureTrailingSlash(this Uri uri)
+        {
+            var builder = new UriBuilder(uri);
+
+            if (!builder.Path.EndsWith("/"))
+            {
+                builder.Path += "/";
+            }
+
+            return builder.Uri;
+        }
     }
 }

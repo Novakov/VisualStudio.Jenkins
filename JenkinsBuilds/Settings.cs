@@ -56,12 +56,12 @@ namespace JenkinsBuilds.Properties
             server.FavoriteJobs.Remove(job.ToString());
         }
 
-        public void AddInstance(string displayName, string serverUrl, bool requiresAuthentication)
+        public void AddInstance(string displayName, Uri serverUrl, bool requiresAuthentication)
         {
             this.Instances.Add(new JenkinsInstance
             {
                 DisplayName = displayName,
-                Url = serverUrl,
+                Url = serverUrl.EnsureTrailingSlash().ToString(),
                 RequiresAuthentication = requiresAuthentication,
                 FavoriteJobs = new System.Collections.Generic.List<string>()
             });

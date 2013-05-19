@@ -50,7 +50,7 @@ namespace JenkinsBuilds.Pages
                 var b = cred.Save();
             }
 
-            Properties.Settings.Default.AddInstance(this.ViewModel.DisplayName, this.ViewModel.Url, this.ViewModel.RequiresAuthentication);
+            Properties.Settings.Default.AddInstance(this.ViewModel.DisplayName, new Uri(this.ViewModel.Url), this.ViewModel.RequiresAuthentication);
 
             Properties.Settings.Default.Save();
 
