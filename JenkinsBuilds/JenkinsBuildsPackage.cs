@@ -20,7 +20,8 @@ namespace JenkinsBuilds
     [Guid(GuidList.guidJenkinsBuildsPkgString)]
     [ProvideToolWindow(typeof(BuildsDetails.BuildDetailsWindow), Style = VsDockStyle.Tabbed, Orientation = ToolWindowOrientation.Right, Window = EnvDTE.Constants.vsWindowKindMainWindow, MultiInstances = true, DocumentLikeTool = true)]
     [ProvideToolWindow(typeof(BuildsExplorer.BuildsExplorerWindow), Style = VsDockStyle.Tabbed, Orientation = ToolWindowOrientation.Right, Window = EnvDTE.Constants.vsWindowKindMainWindow, DocumentLikeTool = true)]
-    [ProvideAutoLoad("{4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}")]
+    [ProvideAutoLoad(VSConstants.UICONTEXT.SolutionExists_string)]
+    [ProvideAutoLoad(VSConstants.UICONTEXT.NoSolution_string)]
     public sealed class JenkinsBuildsPackage : Package
     {
         public static JenkinsBuildsPackage Instance { get; private set; }

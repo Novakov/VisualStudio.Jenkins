@@ -3,6 +3,6 @@
   
   
   <Target Name="Build">
-    <MSBuild Projects="JenkinsBuilds.sln" Properties="Configuration=Release"   />
+    <MSBuild Projects="JenkinsBuilds.sln" Properties="Configuration=Release" />
   </Target>
 </Project>
