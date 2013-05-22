@@ -28,6 +28,11 @@ namespace JenkinsBuilds.BuildsDetails
             get { return this.Build.ChangeSets.Any(); }
         }
 
+        public bool HasArtifacts
+        {
+            get { return this.Build.Artifacts.Any(); }
+        }
+
         public Task<string> BuildLog { get; set; }
 
         public ICommand OpenBuildPageCommand { get; set; }

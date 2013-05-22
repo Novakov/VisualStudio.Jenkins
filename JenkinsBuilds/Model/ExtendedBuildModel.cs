@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Commons.Paths;
 using JenkinsBuilds.Jenkins;
 using Niles.Model;
 
@@ -11,13 +12,15 @@ namespace JenkinsBuilds.Model
     [PropertyChanged.ImplementPropertyChanged]
     public class ExtendedBuildModel : BuildModel
     {
-        public new const string FetchTree = BuildModel.FetchTree + ",duration,actions[causes[shortDescription]]," + ChangeSetModel.FetchTree;        
+        public new const string FetchTree = BuildModel.FetchTree + ",artifacts[fileName,relativePath],duration,actions[causes[shortDescription]]," + ChangeSetModel.FetchTree;        
 
         public TimeSpan Duration { get; set; }
 
         public string Cause { get; set; }
 
         public ChangeSetModel[] ChangeSets { get; set; }
+
+        public Item[] Artifacts { get; set; }
 
         public ExtendedBuildModel LoadFrom(ExtendedBuild build)
         {
@@ -36,6 +39,13 @@ namespace JenkinsBuilds.Model
             {
                 this.ChangeSets = new ChangeSetModel[0];
             }
+
+            var loader = new PathTreeLoader();
+
+            this.Artifacts = loader.Load(build.Artifacts.Select(x => x.RelativePath))
+                                .ConvertToLeaves()
+                                .JoinPassthroughNodes()
+                                .ToArray();
 
             return this;
         }        

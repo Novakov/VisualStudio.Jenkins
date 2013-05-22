@@ -60,12 +60,15 @@
             </Grid>           
         </StackPanel>
 
-        <TabControl SelectedIndex="2" BorderThickness="0,1,0,0" Background="Transparent">
+        <TabControl SelectedIndex="0" BorderThickness="0,1,0,0" Background="Transparent">
             <TabItem Header="Summary">
                 <local:SummaryTab DataContext="{Binding}"/>
             </TabItem>
             <TabItem Header="Change Sets" Visibility="{Binding HasChangeSets, Converter={StaticResource BooleanToVisibilityConverter}, Mode=OneWay}">
                 <local:ChangeSetTab DataContext="{Binding}" />
+            </TabItem>
+            <TabItem Header="Artifacts" Visibility="{Binding HasArtifacts, Converter={StaticResource BooleanToVisibilityConverter}, Mode=OneWay}">
+                <local:ArtifactsTab DataContext="{Binding Build.Artifacts}" />
             </TabItem>
             <TabItem Header="Build log" x:Name="logTabHeader">                
                 <FlowDocumentReader ViewingMode="Scroll" VerticalContentAlignment="Stretch" VerticalAlignment="Top" ScrollViewer.VerticalScrollBarVisibility="Auto">

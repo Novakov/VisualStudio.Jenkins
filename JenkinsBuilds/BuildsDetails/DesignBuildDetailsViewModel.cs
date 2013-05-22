@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Commons.Paths;
 using JenkinsBuilds.Commands;
 using JenkinsBuilds.Model;
 
@@ -24,6 +25,23 @@ namespace JenkinsBuilds.BuildsDetails
                 {
                     new ChangeSetModel { Author = "Jack O'Neill",  Message = "Dialed the stargate" },
                     new ChangeSetModel { Author = "Sam Carter", Message = "Fixed it!" },
+                },
+
+                Artifacts = new Item[]
+                {
+                    new FileItem { Name = "File1.txt" },
+                    new FolderItem 
+                    {
+                        Name = "Folder1",
+                        Children = new List<Item>
+                        {
+                            new FolderItem { Name = "Folder2" },
+                            new FolderItem { Name = "Folder3" },
+                            new FileItem { Name = "File2.txt" },
+                            new FileItem { Name = "File3.txt" },
+                            new FileItem { Name = "File4.txt" },
+                        }
+                    }
                 }
             };
 

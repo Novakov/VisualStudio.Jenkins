@@ -163,6 +163,9 @@
     <Compile Include="Base\TeamExplorerViewableBase.cs" />
     <Compile Include="Base\ViewModelBase.cs" />
     <Compile Include="BuildChangedEventArgs.cs" />
+    <Compile Include="BuildsDetails\ArtifactsTab.xaml.cs">
+      <DependentUpon>ArtifactsTab.xaml</DependentUpon>
+    </Compile>
     <Compile Include="BuildsDetails\BuildDetailsView.xaml.cs">
       <DependentUpon>BuildDetailsView.xaml</DependentUpon>
     </Compile>
@@ -261,6 +264,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Configuration\JenkinsInstance.cs" />
     <Compile Include="Settings.cs" />
+    <Compile Include="TypeBasedTemplateSelector.cs" />
     <Compile Include="UriExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -307,6 +311,8 @@
     <Resource Include="Images\testResults\failed.png" />
     <Resource Include="Images\testResults\skipped.png" />
     <Resource Include="Resources\lunapic_136899334771306_2.png" />
+    <Resource Include="Images\treeView\folder.png" />
+    <Resource Include="Images\treeView\file.png" />
     <Content Include="Resources\logo.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <IncludeInVSIX>true</IncludeInVSIX>
@@ -314,6 +320,10 @@
     <Content Include="Resources\Package.ico" />
   </ItemGroup>
   <ItemGroup>
+    <Page Include="BuildsDetails\ArtifactsTab.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="BuildsDetails\BuildDetailsView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -355,7 +365,12 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\Commons\Commons.csproj">
+      <Project>{a85ebd13-68f7-4642-991f-9df0b20caa3c}</Project>
+      <Name>Commons</Name>
+    </ProjectReference>
+  </ItemGroup>
   <PropertyGroup>
     <UseCodebase>true</UseCodebase>
   </PropertyGroup>
