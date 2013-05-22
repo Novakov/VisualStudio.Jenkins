@@ -28,7 +28,7 @@ namespace JenkinsBuilds.Pages
             this.IsBusy = false;
         }
 
-        private void Save(object obj)
+        private async void Save(object obj)
         {            
             if (this.ViewModel.RequiresAuthentication)
             {                
@@ -48,6 +48,17 @@ namespace JenkinsBuilds.Pages
                 };
 
                 var b = cred.Save();
+            }
+
+            var client = new JenkinsClient(new Uri(this.ViewModel.Url));
+
+            var version = await client.GetVersion();
+
+            if (version == null)
+            {
+                this.ShowError("Url does not point to Jenkins instance");
+
+                return;
             }
 
             Properties.Settings.Default.AddInstance(this.ViewModel.DisplayName, new Uri(this.ViewModel.Url), this.ViewModel.RequiresAuthentication);

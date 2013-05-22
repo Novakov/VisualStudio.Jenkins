@@ -123,5 +123,21 @@ namespace JenkinsBuilds
                 return await reader.ReadToEndAsync();
             }
         }
+
+        public async Task<Version> GetVersion()
+        {
+            var request = this.CreateRequest(this.ServerUrl);
+
+            var response = await request.GetResponseAsync();
+
+            var version = response.Headers["X-Jenkins"];
+
+            if (string.IsNullOrWhiteSpace(version))
+            {
+                return null;
+            }
+
+            return Version.Parse(version);
+        }
     }
 }
