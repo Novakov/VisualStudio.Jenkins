@@ -264,6 +264,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Configuration\JenkinsInstance.cs" />
     <Compile Include="Settings.cs" />
+    <Compile Include="StatusBarProgressReporter.cs" />
     <Compile Include="TypeBasedTemplateSelector.cs" />
     <Compile Include="UriExtensions.cs" />
   </ItemGroup>

@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Commons.Paths;
 
 namespace JenkinsBuilds.BuildsDetails
 {
@@ -20,9 +21,24 @@ namespace JenkinsBuilds.BuildsDetails
     /// </summary>
     public partial class ArtifactsTab : UserControl
     {
+        public BuildDetailsViewModel ViewModel
+        {
+            get { return (BuildDetailsViewModel)this.DataContext; }
+        }
+
         public ArtifactsTab()
         {
             InitializeComponent();
         }
+
+        private void MenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            var item = (FileItem)((FrameworkElement)sender).DataContext;
+            var ancestorsAndSelf = new[] { item }.Union(item.Ancestors()).Reverse();
+
+            var path = string.Join("/", ancestorsAndSelf.Select(x => x.Name));
+
+            this.ViewModel.ViewFileCommand.ExecuteIfCan(path);
+        }      
     }
 }

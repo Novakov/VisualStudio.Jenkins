@@ -68,7 +68,7 @@
                 <local:ChangeSetTab DataContext="{Binding}" />
             </TabItem>
             <TabItem Header="Artifacts" Visibility="{Binding HasArtifacts, Converter={StaticResource BooleanToVisibilityConverter}, Mode=OneWay}">
-                <local:ArtifactsTab DataContext="{Binding Build.Artifacts}" />
+                <local:ArtifactsTab DataContext="{Binding}" />
             </TabItem>
             <TabItem Header="Build log" x:Name="logTabHeader">                
                 <FlowDocumentReader ViewingMode="Scroll" VerticalContentAlignment="Stretch" VerticalAlignment="Top" ScrollViewer.VerticalScrollBarVisibility="Auto">

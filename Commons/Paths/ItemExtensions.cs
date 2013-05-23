@@ -44,7 +44,7 @@ namespace Commons.Paths
                 {
                     var folderItem = (FolderItem)item;
 
-                    if (folderItem.Children.Count == 1)
+                    if (folderItem.Children.Count == 1 && folderItem.Children[0] is FolderItem)
                     {
                         foreach (var child in folderItem.Children.JoinPassthroughNodes())
                         {
@@ -59,6 +59,29 @@ namespace Commons.Paths
                         yield return folderItem;
                     }
                 }
+            }
+        }
+
+        public static IEnumerable<T> FixUpParents<T>(this IEnumerable<T> @this)
+            where T : Item
+        {
+            foreach (var item in @this.OfType<FolderItem>())
+            {
+                item.Children.ForEach(x => x.Parent = item);
+                item.Children.FixUpParents();
+            }
+
+            return @this;
+        }
+
+        public static IEnumerable<Item> Ancestors(this Item @this)
+        {
+            var item = @this.Parent;
+
+            while (item != null)
+            {
+                yield return item;
+                item = item.Parent;
             }
         }
     }

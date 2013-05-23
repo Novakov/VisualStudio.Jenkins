@@ -41,6 +41,8 @@ namespace JenkinsBuilds.BuildsDetails
 
         public ICommand OpenConsoleLogCommand { get; set; }
 
-        public ICommand OpenWarningCommand { get; set; }        
+        public ICommand OpenWarningCommand { get; set; }
+
+        public ICommand ViewFileCommand { get; set; }
     }
 }

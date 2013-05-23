@@ -90,5 +90,10 @@ namespace JenkinsBuilds
 
             frame.Show();
         }
+
+        public TService GetService<TService, TType>()
+        {
+            return (TService)this.GetService(typeof(TType));
+        }
     }
 }

@@ -9,5 +9,7 @@ namespace Commons.Paths
     public abstract class Item
     {
         public string Name { get; set; }
+
+        public Item Parent { get; set; }
     }
 }

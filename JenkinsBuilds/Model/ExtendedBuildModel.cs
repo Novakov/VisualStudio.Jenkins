@@ -45,9 +45,16 @@ namespace JenkinsBuilds.Model
             this.Artifacts = loader.Load(build.Artifacts.Select(x => x.RelativePath))
                                 .ConvertToLeaves()
                                 .JoinPassthroughNodes()
+                                .ToArray()
+                                .FixUpParents()
                                 .ToArray();
 
             return this;
-        }        
+        }
+
+        public Uri GetArtifactUrl(string path)
+        {
+            return this.Url.AppendPath("artifact/" + path + "/*view*/");
+        }
     }
 }

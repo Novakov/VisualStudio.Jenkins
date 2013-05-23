@@ -16,14 +16,16 @@ namespace JenkinsBuilds.BuildsDetails
 {
     public class BuildDetailsWindow : ToolWindowPane
     {
-        private BuildDetailsViewModel viewModel;
+        private BuildDetailsViewModel viewModel;        
 
         public BuildDetailsWindow()
         {
             this.viewModel = new BuildDetailsViewModel
             {
                 HasWarningsReport = false,
-                HasTestResults = false,                
+                HasTestResults = false,   
+             
+                ViewFileCommand = new DelegateCommand(ViewFile)
             };            
 
             this.Content = new ScrollViewer
@@ -33,6 +35,22 @@ namespace JenkinsBuilds.BuildsDetails
                     DataContext = this.viewModel
                 }
             };             
+        }
+
+        private async void ViewFile(object obj)
+        {
+            var path = (string)obj;
+
+            var client = new JenkinsClient(this.viewModel.Job.ServerUrl);
+
+            var url = this.viewModel.Build.GetArtifactUrl(path);
+
+            var statusBar = JenkinsBuildsPackage.Instance.GetService<IVsStatusbar, SVsStatusbar>();
+
+            //using (var dest = Sys)
+            {
+                await client.DownloadFileAsync(Stream.Null, url, statusBar.ProgressReporter(path));
+            }            
         }       
 
         protected override void OnClose()

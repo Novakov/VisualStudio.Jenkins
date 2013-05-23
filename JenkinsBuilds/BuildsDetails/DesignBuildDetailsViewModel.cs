@@ -42,7 +42,7 @@ namespace JenkinsBuilds.BuildsDetails
                             new FileItem { Name = "File4.txt" },
                         }
                     }
-                }
+                }.FixUpParents().ToArray()
             };
 
             this.HasWarningsReport = true;

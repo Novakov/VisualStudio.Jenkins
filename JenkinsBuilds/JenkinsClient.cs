@@ -11,6 +11,7 @@ using JenkinsBuilds.Jenkins;
 using Niles.Client;
 using Niles.Json;
 using Niles.Model;
+using Commons;
 
 namespace JenkinsBuilds
 {
@@ -138,6 +139,18 @@ namespace JenkinsBuilds
             }
 
             return Version.Parse(version);
+        }
+
+        public async Task DownloadFileAsync(Stream destination, Uri url, IProgress<ProgressReport> progress)
+        {
+            var request = this.CreateRequest(url);
+
+            var response = await request.GetResponseAsync();
+
+            using (var stream = response.GetResponseStream())
+            {
+                await stream.CopyToAsync(destination, progress, totalSize: response.ContentLength);
+            }
         }
     }
 }
