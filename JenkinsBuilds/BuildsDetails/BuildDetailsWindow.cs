@@ -43,14 +43,29 @@ namespace JenkinsBuilds.BuildsDetails
 
             var client = new JenkinsClient(this.viewModel.Job.ServerUrl);
 
-            var url = this.viewModel.Build.GetArtifactUrl(path);
+            var url = this.viewModel.Build.GetArtifactUrl(path);            
 
-            var statusBar = JenkinsBuildsPackage.Instance.GetService<IVsStatusbar, SVsStatusbar>();
+            var caption = string.Format("Downloading artifact {0}...", path);
 
-            //using (var dest = Sys)
+            var destPath = Path.Combine(Path.GetTempPath(), "VS_JenkinsBuilds", this.viewModel.Job.Name, this.viewModel.Build.Number.Value.ToString(), path);
+
+            if (!File.Exists(destPath))
             {
-                await client.DownloadFileAsync(Stream.Null, url, statusBar.ProgressReporter(path));
-            }            
+
+                var dirName = Path.GetDirectoryName(destPath);
+
+                if (!Directory.Exists(dirName))
+                {
+                    Directory.CreateDirectory(dirName);
+                }
+
+                using (var dest = File.Create(destPath))
+                {
+                    await client.DownloadFileAsync(dest, url, JenkinsBuildsPackage.Instance.StatusBar.ProgressReporter(caption));
+                }
+            }
+
+            JenkinsBuildsPackage.Instance.OpenFile(destPath);
         }       
 
         protected override void OnClose()

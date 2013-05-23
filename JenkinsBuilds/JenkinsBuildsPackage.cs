@@ -26,9 +26,21 @@ namespace JenkinsBuilds
     {
         public static JenkinsBuildsPackage Instance { get; private set; }
 
+        public EnvDTE.DTE DTE { get; private set; }
+
+        public IVsStatusbar StatusBar { get; private set; }      
+
         public JenkinsBuildsPackage()
         {
             JenkinsBuildsPackage.Instance = this;
+        }
+
+        protected override void Initialize()
+        {
+            base.Initialize();
+
+            this.DTE = this.GetService<EnvDTE.DTE, EnvDTE.DTE>();
+            this.StatusBar = this.GetService<IVsStatusbar, SVsStatusbar>(); ;
         }
 
         public TWindow FindWindow<TWindow>(bool create, int id = 0)
@@ -94,6 +106,11 @@ namespace JenkinsBuilds
         public TService GetService<TService, TType>()
         {
             return (TService)this.GetService(typeof(TType));
+        }
+
+        public void OpenFile(string path)
+        {
+            this.DTE.ItemOperations.OpenFile(path);
         }
     }
 }
