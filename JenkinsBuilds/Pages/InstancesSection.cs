@@ -60,14 +60,12 @@ namespace JenkinsBuilds.Pages
             {
                 AddInstanceCommand = new DelegateCommand(OpenAddJenkinsPage),
                 ViewJobsCommand = new DelegateCommand(OpenJobsPage),
-                RemoveInstanceCommand = new DelegateCommand(RemoveInstance)
+                RemoveInstanceCommand = new DelegateCommand<JenkinsInstance>(RemoveInstance)
             };
         }
 
-        private void RemoveInstance(object obj)
+        private void RemoveInstance(JenkinsInstance instance)
         {
-            var instance = (JenkinsInstance)obj;
-
             Settings.Default.Instances.Remove(instance);
             Settings.Default.Save();
 

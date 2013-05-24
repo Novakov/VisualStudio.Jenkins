@@ -8,7 +8,7 @@ using System.Windows.Input;
 namespace JenkinsBuilds.Commands
 {
     public class DelegateCommand : ICommand
-    {       
+    {
         private Func<object, bool> canExecute;
         private Action<object> action;
 
@@ -28,10 +28,19 @@ namespace JenkinsBuilds.Commands
         {
             return canExecute == null ? true : canExecute(parameter);
         }
-        
+
         public void Execute(object parameter)
         {
             action(parameter);
+        }
+    }
+
+    public class DelegateCommand<TParam> : DelegateCommand
+    {
+        public DelegateCommand(Action<TParam> action, Func<TParam, bool> canExecute = null)
+            : base(p => action((TParam)p), p => canExecute == null ? true : canExecute((TParam)p))
+        {
+
         }
     }
 }

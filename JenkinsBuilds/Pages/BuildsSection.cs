@@ -47,10 +47,8 @@ namespace JenkinsBuilds.Pages
             this.monitors = new Dictionary<Uri, BackgroundJenkinsMonitor>();            
         }
 
-        private void RemoveFromFavorites(object obj)
+        private void RemoveFromFavorites(JobModel job)
         {
-            var job = (JobModel)obj;
-
             this.settings.RemoveJob(job.Url);
 
             this.settings.Save();
@@ -58,10 +56,8 @@ namespace JenkinsBuilds.Pages
             this.Refresh();
         }
 
-        private void BuildNow(object obj)
+        private void BuildNow(JobModel job)
         {
-            var job = (JobModel)obj;
-
             this.clientFactory.GetClient(job.ServerUrl).StartBuild(job.Url);
         }
 
@@ -160,28 +156,26 @@ namespace JenkinsBuilds.Pages
         {
             return new BuildsSectionViewModel
             {
-                BuildNowCommand = new DelegateCommand(BuildNow),
-                RemoveFromFavorites = new DelegateCommand(RemoveFromFavorites),
-                OpenBuildDetailsCommand = new DelegateCommand(OpenBuildDetails),
-                ViewBuildsCommand = new DelegateCommand(ViewBuilds)
+                BuildNowCommand = new DelegateCommand<JobModel>(BuildNow),
+                RemoveFromFavorites = new DelegateCommand<JobModel>(RemoveFromFavorites),
+                OpenBuildDetailsCommand = new DelegateCommand<JobModel>(OpenBuildDetails),
+                ViewBuildsCommand = new DelegateCommand<JobModel>(ViewBuilds)
             };
         }
 
-        private void ViewBuilds(object obj)
+        private void ViewBuilds(JobModel job)
         {            
             var window = this.windowManager.FindWindow<BuildsExplorer.BuildsExplorerWindow>(true);
          
             var frame = (IVsWindowFrame)window.Frame;
 
-            window.SelectJob((JobModel)obj);
+            window.SelectJob(job);
 
             frame.Show();
         }
 
-        private void OpenBuildDetails(object obj)
+        private void OpenBuildDetails(JobModel job)
         {
-            var job = (JobModel)obj;
-
             windowManager.OpenBuildDetails(job.ServerUrl, job.LastBuild);
         }
     }

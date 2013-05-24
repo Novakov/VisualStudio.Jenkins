@@ -15,7 +15,7 @@
             </ResourceDictionary.MergedDictionaries>
 
             <Converters:TestResultImage x:Key="TestResultImage"/>
-            
+
             <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
             <local:WarningTextLinkConverter x:Key="WarningTextLinkConverter"/>
 
@@ -74,11 +74,13 @@
                                               Margin="10,0,0,0" 
                                               IsChecked="False"
                                               />
-                                <TextBlock Margin="5,0,0,0" Padding="0">
+                                <Label Margin="5,0,0,0" Padding="0">
+                                    <TextBlock>
                                     <Run Text="{Binding Name}"/> (<Run Text="{Binding PassCount, Mode=OneWay}" /> passed, 
                                                                   <Run Text="{Binding FailCount, Mode=OneWay}" /> failed,
                                                                   <Run Text="{Binding SkipCount, Mode=OneWay}" /> skipped)
-                                </TextBlock>
+                                    </TextBlock>
+                                </Label>
                             </StackPanel>
 
                             <ItemsControl ItemsSource="{Binding Cases}" 
@@ -88,9 +90,8 @@
                                     <DataTemplate>
                                         <StackPanel Orientation="Horizontal">
                                             <Image Source="{Binding Status, Converter={StaticResource TestResultImage}}" Width="16" Height="16"/>
-                                            <TextBlock>
-                                                <Run Text="{Binding Name}" />
-                                            </TextBlock>
+                                            
+                                            <Label Margin="0" Padding="0" Content="{Binding Name}" />
                                         </StackPanel>
                                     </DataTemplate>
                                 </ItemsControl.ItemTemplate>

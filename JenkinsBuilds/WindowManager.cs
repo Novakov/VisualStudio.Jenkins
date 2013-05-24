@@ -49,19 +49,15 @@ namespace JenkinsBuilds
             var warnings = client.GetResourceIfAvailable<BuildWarnings>(buildModel.WarningsReportUrl, WarningsModel.FetchTree);
 
             if (warnings != null)
-            {
-                var warningsModel = new WarningsModel().LoadFrom(warnings);
-
-                window.LoadWarnings(warningsModel);
+            {                
+                window.LoadWarnings(new WarningsModel().LoadFrom(warnings));
             }
 
             var testResult = client.GetResourceIfAvailable<TestResults>(buildModel.TestReportUrl, TestResultModel.FetchTree);
 
             if (testResult != null)
-            {
-                var testModel = new TestResultModel().LoadFrom(testResult);
-
-                window.LoadTests(testModel);
+            {               
+                window.LoadTests(new TestResultModel().LoadFrom(testResult));
             }
 
             window.LoadLazyBuildLog(client.GetRawDataAsync(buildModel.LogUrl));

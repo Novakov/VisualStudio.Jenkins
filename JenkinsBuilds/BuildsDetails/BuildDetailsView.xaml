@@ -71,7 +71,7 @@
                 <local:ArtifactsTab DataContext="{Binding}" />
             </TabItem>
             <TabItem Header="Build log" x:Name="logTabHeader">                
-                <FlowDocumentReader ViewingMode="Scroll" VerticalContentAlignment="Stretch" VerticalAlignment="Top" ScrollViewer.VerticalScrollBarVisibility="Auto">
+                <FlowDocumentReader ViewingMode="Scroll" VerticalContentAlignment="Stretch" VerticalAlignment="Top" ScrollViewer.VerticalScrollBarVisibility="Hidden">
                     <FlowDocument PagePadding="0">
                         <Paragraph TextAlignment="Left" FontSize="12" FontFamily="Consolas" Margin="0" LineStackingStrategy="BlockLineHeight">
                             <Run Text="{Binding BuildLog.Result, IsAsync=True, Mode=OneWay, FallbackValue='Loading build log...'}" />

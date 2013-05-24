@@ -34,10 +34,8 @@ namespace JenkinsBuilds.Pages
             this.clientFactory = clientFactory;
         }
 
-        private void AddToFavorites(object obj)
-        {         
-            var job = (JobModel)obj;
-
+        private void AddToFavorites(JobModel job)
+        {   
             Properties.Settings.Default.AddJob(new Uri(this.instance.Url), job.Url);
             Properties.Settings.Default.Save();
 
@@ -51,6 +49,15 @@ namespace JenkinsBuilds.Pages
             this.instance = (JenkinsInstance)e.Context;
 
             this.Title = "Jobs on " + instance.DisplayName;
+        }
+
+        protected override ViewModelBase CreateViewModel()
+        {
+            return new JobsPageViewModel
+            {
+                AddToFavoritesCommand = new DelegateCommand<JobModel>(this.AddToFavorites),
+                RemoveFromFavoritesCommand = new DelegateCommand<JobModel>(this.RemoveFromFavorites)
+            };
         }
 
         public override void Loaded(object sender, PageLoadedEventArgs e)
@@ -91,21 +98,10 @@ namespace JenkinsBuilds.Pages
         protected override JobsPageView CreateView()
         {
             return new JobsPageView();
-        }
+        }        
 
-        protected override ViewModelBase CreateViewModel()
-        {
-            return new JobsPageViewModel
-            {
-                AddToFavoritesCommand = new DelegateCommand(this.AddToFavorites),
-                RemoveFromFavoritesCommand = new DelegateCommand(this.RemoveFromFavorites)
-            };
-        }
-
-        private void RemoveFromFavorites(object obj)
-        {
-            var job = (JobModel)obj;
-
+        private void RemoveFromFavorites(JobModel job)
+        {            
             Settings.Default.RemoveJob(job.Url);
             Settings.Default.Save();
 

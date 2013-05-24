@@ -106,10 +106,8 @@ namespace JenkinsBuilds.BuildsDetails
 
             this.BuildLog = Task.FromResult(CreateLog());
 
-            this.OpenBuildPageCommand = new DelegateCommand(o => { });
-            this.RebuildCommand = new DelegateCommand(o => { });
-            this.OpenConsoleLogCommand = new DelegateCommand(o => { });
-            this.OpenWarningCommand = new DelegateCommand(o => { });
+            this.OpenBuildPageCommand = new DelegateCommand(o => { }); // TODO: Implement            
+            this.OpenWarningCommand = new DelegateCommand(o => { }); // TODO: implement
         }
 
         private string CreateLog()

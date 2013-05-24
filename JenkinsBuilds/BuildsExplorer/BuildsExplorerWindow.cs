@@ -35,7 +35,7 @@ namespace JenkinsBuilds.BuildsExplorer
             {
                 Instances = Settings.Default.Instances.ToList(),
                 SearchBuildsCommand = new DelegateCommand(SearchBuilds),
-                OpenBuildDetailsCommand = new DelegateCommand(OpenBuildDetails)
+                OpenBuildDetailsCommand = new DelegateCommand<BuildModel>(OpenBuildDetails)
             };
 
             ((INotifyPropertyChanged)this.viewModel).PropertyChanged += SelectedInstanceChanged;
@@ -77,10 +77,8 @@ namespace JenkinsBuilds.BuildsExplorer
             return node.Jobs.Select(x => new JobModel().LoadFrom(x)).ToList();
         }
 
-        private void OpenBuildDetails(object obj)
-        {            
-            var selectedBuild = ((BuildModel)obj);            
-
+        private void OpenBuildDetails(BuildModel selectedBuild)
+        {                        
             this.windowManager.OpenBuildDetails(selectedBuild.ServerUrl, selectedBuild);
         }
 

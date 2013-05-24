@@ -37,8 +37,8 @@ namespace JenkinsBuilds.BuildsDetails
                 HasWarningsReport = false,
                 HasTestResults = false,   
              
-                ViewFileCommand = new DelegateCommand(ViewFile),
-                SaveFileAsCommand = new DelegateCommand(SaveFileAs)
+                ViewFileCommand = new DelegateCommand<string>(ViewFile),
+                SaveFileAsCommand = new DelegateCommand<string>(SaveFileAs)
             };            
 
             this.Content = new ScrollViewer
@@ -50,10 +50,8 @@ namespace JenkinsBuilds.BuildsDetails
             };             
         }
 
-        private async void SaveFileAs(object obj)
-        {
-            var path = (string)obj;
-
+        private async void SaveFileAs(string path)
+        {            
             var caption = string.Format("Downloading artifact {0}...", path);
 
             var dialog = new SaveFileDialog
@@ -68,10 +66,8 @@ namespace JenkinsBuilds.BuildsDetails
             }
         }
 
-        private async void ViewFile(object obj)
-        {
-            var path = (string)obj;                             
-
+        private async void ViewFile(string path)
+        {            
             var caption = string.Format("Downloading artifact {0}...", path);
 
             var destPath = this.downloader.GetTargetPath(this.viewModel.Job, this.viewModel.Build, path);
