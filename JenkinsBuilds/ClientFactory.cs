@@ -1,0 +1,18 @@
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel.Composition;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace JenkinsBuilds
+{
+    [Export(typeof(IClientFactory))]
+    public class ClientFactory : JenkinsBuilds.IClientFactory
+    {
+        public JenkinsClient GetClient(Uri serverUri)
+        {
+            return new JenkinsClient(serverUri);
+        }
+    }
+}

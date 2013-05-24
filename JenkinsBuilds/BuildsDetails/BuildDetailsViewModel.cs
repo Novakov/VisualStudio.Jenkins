@@ -44,5 +44,7 @@ namespace JenkinsBuilds.BuildsDetails
         public ICommand OpenWarningCommand { get; set; }
 
         public ICommand ViewFileCommand { get; set; }
+
+        public ICommand SaveFileAsCommand { get; set; }
     }
 }

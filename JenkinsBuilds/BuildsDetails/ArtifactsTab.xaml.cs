@@ -31,7 +31,7 @@ namespace JenkinsBuilds.BuildsDetails
             InitializeComponent();
         }
 
-        private void MenuItem_Click(object sender, RoutedEventArgs e)
+        private void ViewFile(object sender, RoutedEventArgs e)
         {
             var item = (FileItem)((FrameworkElement)sender).DataContext;
             var ancestorsAndSelf = new[] { item }.Union(item.Ancestors()).Reverse();
@@ -39,6 +39,16 @@ namespace JenkinsBuilds.BuildsDetails
             var path = string.Join("/", ancestorsAndSelf.Select(x => x.Name));
 
             this.ViewModel.ViewFileCommand.ExecuteIfCan(path);
-        }      
+        }
+
+        private void SaveAs(object sender, RoutedEventArgs e)
+        {
+            var item = (FileItem)((FrameworkElement)sender).DataContext;
+            var ancestorsAndSelf = new[] { item }.Union(item.Ancestors()).Reverse();
+
+            var path = string.Join("/", ancestorsAndSelf.Select(x => x.Name));
+
+            this.ViewModel.SaveFileAsCommand.ExecuteIfCan(path);
+        }
     }
 }

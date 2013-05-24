@@ -12,6 +12,8 @@ using JenkinsBuilds.Model;
 using JenkinsBuilds.BuildsDetails;
 using Niles.Model;
 using JenkinsBuilds.Jenkins;
+using Microsoft.VisualStudio.ComponentModelHost;
+using System.ComponentModel.Composition;
 
 namespace JenkinsBuilds
 {
@@ -24,11 +26,12 @@ namespace JenkinsBuilds
     [ProvideAutoLoad(VSConstants.UICONTEXT.NoSolution_string)]
     public sealed class JenkinsBuildsPackage : Package
     {
+        [Export]
         public static JenkinsBuildsPackage Instance { get; private set; }
 
         public EnvDTE.DTE DTE { get; private set; }
-
-        public IVsStatusbar StatusBar { get; private set; }      
+        public IVsStatusbar StatusBar { get; private set; }
+        public IComponentModel ComponentModel { get; private set; }
 
         public JenkinsBuildsPackage()
         {
@@ -40,7 +43,8 @@ namespace JenkinsBuilds
             base.Initialize();
 
             this.DTE = this.GetService<EnvDTE.DTE, EnvDTE.DTE>();
-            this.StatusBar = this.GetService<IVsStatusbar, SVsStatusbar>(); ;
+            this.StatusBar = this.GetService<IVsStatusbar, SVsStatusbar>();
+            this.ComponentModel = this.GetService<IComponentModel, SComponentModel>();
         }
 
         public TWindow FindWindow<TWindow>(bool create, int id = 0)
@@ -58,7 +62,11 @@ namespace JenkinsBuilds
 
                 if (window == null)
                 {
-                    return (TWindow)this.CreateToolWindow(typeof(TWindow), i);
+                    window = this.CreateToolWindow(typeof(TWindow), i);
+
+                    this.ComponentModel.DefaultCompositionService.SatisfyImportsOnce(window);
+
+                    return (TWindow)window;
                 }
             }
         }
@@ -111,6 +119,6 @@ namespace JenkinsBuilds
         public void OpenFile(string path)
         {
             this.DTE.ItemOperations.OpenFile(path);
-        }
+        }        
     }
 }

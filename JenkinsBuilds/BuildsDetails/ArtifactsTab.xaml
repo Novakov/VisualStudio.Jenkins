@@ -22,11 +22,12 @@
             <HierarchicalDataTemplate x:Key="FileItem">
                 <StackPanel Orientation="Horizontal">
                     <Image Source="/JenkinsBuilds;component/Images/treeView/file.png" />
-                    <Label Padding="0" Margin="0" Content="{Binding Name}" MouseDoubleClick="MenuItem_Click" />
+                    <Label Padding="0" Margin="0" Content="{Binding Name}" MouseDoubleClick="ViewFile" />
                     
                     <StackPanel.ContextMenu>
                         <ContextMenu>
-                            <MenuItem Header="View" Click="MenuItem_Click" />
+                            <MenuItem Header="View" Click="ViewFile" FontWeight="Bold"/>                            
+                            <MenuItem Header="Save as..." Click="SaveAs" />
                         </ContextMenu>
                     </StackPanel.ContextMenu>
                 </StackPanel>                

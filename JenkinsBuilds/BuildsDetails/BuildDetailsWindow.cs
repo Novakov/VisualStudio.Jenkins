@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.Composition;
 using System.IO;
 using System.Linq;
 using System.Runtime.Serialization.Formatters.Binary;
@@ -11,12 +12,19 @@ using JenkinsBuilds.Model;
 using Microsoft.VisualStudio;
 using Microsoft.VisualStudio.Shell;
 using Microsoft.VisualStudio.Shell.Interop;
+using Microsoft.Win32;
 
 namespace JenkinsBuilds.BuildsDetails
 {
     public class BuildDetailsWindow : ToolWindowPane
     {
-        private BuildDetailsViewModel viewModel;        
+        private BuildDetailsViewModel viewModel;
+
+        [Import]
+        private IArtifactDownloader downloader = null;
+
+        [Import]
+        private JenkinsBuildsPackage package = null;
 
         public BuildDetailsWindow()
         {
@@ -25,7 +33,8 @@ namespace JenkinsBuilds.BuildsDetails
                 HasWarningsReport = false,
                 HasTestResults = false,   
              
-                ViewFileCommand = new DelegateCommand(ViewFile)
+                ViewFileCommand = new DelegateCommand(ViewFile),
+                SaveFileAsCommand = new DelegateCommand(SaveFileAs)
             };            
 
             this.Content = new ScrollViewer
@@ -37,35 +46,35 @@ namespace JenkinsBuilds.BuildsDetails
             };             
         }
 
-        private async void ViewFile(object obj)
+        private async void SaveFileAs(object obj)
         {
             var path = (string)obj;
 
-            var client = new JenkinsClient(this.viewModel.Job.ServerUrl);
+            var caption = string.Format("Downloading artifact {0}...", path);
 
-            var url = this.viewModel.Build.GetArtifactUrl(path);            
+            var dialog = new SaveFileDialog
+            {
+                FileName = Path.GetFileName(path),
+                Filter = "All files|*.*"
+            };
+
+            if (dialog.ShowDialog() == true)
+            {
+                await this.downloader.Fetch(dialog.FileName, this.viewModel.Build, path, this.package.StatusBar.ProgressReporter(caption));
+            }
+        }
+
+        private async void ViewFile(object obj)
+        {
+            var path = (string)obj;                             
 
             var caption = string.Format("Downloading artifact {0}...", path);
 
-            var destPath = Path.Combine(Path.GetTempPath(), "VS_JenkinsBuilds", this.viewModel.Job.Name, this.viewModel.Build.Number.Value.ToString(), path);
+            var destPath = this.downloader.GetTargetPath(this.viewModel.Job, this.viewModel.Build, path);
 
-            if (!File.Exists(destPath))
-            {
+            await this.downloader.Fetch(destPath, this.viewModel.Build, path, this.package.StatusBar.ProgressReporter(caption));
 
-                var dirName = Path.GetDirectoryName(destPath);
-
-                if (!Directory.Exists(dirName))
-                {
-                    Directory.CreateDirectory(dirName);
-                }
-
-                using (var dest = File.Create(destPath))
-                {
-                    await client.DownloadFileAsync(dest, url, JenkinsBuildsPackage.Instance.StatusBar.ProgressReporter(caption));
-                }
-            }
-
-            JenkinsBuildsPackage.Instance.OpenFile(destPath);
+            this.package.OpenFile(destPath);
         }       
 
         protected override void OnClose()

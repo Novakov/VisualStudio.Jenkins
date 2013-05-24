@@ -51,6 +51,7 @@
     <Reference Include="Microsoft.TeamFoundation.Client, Version=11.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
     <Reference Include="Microsoft.TeamFoundation.Common, Version=11.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
     <Reference Include="Microsoft.TeamFoundation.Controls, Version=11.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
+    <Reference Include="Microsoft.VisualStudio.ComponentModelHost, Version=11.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
     <Reference Include="Microsoft.VisualStudio.ExtensibilityHosting, Version=11.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
     <Reference Include="Microsoft.VisualStudio.OLE.Interop" />
     <Reference Include="Microsoft.VisualStudio.Shell.Interop" />
@@ -154,6 +155,7 @@
     </COMReference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ArtifactDownloader.cs" />
     <Compile Include="BackgroundJenkinsMonitor.cs" />
     <Compile Include="Base\NotifyPropertyChangeBase.cs" />
     <Compile Include="Base\TeamExplorerNavigationItemBase.cs" />
@@ -188,6 +190,7 @@
     <Compile Include="BuildsExplorer\ResultFilterItem.cs" />
     <Compile Include="BuildsExplorer\ResultFilterItems.cs" />
     <Compile Include="ChangeType.cs" />
+    <Compile Include="ClientFactory.cs" />
     <Compile Include="CommandExtensions.cs" />
     <Compile Include="Commands\DelegateCommand.cs" />
     <Compile Include="Configuration\JenkinsInstances.cs" />
@@ -201,6 +204,8 @@
     <Compile Include="CredentialsPromptProvider.cs" />
     <Compile Include="Guids.cs" />
     <Compile Include="Base\TeamExplorerPageBase.cs" />
+    <Compile Include="IArtifactDownloader.cs" />
+    <Compile Include="IClientFactory.cs" />
     <Compile Include="ImportServiceProviderAttribute.cs" />
     <Compile Include="JenkinsClient.cs" />
     <Compile Include="JenkinsClientExtensions.cs" />

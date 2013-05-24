@@ -62,6 +62,11 @@ namespace JenkinsBuilds.Model
             }
         }
 
+        public Uri GetArtifactUrl(string path)
+        {
+            return this.Url.AppendPath("artifact/" + path + "/*view*/");
+        }
+
         public BuildModel LoadFrom(Build build)
         {
             this.Timestamp = build.Timestamp;

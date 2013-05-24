@@ -50,11 +50,6 @@ namespace JenkinsBuilds.Model
                                 .ToArray();
 
             return this;
-        }
-
-        public Uri GetArtifactUrl(string path)
-        {
-            return this.Url.AppendPath("artifact/" + path + "/*view*/");
-        }
+        }        
     }
 }
