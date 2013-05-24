@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Niles.Model;
 
-namespace JenkinsBuilds
+namespace Jenkins.Model
 {
-    public enum ChangeType
+    public class ExtendedBuild : Build
     {
-        Started,
-        Finished
+        public BuildActions Actions { get; set; }
     }
 }

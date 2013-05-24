@@ -5,7 +5,7 @@ using System.Text;
 using Niles.Client;
 using Niles.Model;
 
-namespace JenkinsBuilds
+namespace Jenkins
 {
     public class JenkinsMonitor
     {

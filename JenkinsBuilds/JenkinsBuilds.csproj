@@ -164,7 +164,6 @@
     <Compile Include="Base\TeamExplorerSectionBase.cs" />
     <Compile Include="Base\TeamExplorerViewableBase.cs" />
     <Compile Include="Base\ViewModelBase.cs" />
-    <Compile Include="BuildChangedEventArgs.cs" />
     <Compile Include="BuildsDetails\ArtifactsTab.xaml.cs">
       <DependentUpon>ArtifactsTab.xaml</DependentUpon>
     </Compile>
@@ -189,7 +188,6 @@
     <Compile Include="BuildsExplorer\BuildsExplorerWindow.cs" />
     <Compile Include="BuildsExplorer\ResultFilterItem.cs" />
     <Compile Include="BuildsExplorer\ResultFilterItems.cs" />
-    <Compile Include="ChangeType.cs" />
     <Compile Include="ClientFactory.cs" />
     <Compile Include="CommandExtensions.cs" />
     <Compile Include="Commands\DelegateCommand.cs" />
@@ -209,18 +207,6 @@
     <Compile Include="ImportServiceProviderAttribute.cs" />
     <Compile Include="IStatusBar.cs" />
     <Compile Include="IWindowManager.cs" />
-    <Compile Include="JenkinsClient.cs" />
-    <Compile Include="JenkinsClientExtensions.cs" />
-    <Compile Include="JenkinsMonitor.cs" />
-    <Compile Include="Jenkins\BuildActions.cs" />
-    <Compile Include="Jenkins\BuildCause.cs" />
-    <Compile Include="Jenkins\BuildsActionsConverter.cs" />
-    <Compile Include="Jenkins\ExtendedBuild.cs" />
-    <Compile Include="Jenkins\Suite.cs" />
-    <Compile Include="Jenkins\TestCase.cs" />
-    <Compile Include="Jenkins\TestResults.cs" />
-    <Compile Include="Jenkins\Warning.cs" />
-    <Compile Include="Jenkins\BuildWarnings.cs" />
     <Compile Include="Model\BuildModel.cs" />
     <Compile Include="Model\BuildStatus.cs" />
     <Compile Include="Model\ChangeSetModel.cs" />
@@ -274,7 +260,6 @@
     <Compile Include="StatusBar.cs" />
     <Compile Include="StatusBarProgressReporter.cs" />
     <Compile Include="TypeBasedTemplateSelector.cs" />
-    <Compile Include="UriExtensions.cs" />
     <Compile Include="WindowManager.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -380,7 +365,12 @@
       <Project>{a85ebd13-68f7-4642-991f-9df0b20caa3c}</Project>
       <Name>Commons</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Jenkins\Jenkins.csproj">
+      <Project>{231d3dcf-71a5-451b-8213-1423b116a33c}</Project>
+      <Name>Jenkins</Name>
+    </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <PropertyGroup>
     <UseCodebase>true</UseCodebase>
   </PropertyGroup>

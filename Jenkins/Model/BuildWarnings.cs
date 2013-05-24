@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Niles.Model;
 
-namespace JenkinsBuilds.Jenkins
+namespace Jenkins.Model
 {
     public class BuildWarnings : IResource
     {

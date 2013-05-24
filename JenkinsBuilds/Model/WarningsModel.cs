@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Jenkins.Model;
 
 namespace JenkinsBuilds.Model
 {
@@ -21,7 +22,7 @@ namespace JenkinsBuilds.Model
 
         public List<WarningModel> Warnings { get; set; }
 
-        public WarningsModel LoadFrom(Jenkins.BuildWarnings warnings)
+        public WarningsModel LoadFrom(BuildWarnings warnings)
         {
             this.Delta = warnings.WarningsDelta;
             this.Count = warnings.NumberOfWarnings;

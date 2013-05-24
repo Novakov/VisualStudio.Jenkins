@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using JenkinsBuilds.Properties;
 using Niles.Model;
+using Commons;
 
 namespace JenkinsBuilds.Model
 {

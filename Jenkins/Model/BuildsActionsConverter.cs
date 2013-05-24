@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
-namespace JenkinsBuilds.Jenkins
+namespace Jenkins.Model
 {
     public class BuildsActionsConverter : JsonConverter
     {

@@ -1,4 +1,5 @@
 ﻿using System;
+using Jenkins;
 namespace JenkinsBuilds
 {
     public interface IClientFactory

@@ -4,11 +4,10 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JenkinsBuilds", "JenkinsBuilds\JenkinsBuilds.csproj", "{8213D09E-ADB8-41DB-BA90-04ABA1FE03B3}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{0C0A3756-2B25-471A-A0B4-AABB0B964F43}"
-	ProjectSection(SolutionItems) = preProject
-		Build.proj = Build.proj
-	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Commons", "Commons\Commons.csproj", "{A85EBD13-68F7-4642-991F-9DF0B20CAA3C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Jenkins", "Jenkins\Jenkins.csproj", "{231D3DCF-71A5-451B-8213-1423B116A33C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -24,6 +23,10 @@ Global
 		{A85EBD13-68F7-4642-991F-9DF0B20CAA3C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A85EBD13-68F7-4642-991F-9DF0B20CAA3C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A85EBD13-68F7-4642-991F-9DF0B20CAA3C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{231D3DCF-71A5-451B-8213-1423B116A33C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{231D3DCF-71A5-451B-8213-1423B116A33C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{231D3DCF-71A5-451B-8213-1423B116A33C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{231D3DCF-71A5-451B-8213-1423B116A33C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -11,7 +11,6 @@ using Microsoft.VisualStudio.Shell;
 using JenkinsBuilds.Model;
 using JenkinsBuilds.BuildsDetails;
 using Niles.Model;
-using JenkinsBuilds.Jenkins;
 using Microsoft.VisualStudio.ComponentModelHost;
 using System.ComponentModel.Composition;
 

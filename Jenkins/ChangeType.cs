@@ -4,10 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace JenkinsBuilds.Jenkins
+namespace Jenkins
 {
-    public class BuildCause
+    public enum ChangeType
     {
-        public string ShortDescription { get; set; }
+        Started,
+        Finished
     }
 }

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Commons.Paths;
-using JenkinsBuilds.Jenkins;
+using Jenkins.Model;
 using Niles.Model;
 
 namespace JenkinsBuilds.Model

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace JenkinsBuilds.Jenkins
+namespace Jenkins.Model
 {
     public class TestResults
     {

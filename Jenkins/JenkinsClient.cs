@@ -1,19 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.Composition;
 using System.IO;
 using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using CredentialManagement;
-using JenkinsBuilds.Jenkins;
 using Niles.Client;
 using Niles.Json;
 using Niles.Model;
 using Commons;
 
-namespace JenkinsBuilds
+namespace Jenkins
 {
     public class JenkinsClient : JsonJenkinsClient
     {

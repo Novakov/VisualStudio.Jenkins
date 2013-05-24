@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace JenkinsBuilds.Jenkins
+namespace Jenkins.Model
 {
     public class Warning
     {

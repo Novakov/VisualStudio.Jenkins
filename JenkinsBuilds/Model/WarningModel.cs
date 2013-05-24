@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Jenkins.Model;
 
 namespace JenkinsBuilds.Model
 {
@@ -20,7 +21,7 @@ namespace JenkinsBuilds.Model
 
         public string Priority { get; set; }
 
-        public WarningModel LoadFrom(Jenkins.Warning warning)
+        public WarningModel LoadFrom(Warning warning)
         {
             this.FileName = warning.FileName;
             this.LineNumber = warning.PrimaryLineNumber;

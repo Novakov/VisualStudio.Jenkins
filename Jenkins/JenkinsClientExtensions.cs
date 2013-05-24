@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Niles.Client;
 using Niles.Model;
 
-namespace JenkinsBuilds
+namespace Jenkins
 {
     public static class JenkinsClientExtensions
     {

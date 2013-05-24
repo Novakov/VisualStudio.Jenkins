@@ -3,12 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Niles.Model;
 
-namespace JenkinsBuilds.Jenkins
+namespace Jenkins.Model
 {
-    public class ExtendedBuild : Build
+    public class BuildCause
     {
-        public BuildActions Actions { get; set; }
+        public string ShortDescription { get; set; }
     }
 }

@@ -12,6 +12,7 @@ using JenkinsBuilds.Properties;
 using Microsoft.TeamFoundation.Controls;
 using Niles.Client;
 using Niles.Model;
+using Jenkins;
 
 namespace JenkinsBuilds.Pages
 {
