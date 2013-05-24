@@ -4,10 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace JenkinsBuilds.Base
+namespace VisualStudio
 {
-    [PropertyChanged.ImplementPropertyChanged]
-    public abstract class ViewModelBase
+    public interface IStatusBar
     {
+        void Progress(string text, bool isCompleted, uint completed, uint total);
     }
 }

@@ -14,11 +14,12 @@ using Niles.Client;
 using Niles.Model;
 using Niles.Monitor;
 using Jenkins;
+using VisualStudio.TeamExplorer;
 
 namespace JenkinsBuilds.Pages
 {
     [TeamExplorerSection(BuildsSection.SectionId, BuildsPage.PageId, 10)]
-    public class BuildsSection : Base.TeamExplorerSectionBase<BuildsSectionView>
+    public class BuildsSection : TeamExplorerSectionBase<BuildsSectionView>
     {
         public const string SectionId = "{5D23BE7D-C7AA-4938-ACED-C4A26587CF7F}";
 
@@ -155,7 +156,7 @@ namespace JenkinsBuilds.Pages
             return new BuildsSectionView();
         }
 
-        protected override Base.ViewModelBase CreateViewModel()
+        protected override ViewModelBase CreateViewModel()
         {
             return new BuildsSectionViewModel
             {

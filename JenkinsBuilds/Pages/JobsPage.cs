@@ -13,11 +13,12 @@ using Microsoft.TeamFoundation.Controls;
 using Niles.Client;
 using Niles.Model;
 using Jenkins;
+using VisualStudio.TeamExplorer;
 
 namespace JenkinsBuilds.Pages
 {
     [TeamExplorerPage(JobsPage.PageId, ParentPageId = BuildsPage.PageId)]
-    public class JobsPage : Base.TeamExplorerPageBase<JobsPageView>
+    public class JobsPage : TeamExplorerPageBase<JobsPageView>
     {
         public const string PageId = "{074B6E0F-2690-4BAF-9CD3-F98C917DA15C}";        
 
@@ -92,7 +93,7 @@ namespace JenkinsBuilds.Pages
             return new JobsPageView();
         }
 
-        protected override Base.ViewModelBase CreateViewModel()
+        protected override ViewModelBase CreateViewModel()
         {
             return new JobsPageViewModel
             {

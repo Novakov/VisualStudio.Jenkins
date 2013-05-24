@@ -10,11 +10,12 @@ using JenkinsBuilds.Configuration;
 using JenkinsBuilds.Properties;
 using Microsoft.TeamFoundation.Controls;
 using Microsoft.VisualStudio.Shell;
+using VisualStudio.TeamExplorer;
 
 namespace JenkinsBuilds.Pages
 {
     [TeamExplorerSection(InstancesSection.SectionId, BuildsPage.PageId, 20)]
-    public class InstancesSection : Base.TeamExplorerSectionBase<InstancesSectionView>
+    public class InstancesSection : TeamExplorerSectionBase<InstancesSectionView>
     {
         public const string SectionId = "62A1A1D3-AAC9-401D-8627-621D4C013C8B";
 
@@ -53,7 +54,7 @@ namespace JenkinsBuilds.Pages
             return new InstancesSectionView();
         }
 
-        protected override Base.ViewModelBase CreateViewModel()
+        protected override ViewModelBase CreateViewModel()
         {
             return new InstancesSectionViewModel
             {

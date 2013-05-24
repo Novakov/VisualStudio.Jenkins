@@ -39,6 +39,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="NotifyPropertyChangeBase.cs" />
     <Compile Include="Paths\FileItem.cs" />
     <Compile Include="Paths\FolderItem.cs" />
     <Compile Include="Paths\Item.cs" />

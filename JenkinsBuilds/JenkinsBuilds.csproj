@@ -157,13 +157,6 @@
   <ItemGroup>
     <Compile Include="ArtifactDownloader.cs" />
     <Compile Include="BackgroundJenkinsMonitor.cs" />
-    <Compile Include="Base\NotifyPropertyChangeBase.cs" />
-    <Compile Include="Base\TeamExplorerNavigationItemBase.cs" />
-    <Compile Include="Base\TeamExplorerBase.cs" />
-    <Compile Include="Base\TeamExplorerNavigationLinkBase.cs" />
-    <Compile Include="Base\TeamExplorerSectionBase.cs" />
-    <Compile Include="Base\TeamExplorerViewableBase.cs" />
-    <Compile Include="Base\ViewModelBase.cs" />
     <Compile Include="BuildsDetails\ArtifactsTab.xaml.cs">
       <DependentUpon>ArtifactsTab.xaml</DependentUpon>
     </Compile>
@@ -201,11 +194,8 @@
     <Compile Include="Converters\VisibilityConverter.cs" />
     <Compile Include="CredentialsPromptProvider.cs" />
     <Compile Include="Guids.cs" />
-    <Compile Include="Base\TeamExplorerPageBase.cs" />
     <Compile Include="IArtifactDownloader.cs" />
     <Compile Include="IClientFactory.cs" />
-    <Compile Include="ImportServiceProviderAttribute.cs" />
-    <Compile Include="IStatusBar.cs" />
     <Compile Include="IWindowManager.cs" />
     <Compile Include="Model\BuildModel.cs" />
     <Compile Include="Model\BuildStatus.cs" />
@@ -257,8 +247,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Configuration\JenkinsInstance.cs" />
     <Compile Include="Settings.cs" />
-    <Compile Include="StatusBar.cs" />
-    <Compile Include="StatusBarProgressReporter.cs" />
     <Compile Include="TypeBasedTemplateSelector.cs" />
     <Compile Include="WindowManager.cs" />
   </ItemGroup>
@@ -368,6 +356,12 @@
     <ProjectReference Include="..\Jenkins\Jenkins.csproj">
       <Project>{231d3dcf-71a5-451b-8213-1423b116a33c}</Project>
       <Name>Jenkins</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\VisualStudio\VisualStudio.csproj">
+      <Project>{0aa4ab7c-5017-4514-8329-84b3cfc55f87}</Project>
+      <Name>VisualStudio</Name>
+      <IncludeOutputGroupsInVSIX>BuiltProjectOutputGroup%3bBuiltProjectOutputGroupDependencies%3bGetCopyToOutputDirectoryItems%3bSatelliteDllsProjectOutputGroup%3b</IncludeOutputGroupsInVSIX>
+      <IncludeOutputGroupsInVSIXLocalOnly>DebugSymbolsProjectOutputGroup%3b</IncludeOutputGroupsInVSIXLocalOnly>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup />

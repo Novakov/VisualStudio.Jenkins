@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Jenkins;
+using Microsoft.VisualStudio.Shell.Interop;
 
 namespace JenkinsBuilds
 {
@@ -17,7 +18,7 @@ namespace JenkinsBuilds
         }
 
         public JenkinsClient GetClient(string serverUri)
-        {
+        {            
             return this.GetClient(new Uri(serverUri));
         }
     }

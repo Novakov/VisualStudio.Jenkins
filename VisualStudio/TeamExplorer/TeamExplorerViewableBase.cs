@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 
-namespace JenkinsBuilds.Base
+namespace VisualStudio.TeamExplorer
 {
     public abstract class TeamExplorerViewableBase<TView> : TeamExplorerBase
         where TView : UserControl

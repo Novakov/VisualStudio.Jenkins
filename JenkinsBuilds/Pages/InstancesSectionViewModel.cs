@@ -5,11 +5,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using VisualStudio.TeamExplorer;
 
 namespace JenkinsBuilds.Pages
 {
     [PropertyChanged.ImplementPropertyChanged]
-    public class InstancesSectionViewModel : Base.ViewModelBase
+    public class InstancesSectionViewModel : ViewModelBase
     {
         public ICommand AddInstanceCommand { get; set; }
         public ObservableCollection<Configuration.JenkinsInstance> Instances { get; set; }

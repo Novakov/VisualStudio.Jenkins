@@ -6,11 +6,13 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.TeamFoundation.Controls;
 using Microsoft.VisualStudio.Shell.Interop;
+using VisualStudio;
+using VisualStudio.TeamExplorer;
 
 namespace JenkinsBuilds.Pages
 {
     [TeamExplorerNavigationItem(BuildExplorerItem.ItemId, 201)]
-    public class BuildExplorerItem : Base.TeamExplorerNavigationItemBase
+    public class BuildExplorerItem : TeamExplorerNavigationItemBase
     {
         public const string ItemId = "{40E276FB-5521-4ACD-95AD-4098FD40642D}";
 

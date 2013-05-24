@@ -7,11 +7,12 @@ using System.Threading.Tasks;
 using CredentialManagement;
 using JenkinsBuilds.Commands;
 using Microsoft.TeamFoundation.Controls;
+using VisualStudio.TeamExplorer;
 
 namespace JenkinsBuilds.Pages
 {
     [TeamExplorerPage(AddJenkinsPage.PageId, ParentPageId = BuildsPage.PageId)]
-    public class AddJenkinsPage : Base.TeamExplorerPageBase<AddJenkinsPageView>
+    public class AddJenkinsPage : TeamExplorerPageBase<AddJenkinsPageView>
     {
         public const string PageId = "{1256AA90-290A-4656-8BEB-4AF1B171B6BB}";
 
@@ -80,7 +81,7 @@ namespace JenkinsBuilds.Pages
             return new AddJenkinsPageView();
         }
 
-        protected override Base.ViewModelBase CreateViewModel()
+        protected override ViewModelBase CreateViewModel()
         {
             return new AddJenkinsPageViewModel
             {

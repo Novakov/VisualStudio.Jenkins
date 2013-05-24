@@ -6,11 +6,12 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using JenkinsBuilds.Model;
+using VisualStudio.TeamExplorer;
 
 namespace JenkinsBuilds.Pages
 {
     [PropertyChanged.ImplementPropertyChanged]
-    public class BuildsSectionViewModel : Base.ViewModelBase
+    public class BuildsSectionViewModel : ViewModelBase
     {
         public ObservableCollection<JobModel> Jobs { get; set; }
 

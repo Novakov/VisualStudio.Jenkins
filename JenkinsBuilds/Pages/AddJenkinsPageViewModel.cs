@@ -4,10 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using VisualStudio.TeamExplorer;
 
 namespace JenkinsBuilds.Pages
 {
-    public class AddJenkinsPageViewModel : Base.ViewModelBase
+    public class AddJenkinsPageViewModel : ViewModelBase
     {
         public string DisplayName { get; set; }
         public string Url { get; set; }

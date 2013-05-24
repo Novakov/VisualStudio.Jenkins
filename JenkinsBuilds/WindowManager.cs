@@ -26,7 +26,7 @@ namespace JenkinsBuilds
         {            
             this.clientFactory = clientFactory;
             this.composition = composition;
-            this.dte = (DTE)JenkinsBuildsPackage.GetGlobalService(typeof(DTE));
+            this.dte = (DTE)Package.GetGlobalService(typeof(DTE));
         }
 
         public void OpenBuildDetails(Uri serverUrl, BuildModel selectedBuild)

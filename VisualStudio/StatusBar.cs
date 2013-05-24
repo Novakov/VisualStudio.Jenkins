@@ -4,9 +4,10 @@ using System.ComponentModel.Composition;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.VisualStudio.Shell;
 using Microsoft.VisualStudio.Shell.Interop;
 
-namespace JenkinsBuilds
+namespace VisualStudio
 {
     [Export(typeof(IStatusBar))]
     public class StatusBar : IStatusBar
@@ -15,7 +16,7 @@ namespace JenkinsBuilds
 
         public StatusBar()
         {
-            this.statusBar = (IVsStatusbar)JenkinsBuildsPackage.GetGlobalService(typeof(SVsStatusbar));
+            this.statusBar = (IVsStatusbar)Package.GetGlobalService(typeof(SVsStatusbar));
         }
 
         public void Progress(string text, bool isCompleted, uint completed, uint total)

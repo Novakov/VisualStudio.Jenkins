@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.VisualStudio.Shell;
 
-namespace JenkinsBuilds
+namespace VisualStudio
 {
     [AttributeUsage(AttributeTargets.Parameter | AttributeTargets.Field | AttributeTargets.Property)]
     public class ImportServiceProviderAttribute : ImportAttribute

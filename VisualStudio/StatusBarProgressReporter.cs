@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Commons;
 using Microsoft.VisualStudio.Shell.Interop;
 
-namespace JenkinsBuilds
+namespace VisualStudio
 {
     public class StatusBarProgressReporter : IProgress<ProgressReport>
     {

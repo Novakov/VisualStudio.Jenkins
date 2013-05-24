@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using Microsoft.TeamFoundation.Client;
 using Microsoft.TeamFoundation.Controls;
 
-namespace JenkinsBuilds.Base
+namespace VisualStudio.TeamExplorer
 {
     public abstract class TeamExplorerBase : IDisposable, INotifyPropertyChanged
     {        

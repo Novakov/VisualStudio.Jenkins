@@ -22,10 +22,10 @@ namespace JenkinsBuilds.BuildsExplorer
         private JenkinsClient client;
 
         [Import]
-        private IClientFactory clientFactory;
+        private IClientFactory clientFactory = null;
 
         [Import]
-        private IWindowManager windowManager;
+        private IWindowManager windowManager = null;
 
         private JobModel preselectedJob;
 

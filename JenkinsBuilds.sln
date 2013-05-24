@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Commons", "Commons\Commons.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Jenkins", "Jenkins\Jenkins.csproj", "{231D3DCF-71A5-451B-8213-1423B116A33C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VisualStudio", "VisualStudio\VisualStudio.csproj", "{0AA4AB7C-5017-4514-8329-84B3CFC55F87}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{231D3DCF-71A5-451B-8213-1423B116A33C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{231D3DCF-71A5-451B-8213-1423B116A33C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{231D3DCF-71A5-451B-8213-1423B116A33C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0AA4AB7C-5017-4514-8329-84B3CFC55F87}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0AA4AB7C-5017-4514-8329-84B3CFC55F87}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0AA4AB7C-5017-4514-8329-84B3CFC55F87}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0AA4AB7C-5017-4514-8329-84B3CFC55F87}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

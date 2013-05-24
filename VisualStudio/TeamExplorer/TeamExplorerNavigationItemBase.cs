@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.TeamFoundation.Controls;
 
-namespace JenkinsBuilds.Base
+namespace VisualStudio.TeamExplorer
 {
     public abstract class TeamExplorerNavigationItemBase : TeamExplorerBase, ITeamExplorerNavigationItem
     {
