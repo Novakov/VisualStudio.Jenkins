@@ -22,22 +22,28 @@ namespace JenkinsBuilds.Pages
     {
         public const string SectionId = "{5D23BE7D-C7AA-4938-ACED-C4A26587CF7F}";
 
-        private IDictionary<Uri, BackgroundJenkinsMonitor> monitors;
-
+        private IWindowManager windowManager;
         private Settings settings;
+        private IClientFactory clientFactory;  
+
+        private IDictionary<Uri, BackgroundJenkinsMonitor> monitors;              
 
         public new BuildsSectionViewModel ViewModel { get { return (BuildsSectionViewModel)base.ViewModel; } }
 
-        public BuildsSection()
+        [ImportingConstructor]
+        public BuildsSection(IWindowManager windowManager, IClientFactory clientFactory)
         {
-            this.settings = Properties.Settings.Default;
+            this.settings = Properties.Settings.Default;            
+
+            this.windowManager = windowManager;
+            this.clientFactory = clientFactory;
 
             this.Title = "Favorite jobs";
 
             this.IsExpanded = true;
             this.IsVisible = true;
 
-            this.monitors = new Dictionary<Uri, BackgroundJenkinsMonitor>();
+            this.monitors = new Dictionary<Uri, BackgroundJenkinsMonitor>();            
         }
 
         private void RemoveFromFavorites(object obj)
@@ -55,7 +61,7 @@ namespace JenkinsBuilds.Pages
         {
             var job = (JobModel)obj;
 
-            new JenkinsClient(job.ServerUrl).StartBuild(job.Url);
+            this.clientFactory.GetClient(job.ServerUrl).StartBuild(job.Url);
         }
 
         public override void Loaded(object sender, SectionLoadedEventArgs e)
@@ -71,7 +77,7 @@ namespace JenkinsBuilds.Pages
         private async Task RefeshAsync()
         {
             var jobFetchTasks = from i in this.settings.Instances
-                                let client = new JenkinsClient(new Uri(i.Url))
+                                let client = this.clientFactory.GetClient(i.Url)
                                 from j in i.FavoriteJobs
                                 select client.GetResourceAsync<Job>(j, JobModel.FetchTree);                                              
 
@@ -161,10 +167,9 @@ namespace JenkinsBuilds.Pages
         }
 
         private void ViewBuilds(object obj)
-        {
-            var pkg = JenkinsBuildsPackage.Instance;
-
-            var window = (BuildsExplorer.BuildsExplorerWindow)pkg.FindWindowPane(typeof(BuildsExplorer.BuildsExplorerWindow), 0, true);
+        {            
+            var window = this.windowManager.FindWindow<BuildsExplorer.BuildsExplorerWindow>(true);
+         
             var frame = (IVsWindowFrame)window.Frame;
 
             window.SelectJob((JobModel)obj);
@@ -176,7 +181,7 @@ namespace JenkinsBuilds.Pages
         {
             var job = (JobModel)obj;
 
-            JenkinsBuildsPackage.Instance.OpenBuildDetails(job.ServerUrl, job.LastBuild);
+            windowManager.OpenBuildDetails(job.ServerUrl, job.LastBuild);
         }
     }
 }

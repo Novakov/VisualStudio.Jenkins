@@ -22,9 +22,7 @@ namespace JenkinsBuilds.BuildsExplorer
     /// Interaction logic for BuildsExplorerView.xaml
     /// </summary>
     public partial class BuildsExplorerView : UserControl
-    {
-        private Func<Uri, JenkinsClient> clientFactory;
-
+    {        
         public JobModel PreselectedJob { get; set; }
 
         public BuildsExplorerViewModel ViewModel
@@ -36,35 +34,7 @@ namespace JenkinsBuilds.BuildsExplorer
         public BuildsExplorerView()
         {
             InitializeComponent();
-
-            this.clientFactory = u => new JenkinsClient(u);            
-        }        
-
-        private async void SelectedInstanceChanged(object sender, SelectionChangedEventArgs e)
-        {
-            this.ViewModel.SelectedJob = null;
-            var jobs = await this.GetJobsFromInstance(this.ViewModel.SelectedInstance.Url);
-
-            jobs.Insert(0, new AllJobsModel());
-
-            this.ViewModel.Jobs = jobs;
-
-            if (this.PreselectedJob !=null)
-            {
-                this.ViewModel.SelectedJob = jobs.SingleOrDefault(x => x.Url == this.PreselectedJob.Url);
-
-                this.PreselectedJob = null;
-            }
-        }
-
-        private async Task<List<JobModel>> GetJobsFromInstance(string instanceUrl)
-        {
-            var client = this.clientFactory(new Uri(this.ViewModel.SelectedInstance.Url));
-
-            var node = await client.GetResourceAsync<Node>(this.ViewModel.SelectedInstance.Url, "jobs[displayName,url]");
-
-            return node.Jobs.Select(x => new JobModel().LoadFrom(x)).ToList();
-        }
+        }                       
 
         private void DataGrid_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {

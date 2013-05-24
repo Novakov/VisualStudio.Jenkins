@@ -52,7 +52,7 @@
 				Style="{StaticResource Filter}" 
                 ItemsSource="{Binding Instances}" 
                 SelectedValue="{Binding SelectedInstance, Mode=TwoWay}"
-                DisplayMemberPath="DisplayName" SelectionChanged="SelectedInstanceChanged"
+                DisplayMemberPath="DisplayName"
                 />
 
             <Label 

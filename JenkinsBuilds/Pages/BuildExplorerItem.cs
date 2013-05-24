@@ -14,17 +14,19 @@ namespace JenkinsBuilds.Pages
     {
         public const string ItemId = "{40E276FB-5521-4ACD-95AD-4098FD40642D}";
 
+        private IWindowManager windowManager;
+
         [ImportingConstructor]
-        public BuildExplorerItem([ImportServiceProvider]IServiceProvider serviceProvider)
+        public BuildExplorerItem([ImportServiceProvider]IServiceProvider serviceProvider, IWindowManager windowManager)
             : base(serviceProvider)
         {
-            this.Text = "Build explorer";            
+            this.Text = "Build explorer";
+            this.windowManager = windowManager;
         }
 
         public override void Execute()
-        {
-            var pkg = JenkinsBuildsPackage.Instance;
-            var window = pkg.FindWindow<BuildsExplorer.BuildsExplorerWindow>(create:true);
+        {            
+            var window = this.windowManager.FindWindow<BuildsExplorer.BuildsExplorerWindow>(create:true);
             var frame = (IVsWindowFrame)window.Frame;
 
             frame.Show();

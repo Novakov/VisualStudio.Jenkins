@@ -14,5 +14,10 @@ namespace JenkinsBuilds
         {
             return new JenkinsClient(serverUri);
         }
+
+        public JenkinsClient GetClient(string serverUri)
+        {
+            return this.GetClient(new Uri(serverUri));
+        }
     }
 }

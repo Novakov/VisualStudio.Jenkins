@@ -24,7 +24,10 @@ namespace JenkinsBuilds.BuildsDetails
         private IArtifactDownloader downloader = null;
 
         [Import]
-        private JenkinsBuildsPackage package = null;
+        private IWindowManager windowManager = null;
+        
+        [Import]
+        private IStatusBar statusBar = null;
 
         public BuildDetailsWindow()
         {
@@ -60,7 +63,7 @@ namespace JenkinsBuilds.BuildsDetails
 
             if (dialog.ShowDialog() == true)
             {
-                await this.downloader.Fetch(dialog.FileName, this.viewModel.Build, path, this.package.StatusBar.ProgressReporter(caption));
+                await this.downloader.Fetch(dialog.FileName, this.viewModel.Build, path, this.statusBar.ProgressReporter(caption));
             }
         }
 
@@ -72,9 +75,9 @@ namespace JenkinsBuilds.BuildsDetails
 
             var destPath = this.downloader.GetTargetPath(this.viewModel.Job, this.viewModel.Build, path);
 
-            await this.downloader.Fetch(destPath, this.viewModel.Build, path, this.package.StatusBar.ProgressReporter(caption));
+            await this.downloader.Fetch(destPath, this.viewModel.Build, path, this.statusBar.ProgressReporter(caption));
 
-            this.package.OpenFile(destPath);
+            this.windowManager.OpenFile(destPath);
         }       
 
         protected override void OnClose()

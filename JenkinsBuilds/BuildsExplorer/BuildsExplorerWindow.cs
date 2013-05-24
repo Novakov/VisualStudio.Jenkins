@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.ComponentModel.Composition;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -19,6 +20,13 @@ namespace JenkinsBuilds.BuildsExplorer
         private BuildsExplorerViewModel viewModel;
 
         private JenkinsClient client;
+
+        [Import]
+        private IClientFactory clientFactory;
+
+        [Import]
+        private IWindowManager windowManager;
+
         private JobModel preselectedJob;
 
         public BuildsExplorerWindow()
@@ -30,7 +38,7 @@ namespace JenkinsBuilds.BuildsExplorer
                 OpenBuildDetailsCommand = new DelegateCommand(OpenBuildDetails)
             };
 
-            //((INotifyPropertyChanged)this.viewModel).PropertyChanged += SelectedInstanceChanged;
+            ((INotifyPropertyChanged)this.viewModel).PropertyChanged += SelectedInstanceChanged;
 
             this.Content = new BuildsExplorerView
             {
@@ -40,16 +48,45 @@ namespace JenkinsBuilds.BuildsExplorer
             this.Caption = "Builds explorer";
         }
 
+        private async void SelectedInstanceChanged(object sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == "SelectedInstance")
+            {
+                this.viewModel.SelectedJob = null;
+                var jobs = await this.GetJobsFromInstance(this.viewModel.SelectedInstance.Url);
+
+                jobs.Insert(0, new AllJobsModel());
+
+                this.viewModel.Jobs = jobs;
+
+                if (this.preselectedJob != null)
+                {
+                    this.viewModel.SelectedJob = jobs.SingleOrDefault(x => x.Url == this.preselectedJob.Url);
+
+                    this.preselectedJob = null;
+                }
+            }
+        }
+
+        private async Task<List<JobModel>> GetJobsFromInstance(string instanceUrl)
+        {
+            var client = this.clientFactory.GetClient(this.viewModel.SelectedInstance.Url);
+
+            var node = await client.GetResourceAsync<Node>(this.viewModel.SelectedInstance.Url, "jobs[displayName,url]");
+
+            return node.Jobs.Select(x => new JobModel().LoadFrom(x)).ToList();
+        }
+
         private void OpenBuildDetails(object obj)
         {            
             var selectedBuild = ((BuildModel)obj);            
 
-            JenkinsBuildsPackage.Instance.OpenBuildDetails(selectedBuild.ServerUrl, selectedBuild);
+            this.windowManager.OpenBuildDetails(selectedBuild.ServerUrl, selectedBuild);
         }
 
         private async void SearchBuilds(object obj)
         {
-            this.client = new JenkinsClient(new Uri(this.viewModel.SelectedInstance.Url));
+            this.client = this.clientFactory.GetClient(this.viewModel.SelectedInstance.Url);
 
             List<BuildModel> builds;
 
@@ -94,7 +131,7 @@ namespace JenkinsBuilds.BuildsExplorer
         public void SelectJob(JobModel jobModel)
         {
             this.viewModel.SelectedInstance = this.viewModel.Instances.SingleOrDefault(x => new Uri(x.Url) == jobModel.ServerUrl);
-            ((BuildsExplorerView)this.Content).PreselectedJob = jobModel;
+            this.preselectedJob = jobModel;
         }
     }
 }

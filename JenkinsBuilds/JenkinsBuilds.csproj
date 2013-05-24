@@ -207,6 +207,8 @@
     <Compile Include="IArtifactDownloader.cs" />
     <Compile Include="IClientFactory.cs" />
     <Compile Include="ImportServiceProviderAttribute.cs" />
+    <Compile Include="IStatusBar.cs" />
+    <Compile Include="IWindowManager.cs" />
     <Compile Include="JenkinsClient.cs" />
     <Compile Include="JenkinsClientExtensions.cs" />
     <Compile Include="JenkinsMonitor.cs" />
@@ -269,9 +271,11 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Configuration\JenkinsInstance.cs" />
     <Compile Include="Settings.cs" />
+    <Compile Include="StatusBar.cs" />
     <Compile Include="StatusBarProgressReporter.cs" />
     <Compile Include="TypeBasedTemplateSelector.cs" />
     <Compile Include="UriExtensions.cs" />
+    <Compile Include="WindowManager.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources.resx">

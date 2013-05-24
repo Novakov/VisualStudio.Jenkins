@@ -16,13 +16,15 @@ namespace JenkinsBuilds.Pages
         public const string PageId = "{1256AA90-290A-4656-8BEB-4AF1B171B6BB}";
 
         private BaseCredentialsPrompt prompt;
+        private IClientFactory clientFactory;
 
         public new AddJenkinsPageViewModel ViewModel { get { return (AddJenkinsPageViewModel)base.ViewModel; } }
 
         [ImportingConstructor]
-        public AddJenkinsPage(BaseCredentialsPrompt prompt)
+        public AddJenkinsPage(BaseCredentialsPrompt prompt, IClientFactory clientFactory)
         {
             this.prompt = prompt;
+            this.clientFactory = clientFactory;
 
             this.Title = "Add Jenkins";
             this.IsBusy = false;
@@ -50,7 +52,7 @@ namespace JenkinsBuilds.Pages
                 var b = cred.Save();
             }
 
-            var client = new JenkinsClient(new Uri(this.ViewModel.Url));
+            var client = this.clientFactory.GetClient(this.ViewModel.Url);
 
             var version = await client.GetVersion();
 

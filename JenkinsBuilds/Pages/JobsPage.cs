@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel.Composition;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -17,11 +18,19 @@ namespace JenkinsBuilds.Pages
     [TeamExplorerPage(JobsPage.PageId, ParentPageId = BuildsPage.PageId)]
     public class JobsPage : Base.TeamExplorerPageBase<JobsPageView>
     {
-        public const string PageId = "{074B6E0F-2690-4BAF-9CD3-F98C917DA15C}";
+        public const string PageId = "{074B6E0F-2690-4BAF-9CD3-F98C917DA15C}";        
 
         private JenkinsInstance instance;
 
+        private IClientFactory clientFactory;
+
         public new JobsPageViewModel ViewModel { get { return (JobsPageViewModel)base.ViewModel; } }
+
+        [ImportingConstructor]
+        public JobsPage(IClientFactory clientFactory)
+        {
+            this.clientFactory = clientFactory;
+        }
 
         private void AddToFavorites(object obj)
         {         
@@ -59,7 +68,7 @@ namespace JenkinsBuilds.Pages
 
         private async Task LoadAsync()
         {
-            var client = new JenkinsClient(new Uri(this.instance.Url));
+            var client = this.clientFactory.GetClient(this.instance.Url);
 
             Node node;
 
