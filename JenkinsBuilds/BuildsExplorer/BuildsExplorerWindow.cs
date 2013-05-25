@@ -36,7 +36,7 @@ namespace JenkinsBuilds.BuildsExplorer
                 Instances = Settings.Default.Instances.ToList(),
                 SearchBuildsCommand = new DelegateCommand(SearchBuilds),
                 OpenBuildDetailsCommand = new DelegateCommand<BuildModel>(OpenBuildDetails)
-            };
+            }.AllowWhenNoErrors(x => x.SearchBuildsCommand);
 
             ((INotifyPropertyChanged)this.viewModel).PropertyChanged += SelectedInstanceChanged;
 

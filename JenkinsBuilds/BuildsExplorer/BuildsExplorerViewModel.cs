@@ -4,12 +4,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using Commons.Wpf;
+using FluentValidation;
 using JenkinsBuilds.Model;
 
 namespace JenkinsBuilds.BuildsExplorer
 {
     [PropertyChanged.ImplementPropertyChanged]
-    public class BuildsExplorerViewModel
+    [InjectValidation]
+    public class BuildsExplorerViewModel : ViewModelBase
     {
         public List<Configuration.JenkinsInstance> Instances { get; set; }
 
@@ -26,5 +29,13 @@ namespace JenkinsBuilds.BuildsExplorer
         public ICommand OpenBuildDetailsCommand { get; set; }
 
         public ResultFilterItem SelectedStatus { get; set; }
+    }
+
+    public class BuildsExplorerViewModelValidator : AbstractValidator<BuildsExplorerViewModel>
+    {
+        public BuildsExplorerViewModelValidator()
+        {
+            this.RuleFor(x => x.SelectedInstance).NotNull();
+        }
     }
 }
