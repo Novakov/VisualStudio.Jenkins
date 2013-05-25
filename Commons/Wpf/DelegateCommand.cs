@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
-namespace JenkinsBuilds.Commands
+namespace Commons.Wpf
 {
     public class DelegateCommand : ICommand
     {

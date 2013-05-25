@@ -2,10 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 
-namespace VisualStudio.TeamExplorer
+namespace JenkinsBuilds
 {
-    public abstract class ViewModelBase
+    public class InjectValidationAttribute : Attribute
     {
     }
 }

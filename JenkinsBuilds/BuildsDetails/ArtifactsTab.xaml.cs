@@ -13,6 +13,8 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Commons.Paths;
+using VisualStudio;
+using Commons.Wpf;
 
 namespace JenkinsBuilds.BuildsDetails
 {

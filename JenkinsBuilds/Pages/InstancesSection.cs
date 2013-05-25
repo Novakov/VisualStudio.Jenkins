@@ -5,12 +5,12 @@ using System.ComponentModel.Composition;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using JenkinsBuilds.Commands;
 using JenkinsBuilds.Configuration;
 using JenkinsBuilds.Properties;
 using Microsoft.TeamFoundation.Controls;
 using Microsoft.VisualStudio.Shell;
 using VisualStudio.TeamExplorer;
+using Commons.Wpf;
 
 namespace JenkinsBuilds.Pages
 {

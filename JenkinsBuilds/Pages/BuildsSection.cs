@@ -5,7 +5,6 @@ using System.ComponentModel.Composition;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using JenkinsBuilds.Commands;
 using JenkinsBuilds.Model;
 using JenkinsBuilds.Properties;
 using Microsoft.TeamFoundation.Controls;
@@ -15,6 +14,7 @@ using Niles.Model;
 using Niles.Monitor;
 using Jenkins;
 using VisualStudio.TeamExplorer;
+using Commons.Wpf;
 
 namespace JenkinsBuilds.Pages
 {

@@ -71,7 +71,6 @@
     <Compile Include="TeamExplorer\TeamExplorerPageBase.cs" />
     <Compile Include="TeamExplorer\TeamExplorerSectionBase.cs" />
     <Compile Include="TeamExplorer\TeamExplorerViewableBase.cs" />
-    <Compile Include="TeamExplorer\ViewModelBase.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Commons\Commons.csproj">

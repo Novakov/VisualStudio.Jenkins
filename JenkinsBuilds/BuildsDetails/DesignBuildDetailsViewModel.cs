@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Commons.Paths;
-using JenkinsBuilds.Commands;
+using Commons.Wpf;
 using JenkinsBuilds.Model;
 
 namespace JenkinsBuilds.BuildsDetails

@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Validar</name>
+    </assembly>
+    <members>
+        <member name="T:Validar.InjectValidationAttribute">
+            <summary>
+            Used to flag items as requiring validation.
+            </summary>
+        </member>
+    </members>
+</doc>

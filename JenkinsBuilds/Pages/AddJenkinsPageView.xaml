@@ -14,9 +14,9 @@
     </UserControl.Resources>
     <StackPanel>
         <Label Content="Display name"/>
-        <TextBox Height="23" TextWrapping="Wrap" Text="{Binding DisplayName, Mode=TwoWay}"/>
+        <TextBox Height="23" TextWrapping="Wrap" Text="{Binding DisplayName, UpdateSourceTrigger=PropertyChanged}"/>
         <Label Content="Jenkins Url"/>
-        <TextBox Height="23" TextWrapping="Wrap" Text="{Binding Url, Mode=TwoWay}"/>        
+        <TextBox Height="23" TextWrapping="Wrap" Text="{Binding Url, UpdateSourceTrigger=PropertyChanged}"/>        
         <CheckBox Content="Server requires authentication" IsChecked="{Binding RequiresAuthentication, Mode=TwoWay}" />
         <StackPanel Height="29" Orientation="Horizontal" FlowDirection="RightToLeft">
             <Button Content="Cancel" Width="75" Command="{Binding CancelCommand}"/>

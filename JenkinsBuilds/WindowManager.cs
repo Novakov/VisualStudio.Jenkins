@@ -14,7 +14,7 @@ using Niles.Model;
 
 namespace JenkinsBuilds
 {
-    [Export(typeof(IWindowManager))]
+    [Export(typeof(IWindowManager))]    
     public class WindowManager : IWindowManager
     {
         private readonly IClientFactory clientFactory;
@@ -102,5 +102,11 @@ namespace JenkinsBuilds
         {
             this.dte.ItemOperations.OpenFile(path);
         } 
+    }
+
+    [InjectValidation]
+    public class A
+    {
+
     }
 }

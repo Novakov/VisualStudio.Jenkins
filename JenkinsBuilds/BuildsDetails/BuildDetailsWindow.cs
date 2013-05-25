@@ -7,7 +7,7 @@ using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
-using JenkinsBuilds.Commands;
+using Commons.Wpf;
 using JenkinsBuilds.Model;
 using Microsoft.VisualStudio;
 using Microsoft.VisualStudio.Shell;

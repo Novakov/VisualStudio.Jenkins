@@ -1,0 +1,56 @@
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using FluentValidation;
+using FluentValidation.Results;
+
+namespace JenkinsBuilds.Validation
+{
+    public class ValidationTemplate : IDataErrorInfo
+    {
+        private INotifyPropertyChanged target;
+        private IValidator validator;
+        private ValidationResult validationResult;
+
+        public ValidationTemplate(INotifyPropertyChanged target)
+        {
+            this.target = target;
+            validator = ValidationFactory.GetValidator(target.GetType());
+            validationResult = validator.Validate(target);
+            target.PropertyChanged += Validate;
+        }
+
+        void Validate(object sender, PropertyChangedEventArgs e)
+        {
+            if (validator != null)
+            {
+                validationResult = validator.Validate(target);
+            }
+        }
+
+        public string Error
+        {
+            get
+            {
+                var strings = validationResult.Errors.Select(x => x.ErrorMessage)
+                    .ToArray();
+                return string.Join(Environment.NewLine, strings);
+            }
+        }
+
+        public string this[string propertyName]
+        {
+            get
+            {
+                var strings = validationResult.Errors.Where(x => x.PropertyName == propertyName)
+                    .Select(x => x.ErrorMessage)
+                    .ToArray();
+
+                return string.Join(Environment.NewLine, strings);
+            }
+        }
+    }
+}

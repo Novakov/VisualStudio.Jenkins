@@ -29,6 +29,10 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <CopyVsixExtensionFiles>True</CopyVsixExtensionFiles>
+    <CopyVsixExtensionLocation>C:\Users\Novakov\AppData\Local\Microsoft\VisualStudio\11.0Exp\Extensions\Maciej Nowak\JenkinsBuilds\1.0</CopyVsixExtensionLocation>
+    <DeployExtension>False</DeployExtension>
+    <CreateVsixContainer>False</CreateVsixContainer>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -46,6 +50,9 @@
     </Reference>
     <Reference Include="CredentialManagement">
       <HintPath>..\packages\CredentialManagement.1.0.1\lib\net35\CredentialManagement.dll</HintPath>
+    </Reference>
+    <Reference Include="FluentValidation">
+      <HintPath>..\packages\FluentValidation.4.0.0.0\lib\Net40\FluentValidation.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Microsoft.TeamFoundation.Client, Version=11.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
@@ -96,6 +103,10 @@
     <Reference Include="System.Xml" />
     <Reference Include="UIAutomationProvider" />
     <Reference Include="UIAutomationTypes" />
+    <Reference Include="Validar">
+      <HintPath>..\packages\Validar.Fody.1.2.0.0\Lib\portable-net4+sl4+wp7+win8+MonoAndroid16+MonoTouch40\Validar.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
@@ -182,8 +193,6 @@
     <Compile Include="BuildsExplorer\ResultFilterItem.cs" />
     <Compile Include="BuildsExplorer\ResultFilterItems.cs" />
     <Compile Include="ClientFactory.cs" />
-    <Compile Include="CommandExtensions.cs" />
-    <Compile Include="Commands\DelegateCommand.cs" />
     <Compile Include="Configuration\JenkinsInstances.cs" />
     <Compile Include="Converters\FavoriteJobMarkConverter.cs" />
     <Compile Include="Converters\IsFavoriteJobConverter.cs" />
@@ -196,6 +205,7 @@
     <Compile Include="Guids.cs" />
     <Compile Include="IArtifactDownloader.cs" />
     <Compile Include="IClientFactory.cs" />
+    <Compile Include="InjectValidationAttribute.cs" />
     <Compile Include="IWindowManager.cs" />
     <Compile Include="Model\BuildModel.cs" />
     <Compile Include="Model\BuildStatus.cs" />
@@ -248,6 +258,8 @@
     <Compile Include="Configuration\JenkinsInstance.cs" />
     <Compile Include="Settings.cs" />
     <Compile Include="TypeBasedTemplateSelector.cs" />
+    <Compile Include="Validation\ValidationFactory.cs" />
+    <Compile Include="Validation\ValidationTemplate.cs" />
     <Compile Include="WindowManager.cs" />
   </ItemGroup>
   <ItemGroup>

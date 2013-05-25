@@ -1,13 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.Composition;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using CredentialManagement;
-using JenkinsBuilds.Commands;
 using Microsoft.TeamFoundation.Controls;
 using VisualStudio.TeamExplorer;
+using Commons.Wpf;
 
 namespace JenkinsBuilds.Pages
 {
@@ -32,9 +33,9 @@ namespace JenkinsBuilds.Pages
         }
 
         private async void Save(object obj)
-        {            
+        {
             if (this.ViewModel.RequiresAuthentication)
-            {                
+            {
                 if (this.prompt.ShowDialog() != DialogResult.OK)
                 {
                     this.ShowError("If Jenkins requires authentication, valid credentials need to be provided");
@@ -87,7 +88,7 @@ namespace JenkinsBuilds.Pages
             {
                 CancelCommand = new DelegateCommand(Back),
                 SaveCommand = new DelegateCommand(Save)
-            };
+            }.AllowWhenNoErrors(x => x.SaveCommand);
         }
     }
 }
