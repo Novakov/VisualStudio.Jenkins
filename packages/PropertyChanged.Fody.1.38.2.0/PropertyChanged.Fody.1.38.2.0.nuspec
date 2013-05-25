@@ -11,6 +11,8 @@
     <iconUrl>https://raw.github.com/Fody/PropertyChanged/master/Icons/package_icon.png</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>Fody add-in for injecting INotifyPropertyChanged code into properties.</description>
+    <releaseNotes />
+    <copyright />
     <language>en-AU</language>
     <tags>WPF, Silverlight, MVVM, WP7, WindowsPhone, INotifyPropertyChanged, DataBinding, ILWeaving, Cecil</tags>
     <dependencies>
