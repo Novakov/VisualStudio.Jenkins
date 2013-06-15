@@ -21,7 +21,6 @@
         <StackPanel Height="29" Orientation="Horizontal" FlowDirection="RightToLeft">
             <Button Content="Cancel" Width="75" Command="{Binding CancelCommand}"/>
             <Button Content="Add" Width="75" Command="{Binding SaveCommand}"/>
-        </StackPanel>
-
+        </StackPanel>             
     </StackPanel>
 </UserControl>
