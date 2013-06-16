@@ -56,9 +56,16 @@ namespace JenkinsBuilds.Pages
             this.Refresh();
         }
 
-        private void BuildNow(JobModel job)
+        private async void BuildNow(JobModel job)
         {
-            this.clientFactory.GetClient(job.ServerUrl).StartBuild(job.Url);
+            try
+            {
+                await this.clientFactory.GetClient(job.ServerUrl).StartBuild(job.Url);
+            }
+            catch (Exception e)
+            {
+                this.ShowError("Starting build failed!\n{0}", e.Message);
+            }
         }
 
         public override void Loaded(object sender, SectionLoadedEventArgs e)

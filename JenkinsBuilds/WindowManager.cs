@@ -29,7 +29,7 @@ namespace JenkinsBuilds
             this.dte = (DTE)Package.GetGlobalService(typeof(DTE));
         }
 
-        public void OpenBuildDetails(Uri serverUrl, BuildModel selectedBuild)
+        public async void OpenBuildDetails(Uri serverUrl, BuildModel selectedBuild)
         {
             var window = this.CreateWindow<BuildDetailsWindow>();
             var frame = (IVsWindowFrame)window.Frame;
@@ -46,14 +46,14 @@ namespace JenkinsBuilds
 
             window.LoadFrom(jobModel, buildModel);
 
-            var warnings = client.GetResourceIfAvailable<BuildWarnings>(buildModel.WarningsReportUrl, WarningsModel.FetchTree);
+            var warnings = await client.GetResourceIfAvailableAsync<BuildWarnings>(buildModel.WarningsReportUrl, WarningsModel.FetchTree);
 
             if (warnings != null)
             {                
                 window.LoadWarnings(new WarningsModel().LoadFrom(warnings));
             }
 
-            var testResult = client.GetResourceIfAvailable<TestResults>(buildModel.TestReportUrl, TestResultModel.FetchTree);
+            var testResult = await client.GetResourceIfAvailableAsync<TestResults>(buildModel.TestReportUrl, TestResultModel.FetchTree);
 
             if (testResult != null)
             {               
